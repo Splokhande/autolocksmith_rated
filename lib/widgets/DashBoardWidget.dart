@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:autolocksmith/Home/dashboard.dart';
 import 'package:provider/provider.dart';
 import 'package:autolocksmith/API/api.dart';
@@ -39,7 +40,9 @@ class DashBoardWidget extends StatelessWidget {
     return SafeArea(
       child: WillPopScope(
         onWillPop: ()async{
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(shop: shop,)), (route) => false);
+          if(currentPage == "Dashboard"){
+            exit(0);
+          }
           return Future.value(true);
         },
         child: Scaffold(
@@ -136,7 +139,7 @@ class DashBoardWidget extends StatelessWidget {
                         }else{
                           Navigator.of(context).pop();
                         }
-                      },child: DrawerItems(text: "Change Password",isOpen: currentPage =="ChangePassword",)),
+                      },child: DrawerItems(text: "Password",isOpen: currentPage =="ChangePassword",)),
                   Divider(color: Colors.grey,),
 
                   GestureDetector(
@@ -399,7 +402,7 @@ class LeadBoardWidget extends StatelessWidget {
                               }else{
                                 Navigator.of(context).pop();
                               }
-                            },child: DrawerItems(text: "Change Password",isOpen: currentPage =="ChangePassword",)),
+                            },child: DrawerItems(text: "Password",isOpen: currentPage =="ChangePassword",)),
                         Divider(color: Colors.grey,),
 
                         GestureDetector(

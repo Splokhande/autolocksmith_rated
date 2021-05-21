@@ -79,11 +79,11 @@ class _MyProfileState extends State<MyProfile> {
                       children: [
                         Text("Need to amend your contact details?",
                           style: TextStyle(fontWeight: FontWeight.bold,
-                              fontSize: 10.sp),),
+                              fontSize: 15.sp),),
                         SizedBox(height: heightS,),
                         Text(" Call 0987654321",
                             style: TextStyle(fontWeight: FontWeight.bold,
-                                fontSize: 12.sp, color: Colors.blue)
+                                fontSize: 15.sp, color: Colors.blue)
                         ),
                         SizedBox(height: 30.h,),
                       ],

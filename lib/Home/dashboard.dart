@@ -133,13 +133,12 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: (){
                           selectOntap(2, context);
-
                         },
                         child: Column(
                           children: [
                             Container(child: Image.asset("asset/change-pw.png"),width: 0.22.sw),
                             SizedBox(height: height*0.02,),
-                            Text("Change\npassword",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,fontSize: width*0.035),)
+                            Text("Password",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,fontSize: width*0.035),)
 
                           ],
                         ),

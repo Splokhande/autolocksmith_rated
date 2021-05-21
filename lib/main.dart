@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'as sys;
-import 'package:flutter_screenutil/screenutil_init.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:autolocksmith/Home/splashscreen.dart';
 import 'package:autolocksmith/model/leads.dart';
@@ -27,16 +27,8 @@ void main() async{
   sys.SystemChrome.setPreferredOrientations([
     sys.DeviceOrientation.portraitUp, sys.DeviceOrientation.portraitDown])
       .then((_) {
-    // runApp(
-    //   DevicePreview(
-    // enabled: !kReleaseMode,
-    // builder: (context) => MyApp(), // Wrap your app
-    // ),
-    // );
     runApp(MyApp());
   });
-
-
 }
 
 
@@ -70,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: Size(414, 896),
-        allowFontScaling: false,
+        // allowFontScaling: false,
         builder: () {
           return MultiProvider(
             providers: [
@@ -78,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             ],
             child:
             MaterialApp(
-              title: 'Flutter Demo',
+              title: 'Autolocksmiths',
               // builder: DevicePreview.appBuilder,
               theme: Styles.themeData(false, context),
               home: SplashScreen(),

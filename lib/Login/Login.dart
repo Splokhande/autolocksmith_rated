@@ -84,10 +84,10 @@ class _LoginState extends State<Login> {
                   onTap: ()async{
                     FocusScope.of(context).requestFocus(FocusNode());
                     if(_email.text == "") {
-                      Toast.show("Email id cannot be black", context);
+                      Toast.show("Enter your email", context);
                     }
                     else if(_pswd.text == ""){
-                      Toast.show("Password cannot be blank", context);
+                      Toast.show("Enter your password", context);
                     }
                     else{
                       API api = API();

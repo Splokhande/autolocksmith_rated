@@ -29,7 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
   #  device_preview:
-  shared_preferences: 2.0.0
+  shared_preferences:
   flutter_launcher_icons:
   flutter_native_splash:
   google_fonts:

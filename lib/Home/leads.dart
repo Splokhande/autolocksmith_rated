@@ -37,6 +37,7 @@ class _MyLeadsState extends State<MyLeads> {
   List<Lead> newLeads = [];
   List<Lead> submittedLeads = [];
   FCMConfig fcm = FCMConfig();
+  Loader loader = Loader();
   @override
   void initState() {
     fcm.initialize(context);
@@ -187,9 +188,13 @@ class _MyLeadsState extends State<MyLeads> {
                         itemBuilder: (_,i){
                           return  GestureDetector(
                             onTap: ()async{
+                              Loader loader = Loader();
+                              loader.showLoader(
+                                  "Fetching Details", context);
                               LeadsDetail leads = LeadsDetail();
                               var res = await api
                                   .postData("getsinglerecord.php?acquid=${newLeads[i].acquid}");
+                              loader.hideLoader(context);
                               var body = jsonDecode(res.body);
                               leads = LeadsDetail.fromMap(body);
                               List<String> list = leads.damageWindow.replaceAll("\$*\$", "'").split("#");
@@ -216,7 +221,7 @@ class _MyLeadsState extends State<MyLeads> {
                       return SizedBox(height: 20.h,);
                     }, itemCount: newLeads.length)
                         : WhiteTextWidget(
-                      text: "Sorry, there are no leads.",
+                      text: "No lead(s) found.",
                       fontSize: 15.sp,
                     ):
                     submittedLeads.length>0 ? ListView.separated(
@@ -226,10 +231,14 @@ class _MyLeadsState extends State<MyLeads> {
                         itemBuilder: (_,i){
                           return  GestureDetector(
                             onTap: ()async{
-                              LeadsDetail leads = LeadsDetail();
+                              Loader loader = Loader();
+                            loader.showLoader(
+                                "Fetching Details", context);
+                            LeadsDetail leads = LeadsDetail();
                               var res = await api
                                   .postData("getsinglerecord.php?acquid=${submittedLeads[i].acquid}");
                               print(res.body);
+                              loader.hideLoader(context);
                               var body = jsonDecode(res.body);
                               leads = LeadsDetail.fromMap(body);
                               List<String> list = leads.damageWindow.replaceAll("\$*\$", "'").split("#");
@@ -258,7 +267,7 @@ class _MyLeadsState extends State<MyLeads> {
                       return SizedBox(height:20.h,);
                     }, itemCount: submittedLeads.length) :
                         WhiteTextWidget(
-                          text: "Sorry, there are no leads.",
+                          text: "No lead(s) found.",
                           fontSize: 15.sp,
                         )
                   ],
@@ -504,7 +513,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         child: Column(
                           children: [
                             WhiteRowTextWidget(
-                            text: "Photos:",fontWeight: FontWeight.bold, fontSize: titleSize,
+                            text: "Images:",fontWeight: FontWeight.bold, fontSize: titleSize,
                             text2: "",fontSize2: 0.035,
                             ),
                             SizedBox(height: 0.015.sh,),

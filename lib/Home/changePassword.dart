@@ -9,8 +9,8 @@ import 'package:autolocksmith/model/User.dart';
 import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class ChangePassword extends StatefulWidget {
   final Shop shop;
   ChangePassword({this.shop});
@@ -54,7 +54,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return DashBoardWidget(
-      header: "Change Password",
+      header: "Password",
       currentPage: "ChangePassword",
       shop: shop,
       container2: Padding(
@@ -72,7 +72,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 height: 50.h,
               ),
               TextFormFieldWidget(
-                hint: "Old Password",
+                hint: "Old password",
                 controller: _oldPassword,
                 isPassword: true,
                 maxLines: 1,
@@ -90,7 +90,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
               TextFormFieldWidget(
 
-                hint: "New Password",
+                hint: "New password",
                 maxLines: 1,
                 isPassword: true,
                 controller: _newPassword,
@@ -110,7 +110,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 height: 20.h,
               ),
               TextFormFieldWidget(
-                hint: "Confirm Password",
+                hint: "Confirm new password",
                 controller: _cnfPassword,
                 isPassword: true,
                 maxLines: 1,

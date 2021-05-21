@@ -324,10 +324,10 @@ class ProfileTextFieldWidget extends StatelessWidget {
           children: [
             Text(title,
               style: TextStyle(fontWeight: FontWeight.bold,
-                  color: Theme.of(context).canvasColor, fontSize: 25.sp),),
+                  color: Theme.of(context).canvasColor, fontSize: 15.sp),),
            SizedBox(height:height*0.01),
             Text(subtitle,
-              style: TextStyle(color: Theme.of(context).canvasColor, fontSize: 25.sp),),
+              style: TextStyle(color: Theme.of(context).canvasColor, fontSize: 15.sp),),
 
           ],
         ),
@@ -363,42 +363,63 @@ class LeadTextFieldWidget extends StatelessWidget {
           children: [
 
             SizedBox(width: 0.015.sw),
-            SizedBox(
-              width: 0.25.sw,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(width: 10.h,),
-                  Text(title, style: TextStyle(fontSize: 15.sp),),
-                  SizedBox(height: 5,),
-                  Text(subtitle, style: TextStyle(fontSize: 15.sp))
-                ],
-              ),
-            ),
-            SizedBox(width: 0.001.sw,),
             Expanded(
-              child: Column(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(width: 10.h,),
-                  Flexible(
-                      fit: FlexFit.loose,
-                      child: Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.sp),)),
-                  SizedBox(height: 5,),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Text(address, style: TextStyle(fontSize: 15.sp)),
-                  )
+                  SizedBox(
+                    width: 0.25.sw,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: 10.h,),
+                        Text(title, style: TextStyle(fontSize: 15.sp),),
+                        SizedBox(height: 5,),
+                        Text(subtitle, style: TextStyle(fontSize: 15.sp))
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 0.001.sw,),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: 10.h,),
+                        Flexible(
+                            fit: FlexFit.loose,
+                            child: Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15.sp),)),
+                        SizedBox(height: 5,),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: Text(address?? "Address", style: TextStyle(fontSize: 15.sp)),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 0.06.sw,),
                 ],
               ),
             ),
-            SizedBox(width: 0.06.sw,),
 
-            Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey, size: 25.sp,)
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible
+                  (
+                    fit: FlexFit.loose,
+                    child: Icon(Icons.arrow_forward_ios_sharp, color: Colors.grey, size: 25.sp,)
+                ),
+
+              ],
+            )
           ],
         ),
       )
