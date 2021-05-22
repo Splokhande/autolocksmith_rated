@@ -84,6 +84,7 @@ class LeadsDetail with ChangeNotifier
   String damageWindow = "";
   String additionInfo = "";
   String whoPay = "";
+  String insuranceName = "";
   String needed = "";
   String windowHeated = "";
   String yearVehicle = "";
@@ -99,7 +100,7 @@ class LeadsDetail with ChangeNotifier
     this.makeOfVehicle, this.modelVehicle, this.damageWindow,
     this.additionInfo, this.whoPay, this.windowHeated, this.yearVehicle,
     this.carDamagePhoto, this.preferDate, this.customerName, this.phone,
-    this.needed,
+    this.needed,this.insuranceName,
     this.email, this.quoteDetails});
 
   factory LeadsDetail
@@ -114,6 +115,7 @@ class LeadsDetail with ChangeNotifier
         damageWindow:    json["damage_windows"],
         additionInfo:    json["additonal_info"],
         whoPay:          json["who_pay"],
+        insuranceName:   json["insurance_name"],
         windowHeated:    json["windowheated"],
         yearVehicle:     json["year_vehicle"],
         carDamagePhoto : json["car_damage_photo"],

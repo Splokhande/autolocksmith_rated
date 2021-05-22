@@ -491,6 +491,31 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       text2: widget.leads.needed,fontSize2: 0.035,
                     ),
                     SizedBox(height: 0.015.sh,),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(5),
+                    //   ),
+                    //   child: Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: 0.01.sw,vertical:  0.01.sh),
+                    //     child: ListTile(
+                    //       title: Text("Billings:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 0.04.sw)
+                    //       ),
+                    //       subtitle:Column(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           Text(widget.leads.whoPay,
+                    //             style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
+                    //           if(widget.leads.insuranceName != "" && widget.leads.insuranceName != null)
+                    //             Text(widget.leads.insuranceName,
+                    //               style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: 0.015.sh,),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
