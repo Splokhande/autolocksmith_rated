@@ -49,7 +49,6 @@ class _MyProfileState extends State<MyProfile> {
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
-
                   // mainAxisAlignment: MainAxisAlignment.start,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisSize: MainAxisSize.min,
@@ -81,7 +80,11 @@ class _MyProfileState extends State<MyProfile> {
                           style: TextStyle(fontWeight: FontWeight.bold,
                               fontSize: 15.sp),),
                         SizedBox(height: heightS,),
-                        Text("Call (646) 751-7835",
+                        widget.shop.country == "United Kingdom"?
+                        Text("Call "+"(646) 751-7835",
+                            style: TextStyle(fontWeight: FontWeight.bold,
+                                fontSize: 15.sp, color: Colors.blue)
+                        ):Text("Call "+"0161 641 4374",
                             style: TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 15.sp, color: Colors.blue)
                         ),

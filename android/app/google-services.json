@@ -37,6 +37,13 @@
             {
               "client_id": "728972505502-lpp6llc6jmss3tah2l9k80b18uf7ef3n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "728972505502-r7vhdf2sojuf4utve2i8vqiumfegqb4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.autolocksmith"
+              }
             }
           ]
         }
@@ -44,17 +51,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:728972505502:android:054386a3c994e36543268f",
+        "mobilesdk_app_id": "1:728972505502:android:8ba129b32430395343268f",
         "android_client_info": {
-          "package_name": "com.app.repair_project"
+          "package_name": "com.app.mywindshield"
         }
       },
       "oauth_client": [
         {
-          "client_id": "728972505502-85ee8ak25tvou5jhv4cgm8tdkfrdaj1d.apps.googleusercontent.com",
+          "client_id": "728972505502-sksghueej5vclv0mgqt1ngunmq97mvsj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.app.repair_project",
+            "package_name": "com.app.mywindshield",
             "certificate_hash": "d69ab6327d05ace76dda4db19a0c99a2cf49bd34"
           }
         },
@@ -74,6 +81,49 @@
             {
               "client_id": "728972505502-lpp6llc6jmss3tah2l9k80b18uf7ef3n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "728972505502-r7vhdf2sojuf4utve2i8vqiumfegqb4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.autolocksmith"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728972505502:android:e208a138f8c7627943268f",
+        "android_client_info": {
+          "package_name": "com.example.rubbish_remover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "728972505502-lpp6llc6jmss3tah2l9k80b18uf7ef3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCP0_t4i4wLnpG4HPO-N78KtoHs3QeAp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "728972505502-lpp6llc6jmss3tah2l9k80b18uf7ef3n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "728972505502-r7vhdf2sojuf4utve2i8vqiumfegqb4p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.autolocksmith"
+              }
             }
           ]
         }
