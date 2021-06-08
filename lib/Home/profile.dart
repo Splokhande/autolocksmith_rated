@@ -80,7 +80,7 @@ class _MyProfileState extends State<MyProfile> {
                           style: TextStyle(fontWeight: FontWeight.bold,
                               fontSize: 15.sp),),
                         SizedBox(height: heightS,),
-                        widget.shop.country == "United Kingdom"?
+                        widget.shop.country != "United Kingdom"?
                         Text("Call "+"(646) 751-7835",
                             style: TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 15.sp, color: Colors.blue)
