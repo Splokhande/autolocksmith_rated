@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                 TextFormFieldWidget(
                   label: "",
                   controller: _email,
-                  hint: "Email Address",
+                  hint: "Email",
                   validate: (value){
                     if(value == ""){
                       return "This field cannot be empty.";

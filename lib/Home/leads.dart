@@ -151,7 +151,7 @@ class _MyLeadsState extends State<MyLeads> {
                       });
                     },
                     child: GradientTabBarButton(
-                      text: "New Leads",
+                      text: "New",
                       icon: Icons.file_download,
                       isActive: selected,
                     ),
