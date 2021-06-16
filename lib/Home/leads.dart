@@ -61,7 +61,7 @@ class _MyLeadsState extends State<MyLeads> {
     width = MediaQuery.of(context).size.width;
     return LeadBoardWidget(
       currentPage: "Leads",
-      header: "My Leads",
+      header: "Leads",
       shop: widget.shop,
       widget:  TextFormFieldWidget(
         controller: _search,
