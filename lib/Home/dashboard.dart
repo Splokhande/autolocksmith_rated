@@ -5,6 +5,8 @@ import 'package:badges/badges.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:provider/provider.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
@@ -41,13 +43,38 @@ class _HomePageState extends State<HomePage> {
   List<Lead> allLeads = [];
   List<Lead> submittedLeads=[];
   FCMConfig fcm = FCMConfig();
+  String _appBadgeSupported = 'Unknown';
   @override
   void initState() {
+    initPlatformState();
     fcm.initialize(context);
     getSp();
 
-  }
 
+  }
+  initPlatformState() async {
+    String appBadgeSupported;
+    try {
+      bool res = await FlutterAppBadger.isAppBadgeSupported();
+      if (res) {
+        appBadgeSupported = 'Supported';
+      } else {
+        appBadgeSupported = 'Not supported';
+      }
+    } on PlatformException {
+      appBadgeSupported = 'Failed to get badge support.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _appBadgeSupported = appBadgeSupported;
+      print(_appBadgeSupported);
+    });
+  }
 
   getSp()async {
     sp = await SharedPreferences.getInstance();
@@ -211,7 +238,7 @@ class _HomePageState extends State<HomePage> {
         break;
 
       case 3:
-        await FirebaseMessaging.instance.deleteToken();
+        // await FirebaseMessaging().deleteToken();
         sp.clear();
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Login()),(route) => false);
         break;

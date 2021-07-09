@@ -9,19 +9,19 @@ import 'package:autolocksmith/Home/splashscreen.dart';
 import 'package:autolocksmith/model/leads.dart';
 import 'package:autolocksmith/theme/themeProvider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+Future firebaseMessagingBackgroundHandler(Map<String, dynamic> message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
 
-  print("Handling a background message: ${message.messageId}");
+  print("Handling a background message: ${message}");
 }
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 
   sys.SystemChrome.setPreferredOrientations([
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             ],
             child:
             MaterialApp(
-              title: 'Autolocksmiths',
+              title: 'Auto Locksmiths',
               // builder: DevicePreview.appBuilder,
               theme: Styles.themeData(false, context),
               home: SplashScreen(),

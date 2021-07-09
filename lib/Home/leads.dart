@@ -333,7 +333,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                 height: 18.h,
               ),
               ListTile(
-                title: Text("Quote Request",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.sp),),
+                title: Text("Lead",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22.sp),),
                 trailing: GestureDetector(
                     onTap: (){
                       showDialog<void>(
@@ -526,8 +526,11 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         child: ListTile(
 
                           title: Text("Details:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 0.04.sw)),
-                          subtitle:Text(widget.leads.additionInfo.replaceAll("&#39;", "'"),
-                            style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
+                          subtitle:Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Text(widget.leads.additionInfo.replaceAll("&#39;", "'"),
+                              style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
+                          ),
                         ),
                       ),
                     ),
@@ -838,12 +841,13 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 Loader loader = Loader();
                                 loader.showLoader("Please wait", context);
                                 API api = API();
-                                _quote.text= _quote.text.replaceAll("£", "psas");
+                                String quote = _quote.text;
+                                quote= quote.replaceAll("£", "psas");
 
                                 SharedPreferences sp =
                                     await SharedPreferences.getInstance();
                                 var res = await api.postData(
-                                    "postlead.php?shop_id=${sp.getString("id")}&acquid=${widget.acquid}&action=submitquote&quote_details=${_quote.text}");
+                                    "postlead.php?shop_id=${sp.getString("id")}&acquid=${widget.acquid}&action=submitquote&quote_details=$quote");
                                 var body = jsonDecode(res.body);
                                 print(body["success"]);
                                 print(body["status"]);
