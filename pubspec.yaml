@@ -44,9 +44,7 @@ dependencies:
   intl:
   badges:
   flutter_app_badger:
-  firebase_analytics: any
   firebase_messaging: ^10.0.3
-  firebase_core:
 dev_dependencies:
   flutter_test:
     sdk: flutter
