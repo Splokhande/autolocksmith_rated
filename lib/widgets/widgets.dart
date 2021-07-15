@@ -109,7 +109,7 @@ class WhiteRowTextWidget extends StatelessWidget {
             SizedBox(
               width: 0.25.sw,
               child: Text(
-                text,
+                "$text:",
                 textAlign: TextAlign.start,
                 maxLines: 5,
                 style: TextStyle(color: Theme.of(context).canvasColor,

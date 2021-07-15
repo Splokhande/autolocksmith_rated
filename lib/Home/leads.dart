@@ -427,11 +427,6 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                     ),
                     SizedBox(height: 0.01.sh),
                     WhiteRowTextWidget(
-                      text: "Year",fontWeight: FontWeight.bold, fontSize: titleSize,
-                      text2: widget.leads.yearVehicle,fontSize2: 15.sp,
-                    ),
-                    SizedBox(height: 0.01.sh),
-                    WhiteRowTextWidget(
                       text: widget.shop.country == "United States"?"VIN":"Reg",fontWeight: FontWeight.bold, fontSize:titleSize,
                       text2:  widget.leads.vehicleReg,fontSize2: 15.sp,
                     ),
@@ -446,6 +441,11 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       text2: widget.leads.modelVehicle,fontSize2: 15.sp,
                     ),
                     SizedBox(height: 0.01.sh),
+                    WhiteRowTextWidget(
+                      text: "Year",fontWeight: FontWeight.bold, fontSize: titleSize,
+                      text2: widget.leads.yearVehicle,fontSize2: 15.sp,
+                    ),
+                    SizedBox(height: 0.01.sh),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -456,7 +456,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
 
                           SizedBox(height: 0.01.sh,),
                           WhiteRowTextWidget(
-                            text: "Help",fontWeight: FontWeight.bold, fontSize:titleSize,
+                            text: "Problem",fontWeight: FontWeight.bold, fontSize:titleSize,
                             text2: "",fontSize2: 0.035,
                           ),
                           Padding(
@@ -470,7 +470,15 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 padding: EdgeInsets.only(left: 0.05.sw, right: 0.05.sw, bottom: 10.h),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.watch_later,color: Colors.lightBlueAccent,size: 0.045.sw,),
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius: BorderRadius.circular(50)
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Icon(Icons.arrow_forward_ios_sharp,color: Colors.white,size: 0.025.sw,),
+                                        )),
                                     SizedBox(width: 0.025.sw,),
                                     Text(widget.help[i],style: TextStyle(color: Theme.of(context).canvasColor,
                                         fontSize: 15.sp),),
@@ -487,7 +495,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
 
                     SizedBox(height: 0.01.sh),
                     WhiteRowTextWidget(
-                      text: "Needed:",fontWeight: FontWeight.bold, fontSize:titleSize,
+                      text: "Needed",fontWeight: FontWeight.bold, fontSize:titleSize,
                       text2: widget.leads.needed,fontSize2: 0.035,
                     ),
                     SizedBox(height: 0.015.sh,),
@@ -541,7 +549,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         child: Column(
                           children: [
                             WhiteRowTextWidget(
-                            text: "Images:",fontWeight: FontWeight.bold, fontSize: titleSize,
+                            text: "Image",fontWeight: FontWeight.bold, fontSize: titleSize,
                             text2: "",fontSize2: 0.035,
                             ),
                             SizedBox(height: 0.015.sh,),
@@ -593,7 +601,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                               children: [
                                 SizedBox(
                                   width:0.25.sw,
-                                  child: Text("Customer:",style: TextStyle(color: Theme.of(context).canvasColor,
+                                  child: Text("Name:",style: TextStyle(color: Theme.of(context).canvasColor,
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.bold),),
                                 ),
@@ -641,7 +649,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                     ),
                     SizedBox(height: 0.015.sh,),
-                    Text("Submit Quote",
+                    Text("Submit your quote",
                         style: TextStyle(
                             color: Theme.of(context).canvasColor,
                             fontSize: 0.04.sw,
@@ -659,9 +667,9 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                             style: TextStyle(color: Theme.of(context).canvasColor,),
 
                             children: [
-                              TextSpan(text: "Note: ",
-                              style: TextStyle(color: Theme.of(context).canvasColor, fontWeight: FontWeight.bold, fontSize:  0.04.sw)
-                              ),
+                              // TextSpan(text: "Note: ",
+                              // style: TextStyle(color: Theme.of(context).canvasColor, fontWeight: FontWeight.bold, fontSize:  0.04.sw)
+                              // ),
                               TextSpan(text: "Other auto locksmiths in your area are quoting for this job."
                                   " Be competitve with your pricing.",
                               style: TextStyle(color: Theme.of(context).canvasColor, fontSize:  0.04.sw)
@@ -684,7 +692,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Make everything clear to customer:",
+                            Text("Make everything clear for the customer:",
                               style: TextStyle(fontWeight: FontWeight.bold),),
                             SizedBox(height: 0.01.sh),
                             Padding(
@@ -710,7 +718,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       SizedBox(width: 0.05.sw
                                         ,),
                                       Expanded(
-                                        child: Text("Provide full details of the work, including price.",
+                                        child: Text("Provide full details of the work including price.",
                                           style: TextStyle(color: Theme.of(context).canvasColor,
                                               fontSize: 0.035.sw),
                                         ),
@@ -734,32 +742,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       SizedBox(width: 0.05.sw
                                         ,),
                                       Expanded(
-                                        child: Text("Provide available dates as to when you carry out the work",
-                                          style: TextStyle(color: Theme.of(context).canvasColor,
-                                              fontSize: 0.035.sw),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 0.01.sh),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(top:4.0),
-                                        child:  CircleAvatar(
-                                          backgroundColor: Colors.blue.shade400,
-                                          minRadius: 0.018.sw,
-                                          child:   Icon(Icons.arrow_forward_ios_sharp,
-                                            color: Theme.of(context).backgroundColor,
-                                            size: 15.sp,),
-                                        ),
-                                      ),
-                                      SizedBox(width: 0.05.sw
-                                        ,),
-                                      Expanded(
-                                        child: Text("Any other information you will feel will help the customer book you",
+                                        child: Text("Provide available dates you can carry out the work.",
                                           style: TextStyle(color: Theme.of(context).canvasColor,
                                               fontSize: 0.035.sw),
                                         ),
@@ -784,7 +767,32 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       SizedBox(width: 0.05.sw
                                         ,),
                                       Expanded(
-                                        child: Text("No need to include your contact details in the box below",
+                                        child: Text("Any other information you feel will help the customer book you.",
+                                          style: TextStyle(color: Theme.of(context).canvasColor,
+                                              fontSize: 0.035.sw),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 0.01.sh),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+
+                                      Padding(
+                                        padding: const EdgeInsets.only(top:4.0),
+                                        child:  CircleAvatar(
+                                          backgroundColor: Colors.blue.shade400,
+                                          minRadius: 0.018.sw,
+                                          child:   Icon(Icons.arrow_forward_ios_sharp,
+                                            color: Theme.of(context).backgroundColor,
+                                            size: 15.sp,),
+                                        ),
+                                      ),
+                                      SizedBox(width: 0.05.sw
+                                        ,),
+                                      Expanded(
+                                        child: Text("No need to include your contact details in the box below.",
                                           style: TextStyle(color: Theme.of(context).canvasColor,
                                               fontSize: 0.035.sw),
                                         ),
@@ -799,11 +807,11 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                     ),
                     SizedBox(height: 0.015.sh,),
-                    Text("Quote the customer using the box below:",
-                        style: TextStyle(
-                            color: Theme.of(context).canvasColor,
-                            fontSize: 0.04.sw,
-                            fontWeight: FontWeight.bold)),
+                    // Text("Quote the customer using the box below:",
+                    //     style: TextStyle(
+                    //         color: Theme.of(context).canvasColor,
+                    //         fontSize: 0.04.sw,
+                    //         fontWeight: FontWeight.bold)),
                     SizedBox(height: 0.015.sh,),
                     TextFormFieldWidget(
                       label: "",
@@ -931,43 +939,51 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                             child: Center(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "Your quote has been submitted to the customer...",style: TextStyle(
-                                      color: Colors.blueGrey,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14.sp,
-                                   ),
+                                  // +
+                                  RichText(text: TextSpan(
+                                      text: "Your quote has been submitted to the customer.",
+                                      style: TextStyle(
+                                          color: Colors.black
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text: " You can edit and re-submit a new quote if need be.",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black
+                                            )
+                                        )
+                                      ]
+                                  ),
                                   ),
                                   SizedBox(
-                                    height: 5.h,
-                                ),
-                                    Text("You can edit and re-submit a new quote if need be.",style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13.5.sp
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.h,
+                                    height: 20.h,
                                   ),
                                   Container(
                                       width: 0.4.sw,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius:
+                                        BorderRadius.circular(10),
                                         color: Colors.pink,
                                       ),
-                                      child:Padding(
+                                      child: Padding(
                                         padding: EdgeInsets.all(0.03.sw),
                                         child: Center(
-                                          child: Text("EDIT QUOTE",style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 0.035.sw
-                                          ),),
+                                          child: Text(
+                                            "EDIT QUOTE",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight:
+                                                FontWeight.bold,
+                                                fontSize: 0.035.sw),
+                                          ),
                                         ),
-                                      ) ),
+                                      )),
                                 ],
                               ),
                             ),
