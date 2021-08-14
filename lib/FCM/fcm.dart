@@ -1,6 +1,8 @@
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FCMConfig extends ChangeNotifier{
   FirebaseMessaging fcm = FirebaseMessaging.instance;
@@ -17,13 +19,19 @@ class FCMConfig extends ChangeNotifier{
       sound: true,
     );
 
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    int count = sp.getInt("count");
+    if(count == null)
+      count = 0;
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message)async{
+
+      print('Got a message whilst in the background!');
+        FlutterAppBadger.updateBadgeCount(count+1);
+    });
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
-      }
+        FlutterAppBadger.updateBadgeCount(count+1);
     });
   }
 }

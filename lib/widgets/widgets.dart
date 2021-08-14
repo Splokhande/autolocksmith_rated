@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:full_screen_image/full_screen_image.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 class RichWidget extends StatelessWidget {
   String text1;
   String text2;
@@ -609,6 +612,64 @@ class DeleteCustomDialog extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16.0),
+      ],
+    );
+  }
+}
+
+class ImageContainer extends StatelessWidget {
+  final String image;
+
+  ImageContainer({this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 0.015.sh,),
+        Container(
+          height: 0.35.sh,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: FullScreenWidget(
+            child: PinchZoom(
+              zoomEnabled: true,
+              child:   CachedNetworkImage(
+                imageUrl: image,
+                width: 1.sw,
+                fit: BoxFit.cover,
+                imageBuilder: (context, imageProvider) =>
+                    Container(
+                      width:  1.sw,
+                      height: 0.3.sh,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                placeholder: (context, url) =>
+                    Center(child: Container(
+                        width:  1.sw,
+                        height: 250.h,
+                        child: Center(child: CircularProgressIndicator()))),
+                errorWidget: (context, url, error) =>
+                    Icon(Icons.error),
+              ),
+              resetDuration: const Duration(milliseconds: 100),
+              maxScale: 2.5,
+              onZoomStart: (){print('Start zooming');},
+              onZoomEnd: (){print('Stop zooming');},
+            ),
+          ),
+
+
+        ),
       ],
     );
   }

@@ -3,18 +3,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'as sys;
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:autolocksmith/Home/splashscreen.dart';
 import 'package:autolocksmith/model/leads.dart';
 import 'package:autolocksmith/theme/themeProvider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-Future firebaseMessagingBackgroundHandler(Map<String, dynamic> message) async {
+Future firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message}");
+  SharedPreferences sp = await SharedPreferences.getInstance();
+  int count = sp.getInt("count") + 1;
+  print("Handling a background message: ${message.messageId}");
+  FlutterAppBadger.updateBadgeCount(count);
+  print("Handling a background message: $message");
 }
 
 

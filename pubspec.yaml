@@ -45,6 +45,10 @@ dependencies:
   badges:
   flutter_app_badger:
   firebase_messaging: ^10.0.3
+  url_launcher:
+  full_screen_image:
+  android_intent_plus:
+  pinch_zoom:
 dev_dependencies:
   flutter_test:
     sdk: flutter

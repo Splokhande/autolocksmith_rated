@@ -43,6 +43,7 @@ class DashBoardWidget extends StatelessWidget {
           if(currentPage == "Dashboard"){
             exit(0);
           }
+
           return Future.value(true);
         },
         child: Scaffold(
@@ -61,6 +62,7 @@ class DashBoardWidget extends StatelessWidget {
                 //   Navigator.of(context).pop();
                 // }
                 // else{
+              // Navigator.pop(context);
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(shop: shop,)), (route) => false);
                 // }
               },

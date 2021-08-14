@@ -84,9 +84,11 @@ class _HomePageState extends State<HomePage> {
     List<Lead> lead =await context.read<Lead>().getLeadsCount(context);
     setState(() {
       allLeads = lead;
+      FlutterAppBadger.updateBadgeCount(allLeads.length);
     });
     print(allLeads.length);
   }
+
 
 
   @override

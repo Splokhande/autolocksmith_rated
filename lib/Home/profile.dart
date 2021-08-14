@@ -7,6 +7,7 @@ import 'package:autolocksmith/model/User.dart';
 import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyProfile extends StatefulWidget {
   final Shop shop;
@@ -25,6 +26,16 @@ class _MyProfileState extends State<MyProfile> {
   void initState() {
     fcm.initialize(context);
   }
+
+
+  Future<void> _openUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +92,16 @@ class _MyProfileState extends State<MyProfile> {
                               fontSize: 15.sp),),
                         SizedBox(height: heightS,),
                         widget.shop.country != "United Kingdom"?
-                        Text("Call "+"(646) 751-7835",
-                            style: TextStyle(fontWeight: FontWeight.bold,
-                                fontSize: 15.sp, color: Colors.blue)
+                        InkWell(
+                          onTap: ()async{
+                            setState(() {
+                              _openUrl('tel: 0161 641 4374}');
+                            });
+                          },
+                          child: Text("Call "+"(646) 751-7835",
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp, color: Colors.blue)
+                          ),
                         ):Text("Call "+"0161 641 4374",
                             style: TextStyle(fontWeight: FontWeight.bold,
                                 fontSize: 15.sp, color: Colors.blue)

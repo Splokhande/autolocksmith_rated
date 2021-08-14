@@ -14,8 +14,11 @@ import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/loader.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:full_screen_image/full_screen_image.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyLeads extends StatefulWidget {
   final List<Lead> newLeads;
@@ -307,6 +310,15 @@ class _LeadsDetailsState extends State<LeadsDetails> {
     _quote.text = widget.leads.quoteDetails == null?"":widget.leads.quoteDetails.replaceAll("psas", "£");
   }
 
+
+  Future<void> _openUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -318,7 +330,6 @@ class _LeadsDetailsState extends State<LeadsDetails> {
   Widget build(BuildContext context) {
     double titleSize =  0.00012.sw;
     return DashBoardWidget(
-
       header: widget.header,
         shop: widget.shop,
       container2: Padding(
@@ -542,47 +553,60 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 0.015.sh,),
 
-                      Visibility(
-                        visible: !( widget.leads.carDamagePhoto == "https://www.autolocksmiths.com/quoteimages/"),
-                        child: Column(
-                          children: [
-                            WhiteRowTextWidget(
+                    if(widget.leads.carDamagePhoto != "")
+                      Column(
+                        children: [
+                          SizedBox(height: 0.015.sh,),
+                          WhiteRowTextWidget(
                             text: "Image",fontWeight: FontWeight.bold, fontSize: titleSize,
-                            text2: "",fontSize2: 0.035,
+                            text2: "",
+                          ),
+                          SizedBox(height: 0.015.sh,),
+                          Container(
+                            height: 0.45.sh,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
                             ),
-                            SizedBox(height: 0.015.sh,),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: CachedNetworkImage(
-                                imageUrl: widget.leads.carDamagePhoto,
-                                width: 1.sw,
-                                fit: BoxFit.cover,
-                                imageBuilder: (context, imageProvider) =>
-                                    Container(
-                                      width:  1.sw,
-                                      height: 250.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        shape: BoxShape.rectangle,
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.contain,
+                            child:
+                            FullScreenWidget(
+                              child: PinchZoom(
+                                zoomEnabled: true,
+                                child:   CachedNetworkImage(
+                                  imageUrl: widget.leads.carDamagePhoto,
+                                  width: 1.sw,
+                                  fit: BoxFit.cover,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                        width:  1.sw,
+                                        height: 0.4.sh,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          shape: BoxShape.rectangle,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.contain,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                placeholder: (context, url) =>
-                                    Center(child: CircularProgressIndicator()),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
+                                  placeholder: (context, url) =>
+                                      Center(child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
+                                resetDuration: const Duration(milliseconds: 100),
+                                maxScale: 2.5,
+                                onZoomStart: (){print('Start zooming');},
+                                onZoomEnd: (){print('Stop zooming');},
                               ),
                             ),
-                          ],
-                        ),
+
+
+
+                          ),
+
+                        ],
                       ),
 
                     SizedBox(height: 0.015.sh,),
@@ -610,38 +634,58 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                               ],
                             ),
                             SizedBox(height: 0.01.sh),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:0.25.sw,
-                                  child: Text("Telephone:",style: TextStyle(color: Theme.of(context).canvasColor,
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold),),
-                                ),
+                            InkWell(
+                              onTap: ()async{
+                                setState(() {
+                                    _openUrl('tel: ${widget.leads.phone}');
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width:0.25.sw,
+                                    child: Text("Telephone:",
+                                      style: TextStyle(
+                                        color: Theme.of(context).canvasColor,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
 
-                                Expanded(child: Text(widget.leads.phone,style: TextStyle(color: Theme.of(context).canvasColor,fontSize: 15.sp),)),
-                              ],
+                                  Expanded(child: Text(widget.leads.phone,style: TextStyle(
+                                      color: Color(0xff0037a6),fontSize: 15.sp),)),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 0.01.sh),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width:0.25.sw,
-                                  child: Text("Email:",style: TextStyle(color: Theme.of(context).canvasColor,
-                                      fontSize: 15.sp,
-                                      fontWeight: FontWeight.bold),),
-                                ),
+                            InkWell(
+                              onTap: ()async{
+                                  setState(() {
+                                     _openUrl('mailto: ${widget.leads.email}');
+                                   }
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width:0.25.sw,
+                                    child: Text("Email:",style: TextStyle(
+                                        color: Theme.of(context).canvasColor,
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold),),
+                                  ),
 
-                                Expanded(child: Padding(
-                                  padding: const EdgeInsets.only(right:16.0),
-                                  child: Text(widget.leads.email,
-                                    style: TextStyle(color: Theme.of(context).canvasColor,fontSize: 15.sp,),),
-                                )),
-                              ],
+                                  Expanded(child: Padding(
+                                    padding: const EdgeInsets.only(right:16.0),
+                                    child: Text(widget.leads.email,
+                                      style: TextStyle(color: Color(0xff0037a6),fontSize: 15.sp,),),
+                                  )),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 0.01.sh),
                           ],
@@ -829,7 +873,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           setState(() {
                             isEdit = false;
                           });
-                        }else{
+                        }
+                        else{
                           if(_quote.text == ""){
                             ShowToast.show("Please provide your quote details", context);
                           }else {
@@ -845,7 +890,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               showNewLead: false,
                                             )),
                                     (route) => false);
-                              } else {
+                              }
+                            else {
                                 Loader loader = Loader();
                                 loader.showLoader("Please wait", context);
                                 API api = API();
