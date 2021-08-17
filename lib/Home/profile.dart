@@ -82,32 +82,32 @@ class _MyProfileState extends State<MyProfile> {
                       ProfileTextFieldWidget(title: "Email",subtitle: widget.shop.shopEmail),
 
                     SizedBox(height: 0.025.sh,),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("Need to amend your contact details?",
-                          style: TextStyle(fontWeight: FontWeight.bold,
-                              fontSize: 15.sp),),
-                        SizedBox(height: heightS,),
-                        widget.shop.country != "United Kingdom"?
-                        InkWell(
-                          onTap: ()async{
-                            setState(() {
-                              _openUrl('tel: 0161 641 4374}');
-                            });
-                          },
-                          child: Text("Call "+"(646) 751-7835",
+                    InkWell(
+                      onTap: ()async{
+                        setState(() {
+                          _openUrl('tel: 0161 641 4374');
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Need to amend your contact details?",
+                            style: TextStyle(fontWeight: FontWeight.bold,
+                                fontSize: 15.sp),),
+                          SizedBox(height: heightS,),
+                          widget.shop.country != "United Kingdom"?
+                          Text("Call "+"(646) 751-7835",
+                              style: TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 15.sp, color: Colors.blue)
+                          ):Text("Call "+"0161 641 4374",
                               style: TextStyle(fontWeight: FontWeight.bold,
                                   fontSize: 15.sp, color: Colors.blue)
                           ),
-                        ):Text("Call "+"0161 641 4374",
-                            style: TextStyle(fontWeight: FontWeight.bold,
-                                fontSize: 15.sp, color: Colors.blue)
-                        ),
-                        SizedBox(height: 30.h,),
-                      ],
+                          SizedBox(height: 30.h,),
+                        ],
+                      ),
                     ),
 
                   ],

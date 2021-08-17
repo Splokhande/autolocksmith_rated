@@ -16,10 +16,14 @@ class LoginWidget extends StatelessWidget {
       child: Scaffold(
         backgroundColor:Colors.white ,
         resizeToAvoidBottomInset: false,
-        body:Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
+        body:ListView(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
+          shrinkWrap: true,
+
+          scrollDirection: Axis.vertical,
+          physics: AlwaysScrollableScrollPhysics(),
           children: [
             Center(
               child: Container(
@@ -31,33 +35,31 @@ class LoginWidget extends StatelessWidget {
                 child: container1,
               ),
             ),
-            Expanded(
+            Container(
+              height: height,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+              ),
               child: Container(
-                height: height,
+                width: width,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                 color: Theme.of(context).primaryColor,
+                  borderRadius:
+                  BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40)),
                 ),
-                child: Container(
-                  width: width,
-                  decoration: BoxDecoration(
-                   color: Theme.of(context).primaryColor,
-                    borderRadius:
-                    BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40)),
-                  ),
-                  child: Padding(
-                    padding:  EdgeInsets.symmetric(horizontal:0.06.sw ),
-                    child: ListView
-                      (
-                      shrinkWrap: true,
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(horizontal:0.06.sw ),
+                  child: ListView
+                    (
+                    shrinkWrap: true,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
 
-                      children: [
-                        container2,
-                      ],
-                    ),
+                    children: [
+                      container2,
+                    ],
                   ),
                 ),
               ),

@@ -211,7 +211,6 @@ class _HomePageState extends State<HomePage> {
           loader.showLoader("Fetching Leads",context);
           var res = await api.postData("getleads.php?shop_id=${shop.id}");
           var body = jsonDecode(res.body);
-
             for (int i = 0; i < body["leads"].length; i++){
               Lead lead = Lead.fromMap(body["leads"][i]);
               if (lead.leadStatus == "new-lead"){
