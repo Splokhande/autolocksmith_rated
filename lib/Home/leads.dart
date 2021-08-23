@@ -554,7 +554,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                     ),
 
-                    if(widget.leads.carDamagePhoto != "")
+                    if(widget.leads.carDamagePhoto != "https://www.autolocksmiths.com/quoteimages/")
                       Column(
                         children: [
                           SizedBox(height: 0.015.sh,),
@@ -921,7 +921,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               lead = widget.newLeads[i];
                                             }
                                           }
-                                          widget.submittedLeads.add(lead);
+                                          widget.submittedLeads.insert(0,lead);
                                           widget.newLeads.removeWhere(
                                               (element) =>
                                                   element.acquid ==
