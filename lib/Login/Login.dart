@@ -67,7 +67,7 @@ class _LoginState extends State<Login> {
                     return null;
                   },
                   type: TextInputType.emailAddress,
-
+maxLines: 1,
                 ),
                 SizedBox(height: 10.h,),
                 TextFormFieldWidget(
