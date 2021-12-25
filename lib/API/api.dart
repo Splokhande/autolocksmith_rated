@@ -1,30 +1,57 @@
-import 'package:http/http.dart' as http;
+import 'package:autolocksmith/Login/Login.dart';
+import 'package:dio/dio.dart' as d;
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class API{
-
+class API {
   static final String _url = "https://www.autolocksmiths.com/appwebservices/";
 
+  d.Response response;
   var token;
+  d.Dio dio = d.Dio();
+  SharedPreferences sp;
+  String header = "";
+  var map = {};
+
+  getHeader() async {
+    sp = await SharedPreferences.getInstance();
+    header = sp.getString("jwtToken");
+    print(header);
+  }
+
   postData(apiUrl) async {
+    await getHeader();
+    setHeaders();
+    print(map);
     var fullUrl = _url + apiUrl;
-    return await http.post(
-      Uri.parse(fullUrl)
-    );
+    print(fullUrl);
+
+    response = await dio.post(fullUrl);
+
+    if (response.data["responce"] != null) {
+      sp.clear();
+      return Get.off(() => Login());
+    } else
+      return response.data;
   }
 
   getData(apiUrl) async {
+    await getHeader();
+    setHeaders();
     var fullUrl = _url + apiUrl;
-    return await http.get(
-      Uri.parse(fullUrl),
-      // headers: _setHeaders(),
+    print(fullUrl);
+    response = await dio.get(
+      fullUrl,
     );
+
+    if (response.data["responce"] != null) {
+      sp.clear();
+      return Get.off(() => Login());
+    } else
+      return response.data;
   }
 
-
-  // _setHeaders() => {
-  //   'Content-type': 'application/json',
-  //   'Accept': 'application/json',
-  // };
-
-
+  setHeaders() {
+    dio.options.headers = {'Authorizationtoken': 'Basic:$header'};
+  }
 }

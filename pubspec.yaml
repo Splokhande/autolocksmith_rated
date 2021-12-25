@@ -44,6 +44,8 @@ dependencies:
   intl:
   badges:
   flutter_app_badger:
+  dio:
+  get:
   firebase_messaging: ^10.0.3
   url_launcher:
   full_screen_image:

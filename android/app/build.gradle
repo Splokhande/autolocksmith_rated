@@ -43,9 +43,9 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.app.autolocksmith"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 6
-        versionName '1.0.2'
+        targetSdkVersion 31
+        versionCode 7
+        versionName '1.0.3'
     }
 
     signingConfigs {
