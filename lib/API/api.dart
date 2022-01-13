@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  static final String _url = "https://www.autolocksmiths.com/appwebservices/";
+  static final String _url =
+      "https://www.autolocksmiths.com/testappwebservices/";
 
   d.Response response;
   var token;

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
@@ -224,10 +223,10 @@ class _MyLeadsState extends State<MyLeads> {
                                       loader.showLoader(
                                           "Fetching Details", context);
                                       LeadsDetail leads = LeadsDetail();
-                                      var res = await api.postData(
+                                      var body = await api.postData(
                                           "getsinglerecord.php?acquid=${newLeads[i].acquid}");
                                       loader.hideLoader(context);
-                                      var body = jsonDecode(res.body);
+
                                       leads = LeadsDetail.fromMap(body);
                                       List<String> list = leads.damageWindow
                                           .replaceAll("\$*\$", "'")
@@ -278,11 +277,10 @@ class _MyLeadsState extends State<MyLeads> {
                                       loader.showLoader(
                                           "Fetching Details", context);
                                       LeadsDetail leads = LeadsDetail();
-                                      var res = await api.postData(
+                                      var body = await api.postData(
                                           "getsinglerecord.php?acquid=${submittedLeads[i].acquid}");
-                                      print(res.body);
                                       loader.hideLoader(context);
-                                      var body = jsonDecode(res.body);
+
                                       leads = LeadsDetail.fromMap(body);
                                       List<String> list = leads.damageWindow
                                           .replaceAll("\$*\$", "'")
@@ -420,9 +418,9 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 Loader loader = Loader();
                                 loader.showLoader("Deleting lead", context);
                                 API api = API();
-                                var res = await api.postData(
+                                var body = await api.postData(
                                     "deletelead.php?acquid=${widget.acquid}&shop_id=${widget.shop.id}&deletelead=1");
-                                var body = jsonDecode(res.body);
+
                                 loader.hideLoader(context);
 
                                 if (body["status"] == "success") {
@@ -1119,9 +1117,9 @@ class _LeadsDetailsState extends State<LeadsDetails> {
 
                                 SharedPreferences sp =
                                     await SharedPreferences.getInstance();
-                                var res = await api.postData(
+                                var body = await api.postData(
                                     "postlead.php?shop_id=${sp.getString("id")}&acquid=${widget.acquid}&action=submitquote&quote_details=$quote");
-                                var body = jsonDecode(res.body);
+
                                 print(body["success"]);
                                 print(body["status"]);
                                 loader.hideLoader(context);
