@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     String token = sp.getString("token");
     print("FCM Token: $token");
     leadsDetail = Lead();
-    List<Lead> lead = await context.read<Lead>().getLeadsCount(context);
+    List<Lead> lead = await context.read<Lead>().getLeadsCount();
     setState(() {
       allLeads = lead;
       FlutterAppBadger.updateBadgeCount(allLeads.length);

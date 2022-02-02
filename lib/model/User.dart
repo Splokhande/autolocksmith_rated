@@ -129,6 +129,7 @@ class Shop {
     sp.setString("shopWebsite", shop.shopWebsite);
     sp.setBool("internet", true);
     sp.setString("jwtToken", shop.jwtToken);
+    sp.setBool("internet", true);
     sp.setInt("count", 0);
   }
 }

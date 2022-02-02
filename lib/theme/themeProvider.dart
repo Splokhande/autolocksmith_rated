@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,12 +5,11 @@ import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class DarkThemePreference {
   static const THEME_STATUS = "THEMESTATUS";
   SharedPreferences prefs;
   setDarkTheme(bool value) async {
-     prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
     prefs.setBool(THEME_STATUS, value);
   }
 
@@ -35,11 +33,25 @@ class DarkThemeProvider with ChangeNotifier {
 }
 
 class Styles {
-
+  static MaterialColor primaryColor = MaterialColor(
+    0xffe30613,
+    <int, Color>{
+      50: Color(0xffe30613).withOpacity(0.1),
+      100: Color(0xffe30613).withOpacity(0.2),
+      200: Color(0xffe30613).withOpacity(0.3),
+      300: Color(0xffe30613).withOpacity(0.4),
+      400: Color(0xffe30613).withOpacity(0.5),
+      500: Color(0xffe30613).withOpacity(0.6),
+      600: Color(0xffe30613).withOpacity(0.7),
+      700: Color(0xffe30613).withOpacity(0.8),
+      800: Color(0xffe30613).withOpacity(0.9),
+      900: Color(0xffe30613).withOpacity(1),
+    },
+  );
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
-      primarySwatch: Colors.red,
-      primaryColor: isDarkTheme ? Colors.white: Color(0xffe30613),
+      primarySwatch: primaryColor,
+      primaryColor: isDarkTheme ? Colors.white : primaryColor,
       primaryColorLight: Colors.red.withOpacity(0.6),
       backgroundColor: isDarkTheme ? Color(0xffe7ebee) : Color(0xffe7ebee),
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
@@ -53,8 +65,9 @@ class Styles {
       cardColor: isDarkTheme ? Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.white : Colors.black,
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
-      secondaryHeaderColor: isDarkTheme ? Colors.white:Color(0xffEC3237),
-      buttonTheme: Theme.of(context).buttonTheme.copyWith(colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
+      secondaryHeaderColor: isDarkTheme ? Colors.white : Color(0xffEC3237),
+      buttonTheme: Theme.of(context).buttonTheme.copyWith(
+          colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
       fontFamily: 'OpenSans',
       textTheme: GoogleFonts.openSansTextTheme(),
       appBarTheme: AppBarTheme(elevation: 0.0),

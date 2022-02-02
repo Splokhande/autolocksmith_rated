@@ -41,7 +41,7 @@ class Lead with ChangeNotifier {
     );
   }
 
-  Future<List<Lead>> getLeadsCount(context) async {
+  Future<List<Lead>> getLeadsCount() async {
     Shop shop = Shop();
     shop = await shop.fromSharedPreference();
     SharedPreferences sp = await SharedPreferences.getInstance();

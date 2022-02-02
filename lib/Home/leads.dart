@@ -224,7 +224,7 @@ class _MyLeadsState extends State<MyLeads> {
                                           "Fetching Details", context);
                                       LeadsDetail leads = LeadsDetail();
                                       var body = await api.postData(
-                                          "getsinglerecord.php?acquid=${newLeads[i].acquid}");
+                                          "getsinglerecord.php?shop_id=${widget.shop.id}&acquid=${newLeads[i].acquid}");
                                       loader.hideLoader(context);
 
                                       leads = LeadsDetail.fromMap(body);
@@ -278,7 +278,7 @@ class _MyLeadsState extends State<MyLeads> {
                                           "Fetching Details", context);
                                       LeadsDetail leads = LeadsDetail();
                                       var body = await api.postData(
-                                          "getsinglerecord.php?acquid=${submittedLeads[i].acquid}");
+                                          "getsinglerecord.php?shop_id=${widget.shop.id}&acquid=${submittedLeads[i].acquid}");
                                       loader.hideLoader(context);
 
                                       leads = LeadsDetail.fromMap(body);

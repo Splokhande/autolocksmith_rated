@@ -408,7 +408,7 @@ class LeadBoardWidget extends StatelessWidget {
                 bottom: PreferredSize(
                   preferredSize: Size(
                     width,
-                    0.5.sh,
+                    0.01.sh,
                   ),
                   child: widget == null
                       ? Container()
