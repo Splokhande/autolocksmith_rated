@@ -52,6 +52,7 @@ dependencies:
   android_intent_plus:
   pinch_zoom:
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 
