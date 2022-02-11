@@ -27,13 +27,14 @@ class FCMConfig extends ChangeNotifier {
     );
 
     if (count == null) count = 0;
-    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-      print('Got a message whilst in the background!');
-      FlutterAppBadger.updateBadgeCount(count);
-    });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
+      FlutterAppBadger.updateBadgeCount(count);
+    });
+
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+      print('Got a message whilst in the background!');
       FlutterAppBadger.updateBadgeCount(count);
     });
   }
