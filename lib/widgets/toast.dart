@@ -1,10 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
-import 'package:toast/toast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ShowToast {
   BuildContext context;
-  ShowToast.show(String msg, context){
-    Toast.show(msg, context,duration: 2);
+  ShowToast.show(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
   }
 }

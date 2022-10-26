@@ -1,17 +1,17 @@
-import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/Home/dashboard.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/model/User.dart';
 import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChangePassword extends StatefulWidget {
-  final Shop shop;
-  ChangePassword({this.shop});
+  User user;
+  ChangePassword({this.user});
   @override
   _ChangePasswordState createState() => _ChangePasswordState();
 }
@@ -23,7 +23,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   GlobalKey<FormState> key = GlobalKey<FormState>();
 
   API api = API();
-  Shop shop = Shop();
+  //
   @override
   void initState() {
     // TODO: implement initState
@@ -40,11 +40,11 @@ class _ChangePasswordState extends State<ChangePassword> {
   }
 
   getSp() async {
-    Shop sh = Shop();
-    sh = await shop.fromSharedPreference();
-    setState(() {
-      shop = sh;
-    });
+    // Shop sh = Shop();
+    // sh = await user.fromSharedPreference();
+    // setState(() {
+    //   user = sh;
+    // });
   }
 
   @override
@@ -52,7 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return DashBoardWidget(
       header: "Password",
       currentPage: "ChangePassword",
-      shop: shop,
+      user: widget.user,
       container2: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0.08.sw, vertical: 0.03.sh),
         child: Form(
@@ -123,22 +123,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                 onTap: () async {
                   FocusScope.of(context).unfocus();
                   if (key.currentState.validate()) {
+                    var data = {
+                      "old_password": _oldPassword.text,
+                      "new_password": _newPassword.text,
+                      "confirm_new_password": _cnfPassword.text
+                    };
                     SharedPreferences sp =
                         await SharedPreferences.getInstance();
-                    var body = await api.postData(
-                        "resetpass.php?resetpass=resetpass&shop_email=${sp.getString("shopEmail")}&shop_password=${_oldPassword.text}&&shop_password_new=${_newPassword.text}&shop_id=${sp.getString("id")}");
+                    var body = await api.putData("changepassword/", data);
 
-                    if (body["status"] == "success") {
-                      ShowToast.show("Password changed successfully", context);
+                    if (!(body is String)) {
+                      ShowToast.show("Password changed successfully");
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => HomePage(
-                                    shop: widget.shop,
+                                    user: widget.user,
                                   )),
                           (route) => false);
                     } else {
-                      ShowToast.show("Failed to change password", context);
+                      ShowToast.show("Failed to change password");
                     }
                   }
                 },

@@ -1,5 +1,11 @@
+import 'dart:io';
 import 'dart:math' as math;
-
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/Home/splashscreen.dart';
 import 'package:autolocksmith/model/User.dart';
@@ -7,12 +13,8 @@ import 'package:autolocksmith/widgets/LoginWidget.dart';
 import 'package:autolocksmith/widgets/loader.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -23,157 +25,188 @@ class _LoginState extends State<Login> {
   TextEditingController _email = TextEditingController();
   TextEditingController _pswd = TextEditingController();
   GlobalKey<FormState> key = GlobalKey<FormState>();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: LoginWidget(
-        container1: Center(
-          child: Image.asset("asset/logo.png", width: 0.6.sw),
-        ),
-        container2: Container(
-          width: 0.85.sw,
-          child: Form(
-            key: key,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 40.h,
-                ),
-                WhiteHeadTextWidget(
-                  text: "Already an Auto Locksmiths member?",
-                  fontSize: 25.sp,
-                  fontWeight: FontWeight.w800,
-                ),
-                SizedBox(
-                  height: 0.025.h,
-                ),
-                WhiteHeadTextWidget(
-                  text: "Sign in to your control panel",
-                  fontSize: 20.sp,
-                  // fontWeight: FontWeight.w800,
-                ),
-                SizedBox(
-                  height: 0.02.h,
-                ),
-                WhiteHeadTextWidget(
-                  text:
-                      "Note: For added security email/password login detail are case sensitive",
-                  fontSize: 15.sp,
-                  // fontWeight: FontWeight.w800,
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                TextFormFieldWidget(
-                  label: "",
-                  controller: _email,
-                  hint: "Email",
-                  validate: (value) {
-                    if (value == "") {
-                      return "This field cannot be empty.";
+        child: LoginWidget(
+      container1: Center(
+        child: Image.asset("asset/logo.png", width: 0.6.sw),
+      ),
+      container2: Container(
+        width: 0.85.sw,
+        child: Form(
+          key: key,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 40.h,
+              ),
+              WhiteHeadTextWidget(
+                text: "Already a Auto Locksmiths member?",
+                fontSize: 25.sp,
+                fontWeight: FontWeight.w800,
+              ),
+              SizedBox(
+                height: 0.025.h,
+              ),
+              WhiteHeadTextWidget(
+                text: "Sign in to your control panel",
+                fontSize: 20.sp,
+                // fontWeight: FontWeight.w800,
+              ),
+              SizedBox(
+                height: 0.02.h,
+              ),
+              WhiteHeadTextWidget(
+                text:
+                    "Note: For added security email/password login detail are case sensitive",
+                fontSize: 15.sp,
+                // fontWeight: FontWeight.w800,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              TextFormFieldWidget(
+                label: "",
+                controller: _email,
+                hint: "Email",
+                validate: (value) {
+                  if (value == "") {
+                    return "This field cannot be empty.";
+                  }
+                  return null;
+                },
+                type: TextInputType.emailAddress,
+                maxLines: 1,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              TextFormFieldWidget(
+                controller: _pswd,
+                label: "",
+                hint: "Password",
+                type: TextInputType.text,
+                isPassword: true,
+                maxLines: 1,
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                  if (_email.text == "") {
+                    ShowToast.show(
+                      "Enter your email address",
+                    );
+                  } else if (_pswd.text == "") {
+                    ShowToast.show(
+                      "Enter your password",
+                    );
+                  } else {
+                    String model = "";
+                    if (Platform.isAndroid) {
+                      AndroidDeviceInfo androidInfo =
+                          await deviceInfo.androidInfo;
+                      model = androidInfo.device;
                     }
-                    return null;
-                  },
-                  type: TextInputType.emailAddress,
-                  maxLines: 1,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                TextFormFieldWidget(
-                  controller: _pswd,
-                  label: "",
-                  hint: "Password",
-                  type: TextInputType.text,
-                  isPassword: true,
-                  maxLines: 1,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    FocusScope.of(context).requestFocus(FocusNode());
-                    if (_email.text == "") {
-                      Toast.show("Enter your email", context);
-                    } else if (_pswd.text == "") {
-                      Toast.show("Enter your password", context);
-                    } else {
-                      API api = API();
-                      FirebaseMessaging fcm = FirebaseMessaging.instance;
-                      Loader loader = Loader();
-                      String token = await fcm.getToken();
-                      loader.showLoader("Please Wait", context);
-                      var body = await api.postData(
-                          "applogin.php?login=submit&shop_email=${_email.text}&shop_password=${_pswd.text}&token=$token");
+                    API api = API();
+                    FirebaseMessaging fcm = FirebaseMessaging.instance;
+                    Loader loader = Loader();
+                    if (Platform.isIOS)
+                      await FirebaseMessaging.instance.requestPermission();
+                    String token = "";
 
-                      loader.hideLoader(context);
-                      if (body["status"] == "success") {
-                        SharedPreferences sp =
-                            await SharedPreferences.getInstance();
-                        Shop shop = Shop.fromMap(body);
-                        shop.toSharedPreference(shop);
-                        sp.setString("token", token);
-                        print("FCM Token: $token");
-                        shop = await shop.fromSharedPreference();
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SplashScreen(
-                                      shop: shop,
-                                    )),
-                            (route) => false);
-                      } else {
-                        Toast.show("Invalid Credentials", context);
-                      }
+                    // if(Platform.isAndroid)
+                    token = await fcm.getToken();
+                    // if(Platform.isIOS)
+                    // token = await fcm.g
+                    // etAPNSToken();
+                    var data = {
+                      "email": _email.text,
+                      "password": _pswd.text,
+                      "device": Platform.isIOS ? "iPhone" : model,
+                      "fcm": token
+                    };
+                    loader.showLoader("Please Wait", context);
+                    var body = await api.postData("login/", data);
+
+                    loader.hideLoader(context);
+                    if (body is String) {
+                      ShowToast.show(
+                        "$body",
+                      );
+                    } else {
+                      SharedPreferences sp =
+                          await SharedPreferences.getInstance();
+                      sp.setInt('id', body["user_id"]);
+                      sp.setString('person_name', body["person_name"]);
+                      // Shop shop = Shop.fromMap(body);
+                      // shop.toSharedPreference(shop);
+                      sp.setString("token", token);
+                      sp.setString("jwtToken", body["token"]);
+                      if (kDebugMode) print("FCM Token: $token");
+                      User user = User(
+                        id: sp.getInt('id'),
+                        personName: sp.getString('person_name'),
+                      );
+                      // shop = await shop.fromSharedPreference();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SplashScreen(user: user)),
+                          (route) => false);
                     }
-                  },
-                  child: RaisedGradientButton(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.black,
-                      ],
-                      begin: FractionalOffset(0.0, 0.0),
-                      end: FractionalOffset(0.65, 0.0),
-                      // tileMode: TileMode.mirror,begin: Alignment.topLeft,end: Alignment.bottomRight,
-                      transform: GradientRotation(math.pi / 2),
-                    ),
-                    child: Center(
-                      child: WhiteHeadTextWidget(
-                        text: "Login",
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  }
+                },
+                child: RaisedGradientButton(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.black,
+                    ],
+                    begin: FractionalOffset(0.0, 0.0),
+                    end: FractionalOffset(0.65, 0.0),
+                    // tileMode: TileMode.mirror,begin: Alignment.topLeft,end: Alignment.bottomRight,
+                    transform: GradientRotation(math.pi / 2),
+                  ),
+                  child: Center(
+                    child: WhiteHeadTextWidget(
+                      text: "Login",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                SizedBox(height: 15.h),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPassword()));
-                  },
-                  child: WhiteHeadTextWidget(
-                    text: "Forgot Password?",
-                    fontSize: 18.sp,
-                    // fontWeight: FontWeight.w800,
-                  ),
+              ),
+              SizedBox(height: 15.h),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ForgotPassword()));
+                },
+                child: WhiteHeadTextWidget(
+                  text: "Forgot Password?",
+                  fontSize: 18.sp,
+                  // fontWeight: FontWeight.w800,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
-    );
+    ));
   }
 }
 
+///Forget password
 class ForgotPassword extends StatefulWidget {
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -187,7 +220,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Container(
       child: LoginWidget(
         container1: Center(
-          child: Image.asset("asset/logo.png", width: 0.6.sw),
+          child: Image.asset("asset/junkgator_logo.png", width: 0.6.sw),
         ),
         container2: Container(
           width: 1.sw,
@@ -234,20 +267,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   onTap: () async {
                     if (_email.text == "") {
                       FocusScope.of(context).unfocus();
-                      ShowToast.show("Email cannot be blank", context);
+                      ShowToast.show("Email cannot be blank");
                     } else {
                       FocusScope.of(context).unfocus();
                       API api = API();
                       var body = await api.postData(
-                          "forgotpass.php?action=sendemail&cont_email=${_email.text}");
-
-                      if (body["status"] == "success") {
-                        ShowToast.show("Please check E-mail", context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                          "recover-password/", {"email": _email.text});
+                      print(body is String);
+                      if (body is String) {
+                        ShowToast.show("Invalid Email address");
                       } else {
-                        ShowToast.show("Invalid E-mail.", context);
+                        ShowToast.show(body["message"]);
                       }
+                      return Get.off(() => Login());
                     }
                   },
                   child: RaisedGradientButton(

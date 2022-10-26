@@ -1,29 +1,27 @@
 import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
 import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/model/leads.dart';
+import 'package:autolocksmith/model/lead_info.dart';
 import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/loader.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:full_screen_image/full_screen_image.dart';
-import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyLeads extends StatefulWidget {
   final List<Lead> newLeads;
   final List<Lead> submittedLeads;
-  final Shop shop;
+  User user;
   final bool showNewLead;
 
-  MyLeads({this.newLeads, this.submittedLeads, this.shop, this.showNewLead});
+  MyLeads({this.newLeads, this.submittedLeads, this.user, this.showNewLead});
 
   @override
   _MyLeadsState createState() => _MyLeadsState();
@@ -39,7 +37,6 @@ class _MyLeadsState extends State<MyLeads> {
   List<Lead> newLeads = [];
   List<Lead> submittedLeads = [];
   FCMConfig fcm = FCMConfig();
-  Loader loader = Loader();
 
   @override
   void initState() {
@@ -65,7 +62,7 @@ class _MyLeadsState extends State<MyLeads> {
     return LeadBoardWidget(
       currentPage: "Leads",
       header: "Leads",
-      shop: widget.shop,
+      user: widget.user,
       widget: TextFormFieldWidget(
         controller: _search,
         hint: "Search",
@@ -73,79 +70,89 @@ class _MyLeadsState extends State<MyLeads> {
           Icons.search,
           size: 0.07.sw,
         ),
-        onChanged: (value) {
+        onChanged: (String value) {
           if (value.length > 1) {
             submittedLeads = widget.submittedLeads;
             newLeads = widget.newLeads;
+
             List<Lead> lead1 = [];
             List<Lead> lead2 = [];
+
             for (int i = 0; i < newLeads.length; i++) {
-              if (newLeads[i]
-                  .uniquecode
-                  .toLowerCase()
+              if ((newLeads[i].name.toLowerCase() +
+                      newLeads[i].mapLocation.toLowerCase() +
+                      newLeads[i].zipcode.toLowerCase() +
+                      newLeads[i].email +
+                      ("jg" + newLeads[i].quoteRequestId.toString()))
+                  .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead1.contains(newLeads[i])) {
                   lead1.add(newLeads[i]);
                 }
               }
-              if (newLeads[i]
-                  .added_date
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead1.contains(newLeads[i])) {
-                  lead1.add(newLeads[i]);
-                }
-              }
-              if (newLeads[i]
-                  .address
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead1.contains(newLeads[i])) {
-                  lead1.add(newLeads[i]);
-                }
-              }
-              if (newLeads[i]
-                  .username
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead1.contains(newLeads[i])) {
-                  lead1.add(newLeads[i]);
-                }
-              }
+              // if (newLeads[i]
+              //     .mapLocation
+              //     .toLowerCase()
+              //     .contains(value.toString().toLowerCase())) {
+              //   if (!lead1.contains(newLeads[i])) {
+              //     lead1.add(newLeads[i]);
+              //   }
+              // }
+              // if (newLeads[i]
+              //     .email
+              //     .toLowerCase()
+              //     .contains(value.toString().toLowerCase())) {
+              //   if (!lead1.contains(newLeads[i])) {
+              //     lead1.add(newLeads[i]);
+              //   }
+              // }
+              // if (newLeads[i]
+              //     .quoteRequestId
+              //     .toString()
+              //     .toLowerCase()
+              //     .contains(value.toString().substring(2).toLowerCase())) {
+              //   if (!lead1.contains(newLeads[i])) {
+              //     lead1.add(newLeads[i]);
+              //   }
+              // }
             }
             for (int i = 0; i < submittedLeads.length; i++) {
-              if (submittedLeads[i]
-                  .uniquecode
-                  .toLowerCase()
+              if ((submittedLeads[i].name.toLowerCase() +
+                      submittedLeads[i].mapLocation.toLowerCase() +
+                      submittedLeads[i].zipcode.toLowerCase() +
+                      submittedLeads[i].email +
+                      ("jg" + submittedLeads[i].quoteRequestId.toString()))
+                  .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead2.contains(submittedLeads[i])) {
                   lead2.add(submittedLeads[i]);
                 }
               }
-              if (submittedLeads[i]
-                  .added_date
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead2.contains(submittedLeads[i])) {
-                  lead2.add(submittedLeads[i]);
-                }
-              }
-              if (submittedLeads[i]
-                  .address
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead2.contains(submittedLeads[i])) {
-                  lead2.add(submittedLeads[i]);
-                }
-              }
-              if (submittedLeads[i]
-                  .username
-                  .toLowerCase()
-                  .contains(value.toString().toLowerCase())) {
-                if (!lead2.contains(submittedLeads[i])) {
-                  lead2.add(submittedLeads[i]);
-                }
-              }
+              //   if (submittedLeads[i]
+              //       .quote
+              //       .toLowerCase()
+              //       .contains(value.toString().toLowerCase())) {
+              //     if (!lead2.contains(submittedLeads[i])) {
+              //       lead2.add(submittedLeads[i]);
+              //     }
+              //   }
+              //   if (submittedLeads[i]
+              //       .email
+              //       .toLowerCase()
+              //       .contains(value.toString().toLowerCase())) {
+              //     if (!lead2.contains(submittedLeads[i])) {
+              //       lead2.add(submittedLeads[i]);
+              //     }
+              //   }
+              //   if (submittedLeads[i]
+              //       .quoteRequestId
+              //       .toString()
+              //       .toLowerCase()
+              //       .contains(value.toString().substring(2).toLowerCase())) {
+              //     if (!lead2.contains(submittedLeads[i])) {
+              //       lead2.add(submittedLeads[i]);
+              //     }
+              //   }
             }
             setState(() {
               newLeads = lead1;
@@ -222,25 +229,29 @@ class _MyLeadsState extends State<MyLeads> {
                                       Loader loader = Loader();
                                       loader.showLoader(
                                           "Fetching Details", context);
-                                      LeadsDetail leads = LeadsDetail();
-                                      var body = await api.postData(
-                                          "getsinglerecord.php?shop_id=${widget.shop.id}&acquid=${newLeads[i].acquid}");
+                                      LeadInfo leads = LeadInfo();
+                                      var body = await api
+                                          .getData("leads/${newLeads[i].id}/");
                                       loader.hideLoader(context);
 
-                                      leads = LeadsDetail.fromMap(body);
-                                      List<String> list = leads.damageWindow
-                                          .replaceAll("\$*\$", "'")
-                                          .split("#");
+                                      leads = LeadInfo.fromJson(body);
+                                      List<String> list = leads.quote.moreInfo
+                                          // .replaceAll("\$*\$", "'")
+                                          // .split("#");
+                                          .split(",");
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${newLeads[i].added_date} | ${newLeads[i].uniquecode}",
+                                                        "${newLeads[i].createdDate} | JG${newLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
-                                                    acquid: newLeads[i].acquid,
-                                                    shop: widget.shop,
+                                                    id: newLeads[i]
+                                                        .quoteRequestId
+                                                        .toString(),
+                                                    // user: widget.shop,
+                                                    user: widget.user,
                                                     newLeads: widget.newLeads,
                                                     submittedLeads:
                                                         widget.submittedLeads,
@@ -248,10 +259,13 @@ class _MyLeadsState extends State<MyLeads> {
                                                   )));
                                     },
                                     child: LeadTextFieldWidget(
-                                      title: newLeads[i].added_date,
-                                      name: newLeads[i].username,
-                                      subtitle: newLeads[i].uniquecode,
-                                      address: newLeads[i].address,
+                                      title: newLeads[i].createdDate,
+                                      name: newLeads[i].name,
+                                      subtitle:
+                                          newLeads[i].quoteRequestId.toString(),
+                                      address: newLeads[i].mapLocation +
+                                          ", " +
+                                          newLeads[i].zipcode,
                                     ),
                                   );
                                 },
@@ -276,26 +290,29 @@ class _MyLeadsState extends State<MyLeads> {
                                       Loader loader = Loader();
                                       loader.showLoader(
                                           "Fetching Details", context);
-                                      LeadsDetail leads = LeadsDetail();
-                                      var body = await api.postData(
-                                          "getsinglerecord.php?shop_id=${widget.shop.id}&acquid=${submittedLeads[i].acquid}");
+                                      LeadInfo leads = LeadInfo();
+                                      var body = await api.getData(
+                                          "leads/${submittedLeads[i].id}/");
                                       loader.hideLoader(context);
 
-                                      leads = LeadsDetail.fromMap(body);
-                                      List<String> list = leads.damageWindow
-                                          .replaceAll("\$*\$", "'")
-                                          .split("#");
+                                      leads = LeadInfo.fromJson(body);
+                                      List<String> list = leads.quote.moreInfo
+                                          // .replaceAll("\$*\$", "'")
+                                          // .split("#");
+                                          .split(",");
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${submittedLeads[i].added_date} | ${submittedLeads[i].uniquecode}",
+                                                        "${submittedLeads[i].createdDate} | JG${submittedLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
-                                                    acquid: submittedLeads[i]
-                                                        .acquid,
-                                                    shop: widget.shop,
+                                                    id: submittedLeads[i]
+                                                        .quoteRequestId
+                                                        .toString(),
+                                                    // user: widget.shop,
+                                                    user: widget.user,
                                                     newLeads: widget.newLeads,
                                                     submittedLeads:
                                                         widget.submittedLeads,
@@ -303,10 +320,13 @@ class _MyLeadsState extends State<MyLeads> {
                                                   )));
                                     },
                                     child: LeadTextFieldWidget(
-                                      title: submittedLeads[i].added_date,
-                                      name: submittedLeads[i].username,
-                                      subtitle: submittedLeads[i].uniquecode,
-                                      address: submittedLeads[i].address,
+                                      title: submittedLeads[i].createdDate,
+                                      name: submittedLeads[i].name,
+                                      subtitle: submittedLeads[i]
+                                          .quoteRequestId
+                                          .toString(),
+                                      address: submittedLeads[i].mapLocation ??
+                                          "" + ", " + submittedLeads[i].zipcode,
                                     ),
                                   );
                                 },
@@ -333,11 +353,11 @@ class _MyLeadsState extends State<MyLeads> {
 
 class LeadsDetails extends StatefulWidget {
   final String header;
-  final String acquid;
-  final LeadsDetail leads;
+  final String id;
+  final LeadInfo leads;
   final List<Lead> newLeads;
   final List<Lead> submittedLeads;
-  final Shop shop;
+  User user;
   final bool isSubmitted;
   final List<String> help;
 
@@ -345,8 +365,8 @@ class LeadsDetails extends StatefulWidget {
       {this.header,
       this.leads,
       this.help,
-      this.acquid,
-      this.shop,
+      this.id,
+      this.user,
       this.submittedLeads,
       this.newLeads,
       this.isSubmitted});
@@ -359,15 +379,19 @@ class _LeadsDetailsState extends State<LeadsDetails> {
   TextEditingController _quote = TextEditingController();
   bool isEdit = false;
   FCMConfig fcm = FCMConfig();
-
+  Future<void> _launched;
   @override
   void initState() {
-    fcm.initialize(context);
     // TODO: implement initState
     isEdit = widget.isSubmitted;
-    _quote.text = widget.leads.quoteDetails == null
-        ? ""
-        : widget.leads.quoteDetails.replaceAll("psas", "£");
+    _quote.text = widget.leads.quote == null ? "" : widget.leads.lead.quote;
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _quote.dispose();
   }
 
   Future<void> _openUrl(String url) async {
@@ -379,18 +403,12 @@ class _LeadsDetailsState extends State<LeadsDetails> {
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _quote.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double titleSize = 0.00012.sw;
     return DashBoardWidget(
-        header: widget.header,
-        shop: widget.shop,
+        header: "${widget.header}",
+        // shop: widget.shop,
+        user: widget.user,
         container2: Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.025.sw),
           child: Container(
@@ -418,27 +436,31 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 Loader loader = Loader();
                                 loader.showLoader("Deleting lead", context);
                                 API api = API();
-                                var body = await api.postData(
-                                    "deletelead.php?acquid=${widget.acquid}&shop_id=${widget.shop.id}&deletelead=1");
+                                var body = await api.deleteData(
+                                    "leads/${widget.id}/?user_id=${widget.user.id}");
 
                                 loader.hideLoader(context);
 
-                                if (body["status"] == "success") {
+                                if (!(body is String)) {
                                   if (widget.isSubmitted) {
                                     widget.submittedLeads.removeWhere(
                                         (element) =>
-                                            element.acquid == widget.acquid);
+                                            element.quoteRequestId.toString() ==
+                                            widget.id);
                                   } else {
                                     widget.newLeads.removeWhere((element) =>
-                                        element.acquid == widget.acquid);
+                                        element.quoteRequestId.toString() ==
+                                        widget.id);
                                   }
-                                  ShowToast.show(
-                                      "Lead deleted successfully", context);
+
+                                  // shop.fromSharedPreference();
+                                  ShowToast.show("Lead deleted successfully");
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyLeads(
-                                                shop: widget.shop,
+                                                // shop: widget.shop,
+                                                user: widget.user,
                                                 showNewLead: true,
                                                 newLeads: widget.newLeads,
                                                 submittedLeads:
@@ -446,7 +468,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               )),
                                       (route) => false);
                                 } else {
-                                  // Toast.show("Something went wrong", context);
+                                  ShowToast.show("Something went wrong");
                                 } // Dismiss alert dialog
                               },
                               title: "Success",
@@ -495,7 +517,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "${widget.leads.vehicleLocation}",
+                                "${widget.leads.quote.mapLocation}",
                                 maxLines: 5,
                                 style: TextStyle(
                                   color: Theme.of(context).canvasColor,
@@ -506,156 +528,34 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Vehicle",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.vehicleType,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: widget.shop.country == "United States"
-                            ? "VIN"
-                            : "Reg",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.vehicleReg,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Make",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.makeOfVehicle,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Model",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.modelVehicle,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Year",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.yearVehicle,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 0.01.sh,
-                            ),
-                            WhiteRowTextWidget(
-                              text: "Problem",
-                              fontWeight: FontWeight.bold,
-                              fontSize: titleSize,
-                              text2: "",
-                              fontSize2: 0.035,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (_, i) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 0.05.sw,
-                                          right: 0.05.sw,
-                                          bottom: 10.h),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4.0),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  color: Colors.white,
-                                                  size: 0.025.sw,
-                                                ),
-                                              )),
-                                          SizedBox(
-                                            width: 0.025.sw,
-                                          ),
-                                          Text(
-                                            widget.help[i],
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15.sp),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (_, i) {
-                                    return SizedBox(
-                                      height: 0.5.h,
-                                    );
-                                  },
-                                  itemCount: widget.help.length),
-                            ),
-                          ],
-                        ),
-                      ),
 
+                      // WhiteRowTextWidget(
+                      //   text: "I am in:",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.vehicleLocation,
+                      //   fontSize2: 15.sp,
+                      // ),
+                      ///
+                      // SizedBox(height: 0.01.sh),
+                      // WhiteRowTextWidget(
+                      //   text: "Property:",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.vehicleType,
+                      //   fontSize2: 15.sp,
+                      // ),
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
-                        text: "Needed",
+                        text: "Needed:",
                         fontWeight: FontWeight.bold,
                         fontSize: titleSize,
-                        text2: widget.leads.needed,
+                        text2: widget.leads.quote.schedule ?? "Needed",
                         fontSize2: 0.035,
                       ),
                       SizedBox(
                         height: 0.015.sh,
                       ),
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.circular(5),
-                      //   ),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.symmetric(horizontal: 0.01.sw,vertical:  0.01.sh),
-                      //     child: ListTile(
-                      //       title: Text("Billings:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 0.04.sw)
-                      //       ),
-                      //       subtitle:Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Text(widget.leads.whoPay,
-                      //             style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
-                      //           if(widget.leads.insuranceName != "" && widget.leads.insuranceName != null)
-                      //             Text(widget.leads.insuranceName,
-                      //               style: TextStyle(fontSize: 0.04.sw, color: Theme.of(context).canvasColor),),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // SizedBox(height: 0.015.sh,),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -672,7 +572,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                widget.leads.additionInfo
+                                widget.leads.quote.moreInfo
                                     .replaceAll("&#39;", "'"),
                                 style: TextStyle(
                                     fontSize: 0.04.sw,
@@ -682,69 +582,31 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           ),
                         ),
                       ),
-
-                      if (widget.leads.carDamagePhoto !=
-                          "https://www.autolocksmiths.com/quoteimages/")
-                        Column(
+                      SizedBox(
+                        height: 0.015.sh,
+                      ),
+                      Visibility(
+                        visible: !(widget.leads.quote.imageList.length == 0),
+                        child: Column(
                           children: [
-                            SizedBox(
-                              height: 0.015.sh,
-                            ),
-                            WhiteRowTextWidget(
-                              text: "Image",
-                              fontWeight: FontWeight.bold,
-                              fontSize: titleSize,
-                              text2: "",
-                            ),
-                            SizedBox(
-                              height: 0.015.sh,
-                            ),
-                            Container(
-                              height: 0.45.sh,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
+                            if (widget.leads.quote.imageList.length > 0)
+                              WhiteRowTextWidget(
+                                text: "Image(s):",
+                                fontWeight: FontWeight.bold,
+                                fontSize: titleSize,
+                                text2: "",
+                                fontSize2: 0.035,
                               ),
-                              child: FullScreenWidget(
-                                child: PinchZoom(
-                                  zoomEnabled: true,
-                                  child: CachedNetworkImage(
-                                    imageUrl: widget.leads.carDamagePhoto,
-                                    width: 1.sw,
-                                    fit: BoxFit.cover,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: 1.sw,
-                                      height: 0.4.sh,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        shape: BoxShape.rectangle,
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
-                                    ),
-                                    placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                  resetDuration:
-                                      const Duration(milliseconds: 100),
-                                  maxScale: 2.5,
-                                  onZoomStart: () {
-                                    print('Start zooming');
-                                  },
-                                  onZoomEnd: () {
-                                    print('Stop zooming');
-                                  },
+                            if (widget.leads.quote.imageList.length > 0)
+                              for (int i = 0;
+                                  i < widget.leads.quote.imageList.length;
+                                  i++)
+                                ImageContainer(
+                                  image: widget.leads.quote.imageList[i].url,
                                 ),
-                              ),
-                            ),
                           ],
                         ),
-
+                      ),
                       SizedBox(
                         height: 0.015.sh,
                       ),
@@ -773,7 +635,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     ),
                                   ),
                                   Text(
-                                    widget.leads.customerName,
+                                    widget.leads.quote.name,
                                     style: TextStyle(
                                         color: Theme.of(context).canvasColor,
                                         fontSize: 15.sp),
@@ -784,7 +646,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                               InkWell(
                                 onTap: () async {
                                   setState(() {
-                                    _openUrl('tel: ${widget.leads.phone}');
+                                    _launched = _openUrl(
+                                        'tel:${widget.leads.quote.telephoneNo}');
                                   });
                                 },
                                 child: Row(
@@ -804,7 +667,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     ),
                                     Expanded(
                                         child: Text(
-                                      widget.leads.phone,
+                                      widget.leads.quote.telephoneNo,
                                       style: TextStyle(
                                           color: Color(0xff0037a6),
                                           fontSize: 15.sp),
@@ -816,7 +679,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                               InkWell(
                                 onTap: () async {
                                   setState(() {
-                                    _openUrl('mailto: ${widget.leads.email}');
+                                    _launched = _openUrl(
+                                        'mailto:${widget.leads.quote.email}');
                                   });
                                 },
                                 child: Row(
@@ -839,7 +703,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       padding:
                                           const EdgeInsets.only(right: 16.0),
                                       child: Text(
-                                        widget.leads.email,
+                                        widget.leads.quote.email,
                                         style: TextStyle(
                                           color: Color(0xff0037a6),
                                           fontSize: 15.sp,
@@ -879,13 +743,15 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   color: Theme.of(context).canvasColor,
                                 ),
                                 children: [
-                                  // TextSpan(text: "Note: ",
-                                  // style: TextStyle(color: Theme.of(context).canvasColor, fontWeight: FontWeight.bold, fontSize:  0.04.sw)
-                                  // ),
+                                  // TextSpan(
+                                  //     text: "Note: ",
+                                  //     style: TextStyle(
+                                  //         color: Theme.of(context).canvasColor,
+                                  //         fontWeight: FontWeight.bold,
+                                  //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other auto locksmiths in your area are quoting for this job."
-                                          " Be competitve with your pricing.",
+                                          "Other junk haulers in your area are quoting for this job. Be competitive with your pricing!",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,
                                           fontSize: 0.04.sw))
@@ -978,7 +844,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            "Provide available dates you can carry out the work.",
+                                            "Provide available dates as to when you can carry out the work.",
                                             style: TextStyle(
                                                 color: Theme.of(context)
                                                     .canvasColor,
@@ -1070,9 +936,9 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       //         color: Theme.of(context).canvasColor,
                       //         fontSize: 0.04.sw,
                       //         fontWeight: FontWeight.bold)),
-                      SizedBox(
-                        height: 0.015.sh,
-                      ),
+                      // SizedBox(
+                      //   height: 0.015.sh,
+                      // ),
                       TextFormFieldWidget(
                         label: "",
                         controller: _quote,
@@ -1094,14 +960,15 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           } else {
                             if (_quote.text == "") {
                               ShowToast.show(
-                                  "Please provide your quote details", context);
+                                  "Please provide your quote details");
                             } else {
-                              if (_quote.text == widget.leads.quoteDetails) {
+                              if (_quote.text == widget.leads.lead.quote) {
                                 Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => MyLeads(
-                                              shop: widget.shop,
+                                              // shop: widget.shop,
+                                              user: widget.user,
                                               newLeads: widget.newLeads,
                                               submittedLeads:
                                                   widget.submittedLeads,
@@ -1117,32 +984,41 @@ class _LeadsDetailsState extends State<LeadsDetails> {
 
                                 SharedPreferences sp =
                                     await SharedPreferences.getInstance();
-                                var body = await api.postData(
-                                    "postlead.php?shop_id=${sp.getString("id")}&acquid=${widget.acquid}&action=submitquote&quote_details=$quote");
+                                var body = await api.putData(
+                                    "submit-quote/${widget.id}/", {
+                                  "lead_id": widget.leads.lead.id,
+                                  "quote": quote
+                                });
 
-                                print(body["success"]);
-                                print(body["status"]);
+                                if (kDebugMode) print(body);
+
                                 loader.hideLoader(context);
-                                if (body["status"] == "success") {
+                                if (!(body is String)) {
+                                  FlutterAppBadger.updateBadgeCount(
+                                      widget.newLeads.length - 1);
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         if (!widget.isSubmitted) {
                                           Lead lead = Lead();
-                                          print(widget.newLeads.length);
+                                          if (kDebugMode)
+                                            print(widget.newLeads.length);
                                           for (int i = 0;
                                               i < widget.newLeads.length;
                                               i++) {
-                                            if (widget.newLeads[i].acquid ==
-                                                widget.acquid) {
+                                            if (widget
+                                                    .newLeads[i].quoteRequestId
+                                                    .toString() ==
+                                                widget.id) {
                                               lead = widget.newLeads[i];
                                             }
                                           }
                                           widget.submittedLeads.insert(0, lead);
                                           widget.newLeads.removeWhere(
                                               (element) =>
-                                                  element.acquid ==
-                                                  widget.acquid);
+                                                  element.quoteRequestId
+                                                      .toString() ==
+                                                  widget.id);
                                         }
                                         var duration = new Duration(seconds: 2);
                                         Timer(duration, () {
@@ -1150,7 +1026,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) => MyLeads(
-                                                        shop: widget.shop,
+                                                        // shop: widget.shop,
+                                                        user: widget.user,
                                                         newLeads:
                                                             widget.newLeads,
                                                         submittedLeads: widget
@@ -1166,7 +1043,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         MyLeads(
-                                                          shop: widget.shop,
+                                                          // shop: widget.shop,
+                                                          user: widget.user,
                                                           newLeads:
                                                               widget.newLeads,
                                                           submittedLeads: widget

@@ -38,7 +38,7 @@ dependencies:
   custom_progress_dialog:
   sqflite:
   flutter_screenutil:
-  toast:
+  fluttertoast:
   connectivity:
   cached_network_image:
   intl:
@@ -51,6 +51,7 @@ dependencies:
   full_screen_image:
   android_intent_plus:
   pinch_zoom:
+  device_info_plus: 3.2.2
 dev_dependencies:
 
   flutter_test:

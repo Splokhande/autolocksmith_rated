@@ -1,3 +1,12 @@
+import 'package:badges/badges.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:autolocksmith/model/lead_info.dart';
+import 'package:autolocksmith/widgets/toast.dart';
+import 'package:provider/provider.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
 import 'package:autolocksmith/Home/changePassword.dart';
@@ -5,22 +14,15 @@ import 'package:autolocksmith/Home/leads.dart';
 import 'package:autolocksmith/Home/profile.dart';
 import 'package:autolocksmith/Login/Login.dart';
 import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/model/leads.dart';
 import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/connectivity.dart';
 import 'package:autolocksmith/widgets/loader.dart';
-import 'package:badges/badges.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
-  final Shop shop;
-  HomePage({this.shop});
+  User user;
+  HomePage({this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -38,49 +40,29 @@ class _HomePageState extends State<HomePage> {
   List<Lead> allLeads = [];
   List<Lead> submittedLeads = [];
   FCMConfig fcm = FCMConfig();
-  String _appBadgeSupported = 'Unknown';
   @override
   void initState() {
-    initPlatformState();
     fcm.initialize(context);
     getSp();
-  }
-
-  initPlatformState() async {
-    String appBadgeSupported;
-    try {
-      bool body = await FlutterAppBadger.isAppBadgeSupported();
-      if (body) {
-        appBadgeSupported = 'Supported';
-      } else {
-        appBadgeSupported = 'Not supported';
-      }
-    } on PlatformException {
-      appBadgeSupported = 'Failed to get badge support.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _appBadgeSupported = appBadgeSupported;
-      print(_appBadgeSupported);
-    });
   }
 
   getSp() async {
     sp = await SharedPreferences.getInstance();
     String token = sp.getString("token");
-    print("FCM Token: $token");
+    if (widget.user.personName == null)
+      widget.user = User(
+        id: sp.getInt('id'),
+        personName: sp.getString('person_name'),
+      );
+    if (kDebugMode) print("FCM Token: $token");
     leadsDetail = Lead();
-    List<Lead> lead = await context.read<Lead>().getLeadsCount();
+    List<Lead> lead = await context.read<Lead>().getLeadsCount(context);
+    FlutterAppBadger.updateBadgeCount(allLeads.length);
     setState(() {
       allLeads = lead;
       FlutterAppBadger.updateBadgeCount(allLeads.length);
     });
-    print(allLeads.length);
+    if (kDebugMode) print(allLeads.length);
   }
 
   @override
@@ -93,7 +75,7 @@ class _HomePageState extends State<HomePage> {
         return DashBoardWidget(
           header: "Dashboard",
           currentPage: "Dashboard",
-          shop: widget.shop,
+          user: widget.user,
           container2: Container(
               child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -179,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Container(
-                            child: Image.asset("asset/change-pw.png"),
+                            child: Image.asset("asset/change_pswd.png"),
                             width: 0.22.sw),
                         SizedBox(
                           height: height * 0.02,
@@ -225,54 +207,67 @@ class _HomePageState extends State<HomePage> {
   }
 
   selectOntap(int i, context) async {
-    Shop shop = Shop();
-    shop = await shop.fromSharedPreference();
+    //
+    // shop = await shop.fromSharedPreference();
 
     switch (i) {
       case 0:
-        Shop shop = Shop();
-        shop = await shop.fromSharedPreference();
+        //
+        // shop = await shop.fromSharedPreference();
         sp = await SharedPreferences.getInstance();
-
+        DateTime date = DateTime.now();
         newLeads.clear();
         submittedLeads.clear();
         loader.showLoader("Fetching Leads", context);
-        var body = await api.postData("getleads.php?shop_id=${shop.id}");
-
-        for (int i = 0; i < body["leads"].length; i++) {
-          Lead lead = Lead.fromMap(body["leads"][i]);
-          if (lead.leadStatus == "new-lead") {
-            newLeads.add(lead);
-          } else {
-            submittedLeads.add(lead);
-          }
+        var body = await api.getData("leads/");
+        if (body == "{}") {
+          body = [];
         }
-        await loader.hideLoader(context);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MyLeads(
-                    newLeads: newLeads,
-                    submittedLeads: submittedLeads,
-                    shop: widget.shop)));
+        if (!(body is String)) {
+          for (int i = 0; i < body.length; i++) {
+            Lead lead = Lead.fromJson(body[i]);
+            if (lead.quoteSendAt == "") {
+              newLeads.add(lead);
+            } else {
+              submittedLeads.add(lead);
+            }
+          }
+
+          await loader.hideLoader(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => MyLeads(
+                      newLeads: newLeads,
+                      submittedLeads: submittedLeads,
+                      user: widget.user)));
+        } else {
+          ShowToast.show("Something went wrong \n Try again after sometime");
+        }
         break;
 
       case 1:
+        loader.showLoader("Fetching Profile", context);
+        var body = await api.getData("profile/");
+        await loader.hideLoader(context);
+        User user = User.fromJson(body);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyProfile(
-                  shop: shop,
+                  // shop: shop,
+                  user: user,
                 )));
         break;
 
       case 2:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChangePassword(
-                  shop: shop,
+                  // shop: shop,
+                  user: widget.user,
                 )));
         break;
 
       case 3:
-        // await FirebaseMessaging().deleteToken();
+        await FirebaseMessaging.instance.deleteToken();
         sp.clear();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => Login()), (route) => false);

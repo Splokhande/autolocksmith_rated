@@ -34,25 +34,25 @@ class DarkThemeProvider with ChangeNotifier {
 
 class Styles {
   static MaterialColor primaryColor = MaterialColor(
-    0xffe30613,
+    0xffe40613,
     <int, Color>{
-      50: Color(0xffe30613).withOpacity(0.1),
-      100: Color(0xffe30613).withOpacity(0.2),
-      200: Color(0xffe30613).withOpacity(0.3),
-      300: Color(0xffe30613).withOpacity(0.4),
-      400: Color(0xffe30613).withOpacity(0.5),
-      500: Color(0xffe30613).withOpacity(0.6),
-      600: Color(0xffe30613).withOpacity(0.7),
-      700: Color(0xffe30613).withOpacity(0.8),
-      800: Color(0xffe30613).withOpacity(0.9),
-      900: Color(0xffe30613).withOpacity(1),
+      50: Color(0xffe40613).withOpacity(0.1),
+      100: Color(0xffe40613).withOpacity(0.2),
+      200: Color(0xffe40613).withOpacity(0.3),
+      300: Color(0xffe40613).withOpacity(0.4),
+      400: Color(0xffe40613).withOpacity(0.5),
+      500: Color(0xffe40613).withOpacity(0.6),
+      600: Color(0xffe40613).withOpacity(0.7),
+      700: Color(0xffe40613).withOpacity(0.8),
+      800: Color(0xffe40613).withOpacity(0.9),
+      900: Color(0xffe40613).withOpacity(1),
     },
   );
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
       primarySwatch: primaryColor,
-      primaryColor: isDarkTheme ? Colors.white : primaryColor,
-      primaryColorLight: Colors.red.withOpacity(0.6),
+      primaryColor: primaryColor,
+      primaryColorLight: primaryColor.withOpacity(0.6),
       backgroundColor: isDarkTheme ? Color(0xffe7ebee) : Color(0xffe7ebee),
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
       buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
@@ -61,7 +61,7 @@ class Styles {
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),
       focusColor: isDarkTheme ? Color(0xff0B2512) : Color(0xffA8DAB5),
       disabledColor: Colors.grey,
-      textSelectionColor: isDarkTheme ? Colors.white : Colors.white,
+      // textSelectionColor: isDarkTheme ? Colors.white : Colors.white,
       cardColor: isDarkTheme ? Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.white : Colors.black,
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,

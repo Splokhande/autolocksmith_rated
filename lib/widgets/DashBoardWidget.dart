@@ -1,21 +1,22 @@
 import 'dart:io';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:autolocksmith/Home/dashboard.dart';
+import 'package:autolocksmith/model/lead_info.dart';
+import 'package:provider/provider.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/Home/changePassword.dart';
-import 'package:autolocksmith/Home/dashboard.dart';
 import 'package:autolocksmith/Home/leads.dart';
 import 'package:autolocksmith/Home/profile.dart';
 import 'package:autolocksmith/Login/Login.dart';
 import 'package:autolocksmith/model/User.dart';
+import 'package:flutter/material.dart';
 import 'package:autolocksmith/model/leads.dart';
 import 'package:autolocksmith/widgets/connectivity.dart';
 import 'package:autolocksmith/widgets/loader.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardWidget extends StatelessWidget {
@@ -23,16 +24,19 @@ class DashBoardWidget extends StatelessWidget {
   final Widget container2;
   final Widget widget;
   final String header;
-  final Shop shop;
+  final User user;
   final int onTap;
+  final String onWill;
   final String currentPage;
   DashBoardWidget(
-      {this.container1,
+      {this.onWill,
+      this.container1,
       this.container2,
+      this.user,
       this.widget,
       this.header,
       this.currentPage,
-      this.shop,
+      // this.shop,
       this.onTap});
   double height, width;
   List<Lead> newLeads = [];
@@ -50,7 +54,6 @@ class DashBoardWidget extends StatelessWidget {
           if (currentPage == "Dashboard") {
             exit(0);
           }
-
           return Future.value(true);
         },
         child: Scaffold(
@@ -70,12 +73,12 @@ class DashBoardWidget extends StatelessWidget {
                       //   Navigator.of(context).pop();
                       // }
                       // else{
-                      // Navigator.pop(context);
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => HomePage(
-                                    shop: shop,
+                                    // shop: shop,
+                                    user: user,
                                   )),
                           (route) => false);
                       // }
@@ -107,7 +110,7 @@ class DashBoardWidget extends StatelessWidget {
                           horizontal: width * 0.015,
                         ),
                         child: Text(
-                          "Hello ${shop.shopContactPerson}",
+                          "Hello ${user.personName}",
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: width * 0.035,
@@ -262,20 +265,23 @@ class DashBoardWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => HomePage(
-                      shop: shop,
+                      // shop: shop,
+                      user: user,
                     )),
             (route) => false);
         break;
 
       case 1:
-        if (shop.connection) {
+        if (sp.getBool("internet")) {
           loader.showLoader("Fetching Leads", context);
-          var body = await api.postData("getleads.php?shop_id=${shop.id}");
-
+          var body = await api.getData("leads/");
+          if (body == "{}") {
+            body = [];
+          }
           // if(body["leads"].length >0 ) {
-          for (int i = 0; i < body["leads"].length; i++) {
-            Lead lead = Lead.fromMap(body["leads"][i]);
-            if (lead.leadStatus == "new-lead") {
+          for (int i = 0; i < body.length; i++) {
+            Lead lead = Lead.fromJson(body[i]);
+            if (lead.quoteSendAt == "") {
               newLeads.add(lead);
             } else {
               submittedLeads.add(lead);
@@ -286,35 +292,42 @@ class DashBoardWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => MyLeads(
-                      newLeads: newLeads,
-                      submittedLeads: submittedLeads,
-                      shop: shop)));
+                        newLeads: newLeads,
+                        submittedLeads: submittedLeads,
+                        // shop: shop
+                        user: user,
+                      )));
           // }
           // else{
           //   ShowToast.show("No leads to display", context);
           // }
         } else {
-          ShowToast.show("No Internet Connection", context);
+          ShowToast.show("No Internet Connection");
         }
         break;
 
       case 2:
-        Shop shop = Shop();
-        shop = await shop.fromSharedPreference();
+        loader.showLoader("Fetching Profile", context);
+        var body = await api.getData("profile/");
+        await loader.hideLoader(context);
+        User user = User.fromJson(body);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyProfile(
-                  shop: shop,
+                  // shop: shop,
+                  user: user,
                 )));
         break;
 
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChangePassword(
-                  shop: shop,
+                  // shop: shop,
+                  user: user,
                 )));
         break;
 
       case 4:
+        await FirebaseMessaging.instance.deleteToken();
         sp.clear();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => Login()), (route) => false);
@@ -327,7 +340,7 @@ class LeadBoardWidget extends StatelessWidget {
   final Widget container2;
   final Widget widget;
   final String header;
-  final Shop shop;
+  final User user;
   Function onTap;
   final String currentPage;
   LeadBoardWidget(
@@ -335,7 +348,7 @@ class LeadBoardWidget extends StatelessWidget {
       this.currentPage,
       this.widget,
       this.header,
-      this.shop,
+      this.user,
       this.onTap});
   double height, width;
   List<Lead> newLeads = [];
@@ -356,7 +369,7 @@ class LeadBoardWidget extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomePage(
-                            shop: shop,
+                            user: user,
                           )),
                   (route) => false);
               return Future.value(true);
@@ -378,7 +391,8 @@ class LeadBoardWidget extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomePage(
-                                        shop: shop,
+                                        // shop: shop,
+                                        user: user,
                                       )),
                               (route) => false);
                         },
@@ -393,7 +407,8 @@ class LeadBoardWidget extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomePage(
-                                        shop: shop,
+                                        // shop: shop,
+                                        user: user,
                                       )),
                               (route) => false);
                         },
@@ -406,10 +421,7 @@ class LeadBoardWidget extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 bottom: PreferredSize(
-                  preferredSize: Size(
-                    width,
-                    0.01.sh,
-                  ),
+                  preferredSize: Size(width, 0.015.sh),
                   child: widget == null
                       ? Container()
                       : Padding(
@@ -434,7 +446,7 @@ class LeadBoardWidget extends StatelessWidget {
                               horizontal: width * 0.015,
                             ),
                             child: Text(
-                              "Hello ${shop.shopContactPerson}",
+                              "Hello ${user.personName}",
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: width * 0.035,
@@ -582,20 +594,26 @@ class LeadBoardWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => HomePage(
-                      shop: shop,
+                      // shop: shop,
+                      user: user,
                     )),
             (route) => false);
         break;
 
       case 1:
-        if (shop.connection) {
-          loader.showLoader("Fetching Leads", context);
-          var body = await api.postData("getleads.php?shop_id=${shop.id}");
-
+        // if (shop.connection) {
+        loader.showLoader("Fetching Leads", context);
+        var body = await api.postData("leads/", {});
+        if (body == "{}") {
+          body = [];
+        }
+        if (kDebugMode) print(body);
+        if (!body is String) {
           // if (body["leads"].length > 0) {
+
           for (int i = 0; i < body["leads"].length; i++) {
-            Lead lead = Lead.fromMap(body["leads"][i]);
-            if (lead.leadStatus == "new-lead") {
+            Lead lead = Lead.fromJson(body["leads"][i]);
+            if (lead.quoteSendAt == "") {
               newLeads.add(lead);
             } else {
               submittedLeads.add(lead);
@@ -606,13 +624,14 @@ class LeadBoardWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => MyLeads(
-                      newLeads: newLeads,
-                      submittedLeads: submittedLeads,
-                      shop: shop)));
+                        newLeads: newLeads,
+                        submittedLeads: submittedLeads,
+                        // shop: shop
+                        user: user,
+                      )));
+        } else {
+          ShowToast.show("Something went wrong \n Try again after sometime");
         }
-        // else {
-        // ShowToast.show("Something went wrong \n Try again after sometime", context);
-        // }
         // }
         // else{
         //   ShowToast.show("No Internet Connection", context);
@@ -620,18 +639,22 @@ class LeadBoardWidget extends StatelessWidget {
         break;
 
       case 2:
-        Shop shop = Shop();
-        shop = await shop.fromSharedPreference();
+        loader.showLoader("Fetching Profile", context);
+        var body = await api.getData("profile/");
+        await loader.hideLoader(context);
+        User user = User.fromJson(body);
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyProfile(
-                  shop: shop,
+                  // shop: shop,
+                  user: user,
                 )));
         break;
 
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChangePassword(
-                  shop: shop,
+                  // shop: shop,
+                  user: user,
                 )));
         break;
 

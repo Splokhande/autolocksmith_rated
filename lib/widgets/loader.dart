@@ -9,13 +9,10 @@ class Loader{
     dialog.showProgressDialog(context,
       textToBeDisplayed: message,
     );
-
   }
 
   hideLoader( BuildContext context){
     dialog.dismissProgressDialog(context);
 
   }
-
-
 }
