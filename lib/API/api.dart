@@ -1,16 +1,15 @@
-import 'package:dio/dio.dart' as d;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as g;
 import 'package:autolocksmith/Login/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
   static final String _url = "https://www.autolocksmiths.com/api/";
 
-  d.Response response;
+  Response response;
   var token;
-  d.Dio dio = d.Dio();
+  Dio dio = Dio();
   SharedPreferences sp;
   String header = "";
   var map = {};
@@ -39,7 +38,7 @@ class API {
       return response.data;
     } else if (response.statusCode == 401) {
       sp.clear();
-      return Get.off(() => Login());
+      return g.Get.off(() => Login());
     } else {
       if (kDebugMode) print(response);
       return response.data["message"];
@@ -64,7 +63,7 @@ class API {
       return response.data;
     } else if (response.statusCode == 401) {
       sp.clear();
-      return Get.off(() => Login());
+      return g.Get.off(() => Login());
     } else if (response.statusCode == 500) {
       return "Something went wrong. Try again after sometime";
     } else {
@@ -88,7 +87,7 @@ class API {
       return response.data;
     } else if (response.statusCode == 401) {
       sp.clear();
-      return Get.off(() => Login());
+      return g.Get.off(() => Login());
     } else {
       if (kDebugMode) print(response);
       return response.data["message"];
@@ -102,15 +101,17 @@ class API {
     if (kDebugMode) print(fullUrl);
     response = await dio.delete(fullUrl,
         options: Options(
-          validateStatus: (status) => true,
           followRedirects: false,
+          validateStatus: (status) {
+            return status < 500;
+          },
         ));
 
     if (response.statusCode == 200) {
       return response.data;
     } else if (response.statusCode == 401) {
       sp.clear();
-      return Get.off(() => Login());
+      return g.Get.off(() => Login());
     } else {
       if (kDebugMode) print(response);
       return response.data["message"];
@@ -120,7 +121,8 @@ class API {
   setHeaders() {
     dio.options.headers = {
       'Accept': 'application/json',
-      'x-api-key': '$header'
+      'x-api-key': '$header',
+      'Content-type': 'application/json; charset=UTF-8'
     };
   }
 }
