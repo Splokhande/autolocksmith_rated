@@ -258,7 +258,7 @@ class DashBoardWidget extends StatelessWidget {
     Connection connection = Connection();
     Navigator.of(context).pop();
     SharedPreferences sp = await SharedPreferences.getInstance();
-    connection.check();
+    await connection.check();
     switch (i) {
       case 0:
         Navigator.pushAndRemoveUntil(
@@ -586,7 +586,7 @@ class LeadBoardWidget extends StatelessWidget {
 
   selectOntap(int i, context) async {
     Connection connection = Connection();
-    connection.check();
+    await connection.check();
     Navigator.of(context).pop();
     switch (i) {
       case 0:

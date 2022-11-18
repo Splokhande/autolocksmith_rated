@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child: GestureDetector(
                         onTap: () async {
-                          connection.check();
+                          await connection.check();
                           if (sp.getBool("internet")) {
                             selectOntap(0, context);
                           }

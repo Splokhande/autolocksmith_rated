@@ -49,7 +49,7 @@ class Lead extends ChangeNotifier {
     SharedPreferences sp = await SharedPreferences.getInstance();
     API api = API();
     Connection connection = Connection();
-    connection.check();
+    await connection.check();
     leadList.clear();
     var body = await api.getData("leads/");
     if (body != null && body != "{}")
