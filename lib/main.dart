@@ -1,3 +1,4 @@
+import 'package:autolocksmith/model/lead_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:autolocksmith/Home/splashscreen.dart';
 import 'package:autolocksmith/theme/themeProvider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -70,19 +72,22 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
         designSize: Size(414, 896),
         builder: (_, child) {
-          return GetMaterialApp(
-            title: 'Auto Locksmiths',
-            // builder: DevicePreview.appBuilder,
-            theme: Styles.themeData(false, context),
-            builder: (context, widget) {
-              // ScreenUtil.setContext(context);
+          return MultiProvider(
+            providers: [ChangeNotifierProvider<Lead>(create: (_) => Lead())],
+            child: GetMaterialApp(
+              title: 'Auto Locksmiths',
+              // builder: DevicePreview.appBuilder,
+              theme: Styles.themeData(false, context),
+              builder: (context, widget) {
+                // ScreenUtil.setContext(context);
 
-              return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: widget);
-            },
-            home: SplashScreen(),
-            debugShowCheckedModeBanner: false,
+                return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                    child: widget);
+              },
+              home: SplashScreen(),
+              debugShowCheckedModeBanner: false,
+            ),
           );
         });
   }

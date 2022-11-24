@@ -436,8 +436,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 Loader loader = Loader();
                                 loader.showLoader("Deleting lead", context);
                                 API api = API();
-                                var body =
-                                    await api.deleteData("leads/${widget.id}/"
+                                var body = await api
+                                    .deleteData("leads/${widget.leads.lead.id}/"
                                         // "/?user_id=${widget.user.id}"
                                         );
 

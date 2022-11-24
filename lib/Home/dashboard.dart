@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     width = MediaQuery.of(context).size.width;
     return ChangeNotifierProvider(
       create: (_) => Lead(),
-      child: Consumer<Lead>(builder: (contexts, lead, widges) {
+      child: Consumer<Lead>(builder: (contexts, lead, widgets) {
         return DashBoardWidget(
           header: "Dashboard",
           currentPage: "Dashboard",
