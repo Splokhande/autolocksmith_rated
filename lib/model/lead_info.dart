@@ -107,6 +107,13 @@ class Quote {
   String zipcode;
   String mapLocation;
   String latitude;
+  String vehicleMotor;
+  String vehicleVin;
+  String vehicleMake;
+  String vehicleModel;
+  String vehicleYear;
+  String vehicleHelp;
+
   String longitude;
   String token;
   String ipaddress;
@@ -137,7 +144,13 @@ class Quote {
       this.isDeleted,
       this.createdAt,
       this.updatedAt,
-      this.imageList});
+      this.imageList,
+      this.vehicleYear,
+      this.vehicleModel,
+      this.vehicleMake,
+      this.vehicleVin,
+      this.vehicleMotor,
+      this.vehicleHelp});
 
   Quote.fromJson(Map<String, dynamic> json) {
     List<Images> list = [];
@@ -164,6 +177,13 @@ class Quote {
     isDeleted = json['is_deleted'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    vehicleHelp = json['vehicle_help'];
+    vehicleMotor = json['vehicle_motor'];
+    vehicleVin = json['vehicle_vin'];
+    vehicleMake = json['vehicle_make'];
+    vehicleModel = json['vehicle_model'];
+    vehicleYear = json['vehicle_year'];
+
     imageList = list;
   }
 
@@ -336,6 +356,7 @@ class Images {
   Images({this.id, this.url});
 
   factory Images.fromJson(json) {
-    return Images(id: json["id"], url: json["url"]);
+    return Images(
+        id: json["id"], url: 'https://www.autolocksmiths.com' + json["url"]);
   }
 }

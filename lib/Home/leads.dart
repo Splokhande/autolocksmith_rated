@@ -83,7 +83,7 @@ class _MyLeadsState extends State<MyLeads> {
                       newLeads[i].mapLocation.toLowerCase() +
                       newLeads[i].zipcode.toLowerCase() +
                       newLeads[i].email +
-                      ("jg" + newLeads[i].quoteRequestId.toString()))
+                      ("AL" + newLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead1.contains(newLeads[i])) {
@@ -121,7 +121,7 @@ class _MyLeadsState extends State<MyLeads> {
                       submittedLeads[i].mapLocation.toLowerCase() +
                       submittedLeads[i].zipcode.toLowerCase() +
                       submittedLeads[i].email +
-                      ("jg" + submittedLeads[i].quoteRequestId.toString()))
+                      ("AL" + submittedLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead2.contains(submittedLeads[i])) {
@@ -244,7 +244,7 @@ class _MyLeadsState extends State<MyLeads> {
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${newLeads[i].createdDate} | JG${newLeads[i].quoteRequestId}",
+                                                        "${newLeads[i].createdDate} | AL${newLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
                                                     id: newLeads[i]
@@ -305,7 +305,7 @@ class _MyLeadsState extends State<MyLeads> {
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${submittedLeads[i].createdDate} | JG${submittedLeads[i].quoteRequestId}",
+                                                        "${submittedLeads[i].createdDate} | AL${submittedLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
                                                     id: submittedLeads[i]
@@ -549,6 +549,123 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       // ),
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
+                        text: "Vehicle",
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleSize,
+                        text2: widget.leads.quote.vehicleMotor,
+                        fontSize2: 15.sp,
+                      ),
+                      SizedBox(height: 0.01.sh),
+                      WhiteRowTextWidget(
+                        text:
+                            // widget.leads.quote.vehicleVin == "United States"
+                            //     ?
+                            "VIN"
+                        // : "Reg"
+                        ,
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleSize,
+                        text2: widget.leads.quote.vehicleVin,
+                        fontSize2: 15.sp,
+                      ),
+                      SizedBox(height: 0.01.sh),
+                      WhiteRowTextWidget(
+                        text: "Make",
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleSize,
+                        text2: widget.leads.quote.vehicleMake,
+                        fontSize2: 15.sp,
+                      ),
+                      SizedBox(height: 0.01.sh),
+                      WhiteRowTextWidget(
+                        text: "Model",
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleSize,
+                        text2: widget.leads.quote.vehicleModel,
+                        fontSize2: 15.sp,
+                      ),
+                      SizedBox(height: 0.01.sh),
+                      WhiteRowTextWidget(
+                        text: "Year",
+                        fontWeight: FontWeight.bold,
+                        fontSize: titleSize,
+                        text2: widget.leads.quote.vehicleYear,
+                        fontSize2: 15.sp,
+                      ),
+                      SizedBox(height: 0.01.sh),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 0.01.sh,
+                            ),
+                            WhiteRowTextWidget(
+                              text: "Problem",
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleSize,
+                              text2: "",
+                              fontSize2: 0.035,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (_, i) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 0.05.sw,
+                                          right: 0.05.sw,
+                                          bottom: 10.h),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios_sharp,
+                                                  color: Colors.white,
+                                                  size: 0.025.sw,
+                                                ),
+                                              )),
+                                          SizedBox(
+                                            width: 0.025.sw,
+                                          ),
+                                          Text(
+                                            widget.help[i],
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .canvasColor,
+                                                fontSize: 15.sp),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (_, i) {
+                                    return SizedBox(
+                                      height: 0.5.h,
+                                    );
+                                  },
+                                  itemCount: widget.help.length),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 0.01.sh),
+                      WhiteRowTextWidget(
                         text: "Needed:",
                         fontWeight: FontWeight.bold,
                         fontSize: titleSize,
@@ -753,7 +870,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other junk haulers in your area are quoting for this job. Be competitive with your pricing!",
+                                          "Other auto locksmiths in your area are quoting for this job."
+                                          " Be competitve with your pricing.",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,
                                           fontSize: 0.04.sw))

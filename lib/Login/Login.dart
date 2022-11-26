@@ -133,6 +133,7 @@ class _LoginState extends State<Login> {
                       "device": Platform.isIOS ? "iPhone" : model,
                       "fcm": token
                     };
+                    debugPrint('$data');
                     loader.showLoader("Please Wait", context);
                     var body = await api.postData("login/", data);
 
