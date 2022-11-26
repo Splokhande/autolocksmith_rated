@@ -291,6 +291,8 @@ class _MyLeadsState extends State<MyLeads> {
                                       loader.showLoader(
                                           "Fetching Details", context);
                                       LeadInfo leads = LeadInfo();
+                                      debugPrint(
+                                          'leads/${submittedLeads[i].id}');
                                       var body = await api.getData(
                                           "leads/${submittedLeads[i].id}/");
                                       loader.hideLoader(context);
@@ -557,15 +559,10 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       ),
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
-                        text:
-                            // widget.leads.quote.vehicleVin == "United States"
-                            //     ?
-                            "VIN"
-                        // : "Reg"
-                        ,
+                        text: "Year",
                         fontWeight: FontWeight.bold,
                         fontSize: titleSize,
-                        text2: widget.leads.quote.vehicleVin,
+                        text2: widget.leads.quote.vehicleYear,
                         fontSize2: 15.sp,
                       ),
                       SizedBox(height: 0.01.sh),
@@ -584,14 +581,21 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         text2: widget.leads.quote.vehicleModel,
                         fontSize2: 15.sp,
                       ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Year",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.quote.vehicleYear,
-                        fontSize2: 15.sp,
-                      ),
+                      if (widget.leads.quote.vehicleVin != null)
+                        SizedBox(height: 0.01.sh),
+                      if (widget.leads.quote.vehicleVin != null)
+                        WhiteRowTextWidget(
+                          text:
+                              // widget.leads.quote.vehicleVin == "United States"
+                              //     ?
+                              "VIN"
+                          // : "Reg"
+                          ,
+                          fontWeight: FontWeight.bold,
+                          fontSize: titleSize,
+                          text2: widget.leads.quote.vehicleVin,
+                          fontSize2: 15.sp,
+                        ),
                       SizedBox(height: 0.01.sh),
                       Container(
                         decoration: BoxDecoration(
@@ -604,7 +608,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                               height: 0.01.sh,
                             ),
                             WhiteRowTextWidget(
-                              text: "Problem",
+                              text: "Help",
                               fontWeight: FontWeight.bold,
                               fontSize: titleSize,
                               text2: "",
@@ -623,6 +627,11 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                           right: 0.05.sw,
                                           bottom: 10.h),
                                       child: Row(
+                                        // crossAxisAlignment:
+                                        //     CrossAxisAlignment.start,
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.start,
+                                        //     MainAxisAlignment.start,
                                         children: [
                                           Container(
                                               decoration: BoxDecoration(
@@ -642,12 +651,14 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                           SizedBox(
                                             width: 0.025.sw,
                                           ),
-                                          Text(
-                                            widget.help[i],
-                                            style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .canvasColor,
-                                                fontSize: 15.sp),
+                                          Expanded(
+                                            child: Text(
+                                              widget.help[i],
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15.sp),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -710,7 +721,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                           children: [
                             if (widget.leads.quote.imageList.length > 0)
                               WhiteRowTextWidget(
-                                text: "Image(s):",
+                                text: "Photo(s):",
                                 fontWeight: FontWeight.bold,
                                 fontSize: titleSize,
                                 text2: "",
@@ -1101,11 +1112,12 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 API api = API();
                                 String quote = _quote.text;
                                 quote = quote.replaceAll("£", "psas");
-
+                                debugPrint(
+                                    '{"lead_id": ${widget.leads.lead.id}, "quote": $quote}');
                                 SharedPreferences sp =
                                     await SharedPreferences.getInstance();
                                 var body = await api.putData(
-                                    "submit-quote/${widget.id}/", {
+                                    "submit-quote/${widget.leads.quote.id}/", {
                                   "lead_id": widget.leads.lead.id,
                                   "quote": quote
                                 });
@@ -1250,7 +1262,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                             : Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
-                                  color: Color(0xff81b701),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(0.03.sw),
