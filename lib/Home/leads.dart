@@ -235,10 +235,11 @@ class _MyLeadsState extends State<MyLeads> {
                                       loader.hideLoader(context);
 
                                       leads = LeadInfo.fromJson(body);
-                                      List<String> list = leads.quote.moreInfo
-                                          // .replaceAll("\$*\$", "'")
-                                          // .split("#");
-                                          .split(",");
+                                      List<String> list =
+                                          leads.quote.vehicleHelp
+                                              // .replaceAll("\$*\$", "'")
+                                              // .split("#");
+                                              .split(",");
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -298,10 +299,11 @@ class _MyLeadsState extends State<MyLeads> {
                                       loader.hideLoader(context);
 
                                       leads = LeadInfo.fromJson(body);
-                                      List<String> list = leads.quote.moreInfo
-                                          // .replaceAll("\$*\$", "'")
-                                          // .split("#");
-                                          .split(",");
+                                      List<String> list =
+                                          leads.quote.vehicleHelp
+                                              // .replaceAll("\$*\$", "'")
+                                              // .split("#");
+                                              .split(",");
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>

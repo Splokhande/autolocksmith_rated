@@ -109,8 +109,3 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "asset/Auto-locksmiths-app-icon.png"
-
-flutter_native_splash:
-  image: asset/favicon.png
-  color: e70034
-  size: 1
