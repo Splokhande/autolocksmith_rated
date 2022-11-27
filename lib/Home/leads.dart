@@ -83,7 +83,7 @@ class _MyLeadsState extends State<MyLeads> {
                       newLeads[i].mapLocation.toLowerCase() +
                       newLeads[i].zipcode.toLowerCase() +
                       newLeads[i].email +
-                      ("AL" + newLeads[i].quoteRequestId.toString()))
+                      ("al" + newLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead1.contains(newLeads[i])) {
@@ -121,7 +121,7 @@ class _MyLeadsState extends State<MyLeads> {
                       submittedLeads[i].mapLocation.toLowerCase() +
                       submittedLeads[i].zipcode.toLowerCase() +
                       submittedLeads[i].email +
-                      ("AL" + submittedLeads[i].quoteRequestId.toString()))
+                      ("al" + submittedLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead2.contains(submittedLeads[i])) {

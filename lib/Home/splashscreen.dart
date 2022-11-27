@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   getSp() async {
     sp = await SharedPreferences.getInstance();
     Timer(
-      Duration(milliseconds: 1750),
+      Duration(milliseconds: 1500),
       () {
         if (sp.containsKey("id")) {
           //
@@ -78,8 +78,9 @@ class _SplashScreenState extends State<SplashScreen> {
                         child: Center(
                             child: Image.asset(
                       'asset/favicon.png',
-                      height: 0.7.sh,
-                      width: 0.7.sw,
+                      height: 0.45.sh,
+                      width: 0.45.sw,
+                      fit: BoxFit.fitHeight,
                     )))),
                 Positioned(
                     bottom: 0.05.sh,
