@@ -221,7 +221,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Container(
       child: LoginWidget(
         container1: Center(
-          child: Image.asset("asset/junkgator_logo.png", width: 0.6.sw),
+          child: Image.asset("asset/logo.png", width: 0.6.sw),
         ),
         container2: Container(
           width: 1.sw,
