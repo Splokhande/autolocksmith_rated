@@ -46,7 +46,7 @@ class _LoginState extends State<Login> {
                 height: 40.h,
               ),
               WhiteHeadTextWidget(
-                text: "Already a Auto Locksmiths member?",
+                text: "Already a Rated Locksmiths member?",
                 fontSize: 25.sp,
                 fontWeight: FontWeight.w800,
               ),
@@ -245,7 +245,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 WhiteHeadTextWidget(
                   text:
-                      "Don't worry! Enter the email address associated with your Auto Locksmiths"
+                      "Don't worry! Enter the email address associated with your Rated Locksmiths"
                       " account and we will send you link so that you can reset your password",
                   fontSize: 15.sp,
                   // fontWeight: FontWeight.w800,

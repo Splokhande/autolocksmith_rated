@@ -41,7 +41,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.app.autolocksmith_rated"
+        applicationId "com.app.rated_locksmith"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 10

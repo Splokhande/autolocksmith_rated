@@ -83,7 +83,7 @@ class _MyLeadsState extends State<MyLeads> {
                       newLeads[i].mapLocation.toLowerCase() +
                       newLeads[i].zipcode.toLowerCase() +
                       newLeads[i].email +
-                      ("al" + newLeads[i].quoteRequestId.toString()))
+                      ("rl" + newLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead1.contains(newLeads[i])) {
@@ -121,7 +121,7 @@ class _MyLeadsState extends State<MyLeads> {
                       submittedLeads[i].mapLocation.toLowerCase() +
                       submittedLeads[i].zipcode.toLowerCase() +
                       submittedLeads[i].email +
-                      ("al" + submittedLeads[i].quoteRequestId.toString()))
+                      ("rl" + submittedLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
                   .contains(value.toString().toLowerCase())) {
                 if (!lead2.contains(submittedLeads[i])) {
@@ -883,7 +883,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other auto locksmiths in your area are quoting for this job."
+                                          "Other rated locksmiths in your area are quoting for this job."
                                           " Be competitve with your pricing.",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,

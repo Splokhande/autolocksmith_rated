@@ -3,34 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>728972505502-1nlmlqe3o79dhnuq6rjpv7ecrk8n8odo.apps.googleusercontent.com</string>
+	<string>206479910613-5scbbbron1o9a9tt81taap3a9v6c70u5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.728972505502-1nlmlqe3o79dhnuq6rjpv7ecrk8n8odo</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>728972505502-85ee8ak25tvou5jhv4cgm8tdkfrdaj1d.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.206479910613-5scbbbron1o9a9tt81taap3a9v6c70u5</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCR4av7QcgcCMdjhb7sNCxe3DiefWwHXFY</string>
+	<string>AIzaSyCMa1C7yqvlMYS1fINDbhHCjEHKKlWYDys</string>
 	<key>GCM_SENDER_ID</key>
-	<string>728972505502</string>
+	<string>206479910613</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.InteractiveNetwork.autolocksmith</string>
+	<string>com.InteractiveNetwork.ratedlocksmith</string>
 	<key>PROJECT_ID</key>
-	<string>autolocksmith-d17a9</string>
+	<string>rated-locksmiths-3d2df</string>
 	<key>STORAGE_BUCKET</key>
-	<string>autolocksmith-d17a9.appspot.com</string>
+	<string>rated-locksmiths-3d2df.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:728972505502:ios:3f416cdc58d3933143268f</string>
+	<string>1:206479910613:ios:c2b99a8f0424203ca2245c</string>
 </dict>
 </plist>

@@ -46,12 +46,12 @@ dependencies:
   flutter_app_badger:
   dio:
   get:
-  firebase_messaging: ^10.0.3
+  firebase_messaging: ^14.2.1
   url_launcher:
   full_screen_image:
   android_intent_plus:
   pinch_zoom:
-  device_info_plus: 3.2.2
+  device_info_plus: ^8.0.0
 dev_dependencies:
 
   flutter_test:
@@ -108,9 +108,9 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "asset/Auto-locksmiths-app-icon.png"
+  image_path: "asset/starting-icon.png"
 
 flutter_native_splash:
-  image: asset/favicon.png
+  image: asset/starting-icon.png
   color: e70034
   size: 1

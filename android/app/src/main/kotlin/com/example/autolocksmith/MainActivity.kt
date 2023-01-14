@@ -1,4 +1,4 @@
-package com.app.autolocksmith_rated
+package com.app.rated_locksmith
 
 import io.flutter.embedding.android.FlutterActivity
 

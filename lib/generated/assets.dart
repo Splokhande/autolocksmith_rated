@@ -2,32 +2,33 @@
 class Assets {
   Assets._();
 
-  static const String assetAppIcon = 'asset/app_icon.png';
+  static const String assetAppIcon = 'asset/app-icon.png';
+  static const String assetAutoLocksmithsAppIcon =
+      'asset/Auto-locksmiths-app-icon.png';
   static const String assetChangePswd = 'asset/change_pswd.png';
   static const String assetDelete = 'asset/delete.png';
   static const String assetDone = 'asset/done.png';
   static const String assetDustbin = 'asset/dustbin.png';
-  static const String assetJunkgatorLogo = 'asset/junkgator_logo.png';
+  static const String assetFavicon = 'asset/favicon.png';
   static const String assetLeads = 'asset/leads.png';
-  static const String assetLeads2 = 'asset/leads2.png';
   static const String assetLogo = 'asset/logo.png';
   static const String assetLogout = 'asset/logout.png';
   static const String assetProfile = 'asset/profile.png';
-  static const String assetSplashIcon = 'asset/splash_icon.jpg';
   static const String assetSplashicon = 'asset/splashicon.png';
-  static const String fontOpenSansBold = 'asset/font/OpenSans_Bold.ttf';
+  static const String assetStartingIcon = 'asset/starting-icon.png';
+  static const String fontOpenSansBold = 'asset/font/OpenSans-Bold.ttf';
   static const String fontOpenSansBoldItalic =
-      'asset/font/OpenSans_BoldItalic.ttf';
+      'asset/font/OpenSans-BoldItalic.ttf';
   static const String fontOpenSansExtraBold =
-      'asset/font/OpenSans_ExtraBold.ttf';
+      'asset/font/OpenSans-ExtraBold.ttf';
   static const String fontOpenSansExtraBoldItalic =
-      'asset/font/OpenSans_ExtraBoldItalic.ttf';
-  static const String fontOpenSansItalic = 'asset/font/OpenSans_Italic.ttf';
-  static const String fontOpenSansLight = 'asset/font/OpenSans_Light.ttf';
+      'asset/font/OpenSans-ExtraBoldItalic.ttf';
+  static const String fontOpenSansItalic = 'asset/font/OpenSans-Italic.ttf';
+  static const String fontOpenSansLight = 'asset/font/OpenSans-Light.ttf';
   static const String fontOpenSansLightItalic =
-      'asset/font/OpenSans_LightItalic.ttf';
-  static const String fontOpenSansRegular = 'asset/font/OpenSans_Regular.ttf';
-  static const String fontOpenSansSemiBold = 'asset/font/OpenSans_SemiBold.ttf';
+      'asset/font/OpenSans-LightItalic.ttf';
+  static const String fontOpenSansRegular = 'asset/font/OpenSans-Regular.ttf';
+  static const String fontOpenSansSemiBold = 'asset/font/OpenSans-SemiBold.ttf';
   static const String fontOpenSansSemiBoldItalic =
-      'asset/font/OpenSans_SemiBoldItalic.ttf';
+      'asset/font/OpenSans-SemiBoldItalic.ttf';
 }

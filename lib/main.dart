@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
           return MultiProvider(
             providers: [ChangeNotifierProvider<Lead>(create: (_) => Lead())],
             child: GetMaterialApp(
-              title: 'Auto Locksmiths',
+              title: 'Rated Locksmiths',
               // builder: DevicePreview.appBuilder,
               theme: Styles.themeData(false, context),
               builder: (context, widget) {

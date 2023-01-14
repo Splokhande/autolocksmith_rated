@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.autolocksmith_rated">
+    package="com.app.rated_locksmith">
 
     <queries>
         <!-- If your app makes calls -->
@@ -15,7 +15,7 @@
     </queries>
 
    <application
-        android:label="Auto Locksmiths"
+        android:label="Rated Locksmiths"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

@@ -5,7 +5,7 @@ import 'package:autolocksmith/Login/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  static final String _url = "https://www.autolocksmiths.com/api/";
+  static final String _url = "https://www.ratedlocksmiths.com/api/";
 
   Response response;
   var token;
