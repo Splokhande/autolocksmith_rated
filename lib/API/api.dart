@@ -5,7 +5,7 @@ import 'package:autolocksmith/Login/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  static final String _url = "https://www.ratedlocksmiths.com/api/";
+  static final String _url = "https://www.ratedlocksmiths.co.uk/api/";
 
   Response response;
   var token;
@@ -22,8 +22,9 @@ class API {
 
   postData(apiUrl, body) async {
     await getHeader();
+    debugPrint('$body');
     setHeaders();
-    if (kDebugMode) print(map);
+    // if (kDebugMode) print(body);
     var fullUrl = _url + apiUrl;
     if (kDebugMode) print(fullUrl);
 

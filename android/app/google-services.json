@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "206479910613",
+    "project_id": "rated-locksmiths-3d2df",
+    "storage_bucket": "rated-locksmiths-3d2df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206479910613:android:d77ab354e32e5592a2245c",
+        "android_client_info": {
+          "package_name": "com.app.rated_locksmith"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206479910613-ibpd97smn8rhhrngs05fhdi2k9r0k7ai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ865p5du5R_KV5IEn9myhq05u-lYQMxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206479910613-ibpd97smn8rhhrngs05fhdi2k9r0k7ai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

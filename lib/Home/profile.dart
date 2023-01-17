@@ -125,7 +125,7 @@ class _MyProfileState extends State<MyProfile> {
                           SizedBox(
                             height: heightS,
                           ),
-                          Text(" Call (646) 751 7835",
+                          Text(" Call 0161 641 4374",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15.sp,
