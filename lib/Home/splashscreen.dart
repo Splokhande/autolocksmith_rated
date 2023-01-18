@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
 import 'package:autolocksmith/Home/dashboard.dart';
 import 'package:autolocksmith/Login/Login.dart';
 import 'package:autolocksmith/model/User.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -61,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: widget.user != null
           ? Container(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).backgroundColor,
               width: 1.sw,
               height: 1.sh,
               child: Container(
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
           : Stack(
               children: [
                 Container(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).backgroundColor,
                     width: 1.sw,
                     height: 1.sh,
                     child: Container(
@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         "$version",
                         style: TextStyle(
                             fontSize: 18.sp,
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).canvasColor),
                       )),
                     ))
               ],

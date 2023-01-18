@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/FCM/fcm.dart';
 import 'package:autolocksmith/model/User.dart';
@@ -11,8 +8,12 @@ import 'package:autolocksmith/widgets/DashBoardWidget.dart';
 import 'package:autolocksmith/widgets/loader.dart';
 import 'package:autolocksmith/widgets/toast.dart';
 import 'package:autolocksmith/widgets/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyLeads extends StatefulWidget {
@@ -245,7 +246,7 @@ class _MyLeadsState extends State<MyLeads> {
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${newLeads[i].createdDate} | AL${newLeads[i].quoteRequestId}",
+                                                        "${newLeads[i].createdDate} | RL${newLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
                                                     id: newLeads[i]
@@ -309,7 +310,7 @@ class _MyLeadsState extends State<MyLeads> {
                                               builder: (context) =>
                                                   LeadsDetails(
                                                     header:
-                                                        "${submittedLeads[i].createdDate} | AL${submittedLeads[i].quoteRequestId}",
+                                                        "${submittedLeads[i].createdDate} | RL${submittedLeads[i].quoteRequestId}",
                                                     leads: leads,
                                                     help: list,
                                                     id: submittedLeads[i]

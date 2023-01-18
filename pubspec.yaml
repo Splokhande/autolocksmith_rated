@@ -108,9 +108,10 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "asset/startingIcon.png"
+  image_path: "asset/appstore.png"
+
 
 flutter_native_splash:
-  image: asset/startingIcon.png
-  color: e70034
-  size: 10
+  background_image: "asset/startingIcon.png"
+  size: "10"
+  color: "#e7ebee"

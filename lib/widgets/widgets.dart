@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -498,6 +499,7 @@ class ImageContainer extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           child: FullScreenWidget(
+            backgroundIsTransparent: true,
             child: PinchZoom(
               zoomEnabled: true,
               child: CachedNetworkImage(

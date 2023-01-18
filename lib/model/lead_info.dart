@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 import 'package:autolocksmith/API/api.dart';
 import 'package:autolocksmith/widgets/connectivity.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 DateFormat format = DateFormat("MM-dd-yyyy");
@@ -35,7 +35,7 @@ class Lead extends ChangeNotifier {
     email = json["email"] ?? "";
     name = json["name"] ?? "";
     createdDate = json["created_at"] != null
-        ? DateFormat("MM-dd-yyyy")
+        ? DateFormat("dd-MM-yyyy")
             .format(DateTime.parse(json["created_at"].toString().split('T')[0]))
         : "";
     quoteSendAt = json["quote_send_at"] ?? "";
