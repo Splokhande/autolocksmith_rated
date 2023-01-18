@@ -77,9 +77,9 @@ class _SplashScreenState extends State<SplashScreen> {
                         // color: Colors.grey.shade200,
                         child: Center(
                             child: Image.asset(
-                      'asset/favicon.png',
-                      height: 0.45.sh,
-                      width: 0.45.sw,
+                      'asset/startingIcon.png',
+                      height: 0.15.sh,
+                      width: 0.5.sw,
                       fit: BoxFit.fitHeight,
                     )))),
                 Positioned(

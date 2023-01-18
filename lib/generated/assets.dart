@@ -15,7 +15,7 @@ class Assets {
   static const String assetLogout = 'asset/logout.png';
   static const String assetProfile = 'asset/profile.png';
   static const String assetSplashicon = 'asset/splashicon.png';
-  static const String assetStartingIcon = 'asset/starting-icon.png';
+  static const String assetStartingIcon = 'asset/startingIcon.png';
   static const String fontOpenSansBold = 'asset/font/OpenSans-Bold.ttf';
   static const String fontOpenSansBoldItalic =
       'asset/font/OpenSans-BoldItalic.ttf';

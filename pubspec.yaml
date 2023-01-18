@@ -93,7 +93,7 @@ flutter:
   #         - asset: asset/font/OpenSans-ExtraBoldItalic.ttf
   #         - asset: asset/font/OpenSans-Light.ttf
   #         - asset: asset/font/OpenSans-LightItalic.ttf
-  #         - asset: asset/font/OpenSans-SemiBold.ttf
+  #         - asset: asset/font/FOpenSans-SemiBold.ttf
   #         - asset: asset/font/OpenSans-SemiBoldItalic.ttf
   #         - asset: asset/font/OpenSans-Italic.ttf
   #           style: italic
@@ -108,9 +108,9 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "asset/starting-icon.png"
+  image_path: "asset/startingIcon.png"
 
 flutter_native_splash:
-  image: asset/starting-icon.png
+  image: asset/startingIcon.png
   color: e70034
-  size: 1
+  size: 10

@@ -426,7 +426,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                 ),
                 ListTile(
                   title: Text(
-                    "Lead",
+                    "Quote Request",
+                    // "Lead",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp),
                   ),
@@ -535,147 +536,140 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         ),
                       ),
 
-                      // WhiteRowTextWidget(
-                      //   text: "I am in:",
-                      //   fontWeight: FontWeight.bold,
-                      //   fontSize: titleSize,
-                      //   text2: widget.leads.vehicleLocation,
-                      //   fontSize2: 15.sp,
-                      // ),
                       ///
-                      // SizedBox(height: 0.01.sh),
-                      // WhiteRowTextWidget(
-                      //   text: "Property:",
-                      //   fontWeight: FontWeight.bold,
-                      //   fontSize: titleSize,
-                      //   text2: widget.leads.vehicleType,
-                      //   fontSize2: 15.sp,
-                      // ),
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
-                        text: "Vehicle",
+                        text: "Property:",
                         fontWeight: FontWeight.bold,
                         fontSize: titleSize,
                         text2: widget.leads.quote.vehicleMotor,
                         fontSize2: 15.sp,
                       ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Year",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.quote.vehicleYear,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Make",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.quote.vehicleMake,
-                        fontSize2: 15.sp,
-                      ),
-                      SizedBox(height: 0.01.sh),
-                      WhiteRowTextWidget(
-                        text: "Model",
-                        fontWeight: FontWeight.bold,
-                        fontSize: titleSize,
-                        text2: widget.leads.quote.vehicleModel,
-                        fontSize2: 15.sp,
-                      ),
-                      if (widget.leads.quote.vehicleVin != null)
-                        SizedBox(height: 0.01.sh),
-                      if (widget.leads.quote.vehicleVin != null)
-                        WhiteRowTextWidget(
-                          text:
-                              // widget.leads.quote.vehicleVin == "United States"
-                              //     ?
-                              "VIN"
-                          // : "Reg"
-                          ,
-                          fontWeight: FontWeight.bold,
-                          fontSize: titleSize,
-                          text2: widget.leads.quote.vehicleVin,
-                          fontSize2: 15.sp,
-                        ),
-                      SizedBox(height: 0.01.sh),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 0.01.sh,
-                            ),
-                            WhiteRowTextWidget(
-                              text: "Help",
-                              fontWeight: FontWeight.bold,
-                              fontSize: titleSize,
-                              text2: "",
-                              fontSize2: 0.035,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  itemBuilder: (_, i) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 0.05.sw,
-                                          right: 0.05.sw,
-                                          bottom: 10.h),
-                                      child: Row(
-                                        // crossAxisAlignment:
-                                        //     CrossAxisAlignment.start,
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.start,
-                                        //     MainAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          50)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4.0),
-                                                child: Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  color: Colors.white,
-                                                  size: 0.025.sw,
-                                                ),
-                                              )),
-                                          SizedBox(
-                                            width: 0.025.sw,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              widget.help[i],
-                                              style: TextStyle(
-                                                  color: Theme.of(context)
-                                                      .canvasColor,
-                                                  fontSize: 15.sp),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (_, i) {
-                                    return SizedBox(
-                                      height: 0.5.h,
-                                    );
-                                  },
-                                  itemCount: widget.help.length),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(height: 0.01.sh),
+                      // WhiteRowTextWidget(
+                      //   text: "Vehicle",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.quote.vehicleMotor,
+                      //   fontSize2: 15.sp,
+                      // ),
+                      // SizedBox(height: 0.01.sh),
+                      // WhiteRowTextWidget(
+                      //   text: "Year",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.quote.vehicleYear,
+                      //   fontSize2: 15.sp,
+                      // ),
+                      // SizedBox(height: 0.01.sh),
+                      // WhiteRowTextWidget(
+                      //   text: "Make",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.quote.vehicleMake,
+                      //   fontSize2: 15.sp,
+                      // ),
+                      // SizedBox(height: 0.01.sh),
+                      // WhiteRowTextWidget(
+                      //   text: "Model",
+                      //   fontWeight: FontWeight.bold,
+                      //   fontSize: titleSize,
+                      //   text2: widget.leads.quote.vehicleModel,
+                      //   fontSize2: 15.sp,
+                      // ),
+                      // if (widget.leads.quote.vehicleVin != null)
+                      //   SizedBox(height: 0.01.sh),
+                      // if (widget.leads.quote.vehicleVin != null)
+                      //   WhiteRowTextWidget(
+                      //     text:
+                      //         // widget.leads.quote.vehicleVin == "United States"
+                      //         //     ?
+                      //         "VIN"
+                      //     // : "Reg"
+                      //     ,
+                      //     fontWeight: FontWeight.bold,
+                      //     fontSize: titleSize,
+                      //     text2: widget.leads.quote.vehicleVin,
+                      //     fontSize2: 15.sp,
+                      //   ),
+                      // SizedBox(height: 0.01.sh),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white,
+                      //     borderRadius: BorderRadius.circular(5),
+                      //   ),
+                      //   child: Column(
+                      //     children: [
+                      //       SizedBox(
+                      //         height: 0.01.sh,
+                      //       ),
+                      //       WhiteRowTextWidget(
+                      //         text: "Help",
+                      //         fontWeight: FontWeight.bold,
+                      //         fontSize: titleSize,
+                      //         text2: "",
+                      //         fontSize2: 0.035,
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(bottom: 8.0),
+                      //         child: ListView.separated(
+                      //             shrinkWrap: true,
+                      //             physics: BouncingScrollPhysics(),
+                      //             scrollDirection: Axis.vertical,
+                      //             itemBuilder: (_, i) {
+                      //               return Padding(
+                      //                 padding: EdgeInsets.only(
+                      //                     left: 0.05.sw,
+                      //                     right: 0.05.sw,
+                      //                     bottom: 10.h),
+                      //                 child: Row(
+                      //                   // crossAxisAlignment:
+                      //                   //     CrossAxisAlignment.start,
+                      //                   // mainAxisAlignment:
+                      //                   //     MainAxisAlignment.start,
+                      //                   //     MainAxisAlignment.start,
+                      //                   children: [
+                      //                     Container(
+                      //                         decoration: BoxDecoration(
+                      //                             color: Colors.red,
+                      //                             borderRadius:
+                      //                                 BorderRadius.circular(
+                      //                                     50)),
+                      //                         child: Padding(
+                      //                           padding:
+                      //                               const EdgeInsets.all(4.0),
+                      //                           child: Icon(
+                      //                             Icons.arrow_forward_ios_sharp,
+                      //                             color: Colors.white,
+                      //                             size: 0.025.sw,
+                      //                           ),
+                      //                         )),
+                      //                     SizedBox(
+                      //                       width: 0.025.sw,
+                      //                     ),
+                      //                     Expanded(
+                      //                       child: Text(
+                      //                         widget.help[i],
+                      //                         style: TextStyle(
+                      //                             color: Theme.of(context)
+                      //                                 .canvasColor,
+                      //                             fontSize: 15.sp),
+                      //                       ),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               );
+                      //             },
+                      //             separatorBuilder: (_, i) {
+                      //               return SizedBox(
+                      //                 height: 0.5.h,
+                      //               );
+                      //             },
+                      //             itemCount: widget.help.length),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
