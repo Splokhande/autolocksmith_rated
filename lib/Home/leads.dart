@@ -265,9 +265,11 @@ class _MyLeadsState extends State<MyLeads> {
                                       name: newLeads[i].name,
                                       subtitle:
                                           newLeads[i].quoteRequestId.toString(),
-                                      address: newLeads[i].mapLocation +
-                                          ", " +
-                                          newLeads[i].zipcode,
+                                      address: newLeads[i].mapLocation
+                                      // +
+                                      // ", " +
+                                      // newLeads[i].zipcode
+                                      ,
                                     ),
                                   );
                                 },
@@ -330,8 +332,10 @@ class _MyLeadsState extends State<MyLeads> {
                                       subtitle: submittedLeads[i]
                                           .quoteRequestId
                                           .toString(),
-                                      address: submittedLeads[i].mapLocation ??
-                                          "" + ", " + submittedLeads[i].zipcode,
+                                      address: submittedLeads[i].mapLocation
+                                      // ??
+                                      // "" + ", " + submittedLeads[i].zipcode
+                                      ,
                                     ),
                                   );
                                 },
@@ -593,84 +597,84 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                       //     text2: widget.leads.quote.vehicleVin,
                       //     fontSize2: 15.sp,
                       //   ),
-                      // SizedBox(height: 0.01.sh),
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     color: Colors.white,
-                      //     borderRadius: BorderRadius.circular(5),
-                      //   ),
-                      //   child: Column(
-                      //     children: [
-                      //       SizedBox(
-                      //         height: 0.01.sh,
-                      //       ),
-                      //       WhiteRowTextWidget(
-                      //         text: "Help",
-                      //         fontWeight: FontWeight.bold,
-                      //         fontSize: titleSize,
-                      //         text2: "",
-                      //         fontSize2: 0.035,
-                      //       ),
-                      //       Padding(
-                      //         padding: const EdgeInsets.only(bottom: 8.0),
-                      //         child: ListView.separated(
-                      //             shrinkWrap: true,
-                      //             physics: BouncingScrollPhysics(),
-                      //             scrollDirection: Axis.vertical,
-                      //             itemBuilder: (_, i) {
-                      //               return Padding(
-                      //                 padding: EdgeInsets.only(
-                      //                     left: 0.05.sw,
-                      //                     right: 0.05.sw,
-                      //                     bottom: 10.h),
-                      //                 child: Row(
-                      //                   // crossAxisAlignment:
-                      //                   //     CrossAxisAlignment.start,
-                      //                   // mainAxisAlignment:
-                      //                   //     MainAxisAlignment.start,
-                      //                   //     MainAxisAlignment.start,
-                      //                   children: [
-                      //                     Container(
-                      //                         decoration: BoxDecoration(
-                      //                             color: Colors.red,
-                      //                             borderRadius:
-                      //                                 BorderRadius.circular(
-                      //                                     50)),
-                      //                         child: Padding(
-                      //                           padding:
-                      //                               const EdgeInsets.all(4.0),
-                      //                           child: Icon(
-                      //                             Icons.arrow_forward_ios_sharp,
-                      //                             color: Colors.white,
-                      //                             size: 0.025.sw,
-                      //                           ),
-                      //                         )),
-                      //                     SizedBox(
-                      //                       width: 0.025.sw,
-                      //                     ),
-                      //                     Expanded(
-                      //                       child: Text(
-                      //                         widget.help[i],
-                      //                         style: TextStyle(
-                      //                             color: Theme.of(context)
-                      //                                 .canvasColor,
-                      //                             fontSize: 15.sp),
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               );
-                      //             },
-                      //             separatorBuilder: (_, i) {
-                      //               return SizedBox(
-                      //                 height: 0.5.h,
-                      //               );
-                      //             },
-                      //             itemCount: widget.help.length),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      SizedBox(height: 0.01.sh),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 0.01.sh,
+                            ),
+                            WhiteRowTextWidget(
+                              text: "Problem",
+                              fontWeight: FontWeight.bold,
+                              fontSize: titleSize,
+                              text2: "",
+                              fontSize2: 0.035,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  itemBuilder: (_, i) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 0.05.sw,
+                                          right: 0.05.sw,
+                                          bottom: 10.h),
+                                      child: Row(
+                                        // crossAxisAlignment:
+                                        //     CrossAxisAlignment.start,
+                                        // mainAxisAlignment:
+                                        //     MainAxisAlignment.start,
+                                        //     MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons.arrow_forward_ios_sharp,
+                                                  color: Colors.white,
+                                                  size: 0.025.sw,
+                                                ),
+                                              )),
+                                          SizedBox(
+                                            width: 0.025.sw,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              widget.help[i],
+                                              style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .canvasColor,
+                                                  fontSize: 15.sp),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (_, i) {
+                                    return SizedBox(
+                                      height: 0.5.h,
+                                    );
+                                  },
+                                  itemCount: widget.help.length),
+                            ),
+                          ],
+                        ),
+                      ),
 
                       SizedBox(height: 0.01.sh),
                       WhiteRowTextWidget(
@@ -878,7 +882,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other rated locksmiths in your area are quoting for this job."
+                                          "Other locksmiths in your area are quoting for this job."
                                           " Be competitve with your pricing.",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,
