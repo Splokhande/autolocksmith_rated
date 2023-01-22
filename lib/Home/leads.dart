@@ -431,7 +431,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                 ),
                 ListTile(
                   title: Text(
-                    "Quote Request",
+                    "Lead",
                     // "Lead",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp),
@@ -882,7 +882,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other locksmiths in your area are quoting for this job."
+                                          "Other locksmiths in your area maybe quoting for this job."
                                           " Be competitve with your pricing.",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,
