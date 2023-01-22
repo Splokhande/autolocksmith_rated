@@ -882,7 +882,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                   //         fontSize: 0.04.sw)),
                                   TextSpan(
                                       text:
-                                          "Other locksmiths in your area maybe quoting for this job."
+                                          "Other locksmiths in your area may be quoting for this job."
                                           " Be competitve with your pricing.",
                                       style: TextStyle(
                                           color: Theme.of(context).canvasColor,
