@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'dart:math' as math;
 import 'package:device_info_plus/device_info_plus.dart';
@@ -6,13 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/Home/splashscreen.dart';
-import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/widgets/LoginWidget.dart';
-import 'package:autolocksmith/widgets/loader.dart';
-import 'package:autolocksmith/widgets/toast.dart';
-import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/Home/splashscreen.dart';
+import 'package:rated_locksmith/model/User.dart';
+import 'package:rated_locksmith/widgets/LoginWidget.dart';
+import 'package:rated_locksmith/widgets/loader.dart';
+import 'package:rated_locksmith/widgets/toast.dart';
+import 'package:rated_locksmith/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,8 +24,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _pswd = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _pswd = TextEditingController();
   GlobalKey<FormState> key = GlobalKey<FormState>();
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   @override
@@ -120,7 +122,7 @@ class _LoginState extends State<Login> {
                     Loader loader = Loader();
                     if (Platform.isIOS)
                       await FirebaseMessaging.instance.requestPermission();
-                    String token = "";
+                    String? token = "";
 
                     // if(Platform.isAndroid)
                     token = await fcm.getToken();
@@ -149,7 +151,7 @@ class _LoginState extends State<Login> {
                       sp.setString('person_name', body["person_name"]);
                       // Shop shop = Shop.fromMap(body);
                       // shop.toSharedPreference(shop);
-                      sp.setString("token", token);
+                      sp.setString("token", token!);
                       sp.setString("jwtToken", body["token"]);
                       if (kDebugMode) print("FCM Token: $token");
                       User user = User(
@@ -166,7 +168,7 @@ class _LoginState extends State<Login> {
                   }
                 },
                 child: RaisedGradientButton(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     colors: [
                       Colors.white,
                       Colors.black,
@@ -214,97 +216,95 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  TextEditingController _email = TextEditingController();
+  final TextEditingController _email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: LoginWidget(
-        container1: Center(
-          child: Image.asset("asset/logo.png", width: 0.6.sw),
-        ),
-        container2: Container(
-          width: 1.sw,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 50.h,
-                ),
-                WhiteHeadTextWidget(
-                  text: "Recover password",
-                  fontSize: 25.h,
-                  fontWeight: FontWeight.w800,
-                ),
-                SizedBox(
-                  height: 0.025.h,
-                ),
-                WhiteHeadTextWidget(
-                  text:
-                      "Don't worry! Enter the email address associated with your Rated Locksmiths"
-                      " account and we will send you link so that you can reset your password",
-                  fontSize: 15.sp,
-                  // fontWeight: FontWeight.w800,
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                TextFormFieldWidget(
-                  controller: _email,
-                  label: "",
-                  hint: "Email address",
-                  type: TextInputType.emailAddress,
-                  maxLines: 1,
-                  isEnabled: true,
-                ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    if (_email.text == "") {
-                      FocusScope.of(context).unfocus();
-                      ShowToast.show("Email cannot be blank");
+    return LoginWidget(
+      container1: Center(
+        child: Image.asset("asset/logo.png", width: 0.6.sw),
+      ),
+      container2: Container(
+        width: 1.sw,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 50.h,
+              ),
+              WhiteHeadTextWidget(
+                text: "Recover password",
+                fontSize: 25.h,
+                fontWeight: FontWeight.w800,
+              ),
+              SizedBox(
+                height: 0.025.h,
+              ),
+              WhiteHeadTextWidget(
+                text:
+                    "Don't worry! Enter the email address associated with your Rated Locksmiths"
+                    " account and we will send you link so that you can reset your password",
+                fontSize: 15.sp,
+                // fontWeight: FontWeight.w800,
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              TextFormFieldWidget(
+                controller: _email,
+                label: "",
+                hint: "Email address",
+                type: TextInputType.emailAddress,
+                maxLines: 1,
+                isEnabled: true,
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (_email.text == "") {
+                    FocusScope.of(context).unfocus();
+                    ShowToast.show("Email cannot be blank");
+                  } else {
+                    FocusScope.of(context).unfocus();
+                    API api = API();
+                    var body = await api
+                        .postData("recover-password/", {"email": _email.text});
+                    print(body is String);
+                    if (body is String) {
+                      ShowToast.show("Invalid Email address");
                     } else {
-                      FocusScope.of(context).unfocus();
-                      API api = API();
-                      var body = await api.postData(
-                          "recover-password/", {"email": _email.text});
-                      print(body is String);
-                      if (body is String) {
-                        ShowToast.show("Invalid Email address");
-                      } else {
-                        ShowToast.show(body["message"]);
-                      }
-                      return Get.off(() => Login());
+                      ShowToast.show(body["message"]);
                     }
-                  },
-                  child: RaisedGradientButton(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.white,
-                        Colors.black,
-                      ],
-                      begin: FractionalOffset(0.0, 0.0),
-                      end: FractionalOffset(0.65, 0.0),
-                      // tileMode: TileMode.mirror,begin: Alignment.topLeft,end: Alignment.bottomRight,
-                      transform: GradientRotation(math.pi / 2),
-                    ),
-                    child: Center(
-                        child: WhiteHeadTextWidget(
-                      text: "Submit",
-                      fontSize: 20.h,
-                      fontWeight: FontWeight.w600,
-                    )),
+                    return Get.off(() => Login());
+                  }
+                },
+                child: RaisedGradientButton(
+                  gradient: const LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.black,
+                    ],
+                    begin: FractionalOffset(0.0, 0.0),
+                    end: FractionalOffset(0.65, 0.0),
+                    // tileMode: TileMode.mirror,begin: Alignment.topLeft,end: Alignment.bottomRight,
+                    transform: GradientRotation(math.pi / 2),
                   ),
+                  child: Center(
+                      child: WhiteHeadTextWidget(
+                    text: "Submit",
+                    fontSize: 20.h,
+                    fontWeight: FontWeight.w600,
+                  )),
                 ),
-                SizedBox(height: 0.03.h),
-              ],
-            ),
+              ),
+              SizedBox(height: 0.03.h),
+            ],
           ),
         ),
       ),

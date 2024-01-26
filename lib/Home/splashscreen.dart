@@ -1,23 +1,23 @@
 import 'dart:async';
 
-import 'package:autolocksmith/FCM/fcm.dart';
-import 'package:autolocksmith/Home/dashboard.dart';
-import 'package:autolocksmith/Login/Login.dart';
-import 'package:autolocksmith/model/User.dart';
+import 'package:rated_locksmith/FCM/fcm.dart';
+import 'package:rated_locksmith/Home/dashboard.dart';
+import 'package:rated_locksmith/Login/Login.dart';
+import 'package:rated_locksmith/model/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  final User user;
+  final User? user;
   SplashScreen({this.user});
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SharedPreferences sp;
+  SharedPreferences? sp;
   FCMConfig fcm = FCMConfig();
   String version = "Version: 1.0";
 
@@ -32,12 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       Duration(milliseconds: 1500),
       () {
-        if (sp.containsKey("id")) {
+        if (sp!.containsKey("id")) {
           //
           // shop = await shop.fromSharedPreference();
           User user = User(
-            id: sp.getInt('id'),
-            personName: sp.getString('person_name'),
+            id: sp!.getInt('id'),
+            personName: sp!.getString('person_name'),
           );
 
           Navigator.pushAndRemoveUntil(

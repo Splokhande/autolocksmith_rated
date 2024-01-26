@@ -1,18 +1,16 @@
-import 'package:custom_progress_dialog/custom_progress_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
-class Loader{
-
-  ProgressDialog dialog = ProgressDialog();
-  BuildContext context;
-  showLoader(String message, context){
-    dialog.showProgressDialog(context,
-      textToBeDisplayed: message,
+class Loader {
+  ProgressDialog? dialog;
+  showLoader(String message, context) {
+    dialog = ProgressDialog(context: context);
+    dialog!.show(
+      msg: message,
     );
   }
 
-  hideLoader( BuildContext context){
-    dialog.dismissProgressDialog(context);
-
+  hideLoader(BuildContext context) {
+    dialog!.close();
   }
 }

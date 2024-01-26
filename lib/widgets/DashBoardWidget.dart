@@ -1,33 +1,33 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:autolocksmith/Home/dashboard.dart';
-import 'package:autolocksmith/model/lead_info.dart';
+import 'package:rated_locksmith/Home/dashboard.dart';
+import 'package:rated_locksmith/model/lead_info.dart';
 import 'package:provider/provider.dart';
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/Home/changePassword.dart';
-import 'package:autolocksmith/Home/leads.dart';
-import 'package:autolocksmith/Home/profile.dart';
-import 'package:autolocksmith/Login/Login.dart';
-import 'package:autolocksmith/model/User.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/Home/changePassword.dart';
+import 'package:rated_locksmith/Home/leads.dart';
+import 'package:rated_locksmith/Home/profile.dart';
+import 'package:rated_locksmith/Login/Login.dart';
+import 'package:rated_locksmith/model/User.dart';
 import 'package:flutter/material.dart';
-import 'package:autolocksmith/model/leads.dart';
-import 'package:autolocksmith/widgets/connectivity.dart';
-import 'package:autolocksmith/widgets/loader.dart';
-import 'package:autolocksmith/widgets/toast.dart';
-import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:rated_locksmith/model/leads.dart';
+import 'package:rated_locksmith/widgets/connectivity.dart';
+import 'package:rated_locksmith/widgets/loader.dart';
+import 'package:rated_locksmith/widgets/toast.dart';
+import 'package:rated_locksmith/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardWidget extends StatelessWidget {
-  final Widget container1;
-  final Widget container2;
-  final Widget widget;
-  final String header;
-  final User user;
-  final int onTap;
-  final String onWill;
-  final String currentPage;
+  final Widget? container1;
+  final Widget? container2;
+  final Widget? widget;
+  final String? header;
+  final User? user;
+  final int? onTap;
+  final String? onWill;
+  final String? currentPage;
   DashBoardWidget(
       {this.onWill,
       this.container1,
@@ -38,7 +38,7 @@ class DashBoardWidget extends StatelessWidget {
       this.currentPage,
       // this.shop,
       this.onTap});
-  double height, width;
+  double height = 0, width = 0;
   List<Lead> newLeads = [];
   List<Lead> submittedLeads = [];
   API api = API();
@@ -60,6 +60,7 @@ class DashBoardWidget extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           resizeToAvoidBottomInset: true,
           appBar: AppBar(
+            backgroundColor: Theme.of(context).primaryColor,
             centerTitle: true,
             elevation: 0,
             leading: ModalRoute.of(context)?.canPop == true
@@ -78,7 +79,7 @@ class DashBoardWidget extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => HomePage(
                                     // shop: shop,
-                                    user: user,
+                                    user: user!,
                                   )),
                           (route) => false);
                       // }
@@ -89,7 +90,7 @@ class DashBoardWidget extends StatelessWidget {
             toolbarHeight: 0.075.sh,
             titleSpacing: 20,
             title: WhiteHeadTextWidget(
-              text: header,
+              text: header ?? "",
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
@@ -104,13 +105,13 @@ class DashBoardWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: height * 0.0),
                     child: ListTile(
-                      tileColor: Theme.of(context).backgroundColor,
+                      tileColor: Theme.of(context).colorScheme.background,
                       title: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: width * 0.015,
                         ),
                         child: Text(
-                          "Hello ${user.personName}",
+                          "Hello ${user!.personName}",
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: width * 0.035,
@@ -134,7 +135,7 @@ class DashBoardWidget extends StatelessWidget {
                   GestureDetector(
                       onTap: () {
                         if (currentPage != "Dashboard") {
-                          selectOntap(onTap ?? 0, context);
+                          onTap ?? selectOntap(0, context);
                         } else {
                           Navigator.of(context).pop();
                         }
@@ -149,7 +150,7 @@ class DashBoardWidget extends StatelessWidget {
                   GestureDetector(
                       onTap: () {
                         if (currentPage != "Leads") {
-                          selectOntap(onTap ?? 1, context);
+                          onTap ?? selectOntap(1, context);
                         } else {
                           Navigator.of(context).pop();
                         }
@@ -164,7 +165,7 @@ class DashBoardWidget extends StatelessWidget {
                   GestureDetector(
                       onTap: () {
                         if (currentPage != "Profile") {
-                          selectOntap(onTap ?? 2, context);
+                          onTap ?? selectOntap(2, context);
                         } else {
                           Navigator.of(context).pop();
                         }
@@ -179,7 +180,7 @@ class DashBoardWidget extends StatelessWidget {
                   GestureDetector(
                       onTap: () {
                         if (currentPage != "ChangePassword") {
-                          selectOntap(onTap ?? 3, context);
+                          onTap ?? selectOntap(3, context);
                         } else {
                           Navigator.of(context).pop();
                         }
@@ -193,7 +194,7 @@ class DashBoardWidget extends StatelessWidget {
                   ),
                   GestureDetector(
                       onTap: () {
-                        selectOntap(onTap ?? 4, context);
+                        onTap ?? selectOntap(4, context);
                       },
                       child: DrawerItems(
                         text: "Logout",
@@ -239,7 +240,7 @@ class DashBoardWidget extends StatelessWidget {
                             Container(
                               height: 10.h,
                             ),
-                            Expanded(child: container2),
+                            Expanded(child: container2 ?? SizedBox()),
                           ],
                         ),
                       ),
@@ -266,13 +267,13 @@ class DashBoardWidget extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => HomePage(
                       // shop: shop,
-                      user: user,
+                      user: user!,
                     )),
             (route) => false);
         break;
 
       case 1:
-        if (sp.getBool("internet")) {
+        if (sp.getBool("internet") ?? false) {
           loader.showLoader("Fetching Leads", context);
           var body = await api.getData("leads/");
           if (body == "{}") {
@@ -295,7 +296,7 @@ class DashBoardWidget extends StatelessWidget {
                         newLeads: newLeads,
                         submittedLeads: submittedLeads,
                         // shop: shop
-                        user: user,
+                        user: user!,
                       )));
           // }
           // else{
@@ -314,7 +315,7 @@ class DashBoardWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyProfile(
                   // shop: shop,
-                  user: user,
+                  user: user!,
                 )));
         break;
 
@@ -322,7 +323,7 @@ class DashBoardWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChangePassword(
                   // shop: shop,
-                  user: user,
+                  user: user!,
                 )));
         break;
 
@@ -337,12 +338,12 @@ class DashBoardWidget extends StatelessWidget {
 }
 
 class LeadBoardWidget extends StatelessWidget {
-  final Widget container2;
-  final Widget widget;
-  final String header;
-  final User user;
-  Function onTap;
-  final String currentPage;
+  final Widget? container2;
+  final Widget? widget;
+  final String? header;
+  final User? user;
+  Function? onTap;
+  final String? currentPage;
   LeadBoardWidget(
       {this.container2,
       this.currentPage,
@@ -350,7 +351,7 @@ class LeadBoardWidget extends StatelessWidget {
       this.header,
       this.user,
       this.onTap});
-  double height, width;
+  double height = 0, width = 0;
   List<Lead> newLeads = [];
   List<Lead> submittedLeads = [];
   API api = API();
@@ -369,7 +370,7 @@ class LeadBoardWidget extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomePage(
-                            user: user,
+                            user: user!,
                           )),
                   (route) => false);
               return Future.value(true);
@@ -380,6 +381,7 @@ class LeadBoardWidget extends StatelessWidget {
               appBar: AppBar(
                 centerTitle: true,
                 elevation: 0,
+                backgroundColor: Theme.of(context).primaryColor,
                 leading: ModalRoute.of(context)?.canPop == true
                     ? IconButton(
                         icon: Icon(
@@ -392,7 +394,7 @@ class LeadBoardWidget extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => HomePage(
                                         // shop: shop,
-                                        user: user,
+                                        user: user!,
                                       )),
                               (route) => false);
                         },
@@ -408,7 +410,7 @@ class LeadBoardWidget extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => HomePage(
                                         // shop: shop,
-                                        user: user,
+                                        user: user!,
                                       )),
                               (route) => false);
                         },
@@ -416,7 +418,7 @@ class LeadBoardWidget extends StatelessWidget {
                 shadowColor: Theme.of(context).primaryColor,
                 toolbarHeight: 0.130.sh,
                 title: WhiteHeadTextWidget(
-                  text: header,
+                  text: header ?? "",
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -446,7 +448,7 @@ class LeadBoardWidget extends StatelessWidget {
                               horizontal: width * 0.015,
                             ),
                             child: Text(
-                              "Hello ${user.personName}",
+                              "Hello ${user!.personName}",
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: width * 0.035,
@@ -470,7 +472,7 @@ class LeadBoardWidget extends StatelessWidget {
                       GestureDetector(
                           onTap: () {
                             if (currentPage != "Dashboard") {
-                              selectOntap(onTap ?? 0, context);
+                              onTap ?? selectOntap(0, context);
                             } else {
                               Navigator.of(context).pop();
                             }
@@ -485,7 +487,7 @@ class LeadBoardWidget extends StatelessWidget {
                       GestureDetector(
                           onTap: () {
                             if (currentPage != "Leads") {
-                              selectOntap(onTap ?? 1, context);
+                              onTap ?? selectOntap(1, context);
                             } else {
                               Navigator.of(context).pop();
                             }
@@ -500,7 +502,7 @@ class LeadBoardWidget extends StatelessWidget {
                       GestureDetector(
                           onTap: () {
                             if (currentPage != "Profile") {
-                              selectOntap(onTap ?? 2, context);
+                              onTap ?? selectOntap(2, context);
                             } else {
                               Navigator.of(context).pop();
                             }
@@ -515,7 +517,7 @@ class LeadBoardWidget extends StatelessWidget {
                       GestureDetector(
                           onTap: () {
                             if (currentPage != "ChangePassword") {
-                              selectOntap(onTap ?? 3, context);
+                              onTap ?? selectOntap(3, context);
                             } else {
                               Navigator.of(context).pop();
                             }
@@ -529,7 +531,7 @@ class LeadBoardWidget extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () {
-                            selectOntap(onTap ?? 4, context);
+                            onTap ?? selectOntap(4, context);
                           },
                           child: DrawerItems(
                             text: "Logout",
@@ -569,7 +571,9 @@ class LeadBoardWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Flexible(fit: FlexFit.loose, child: container2),
+                            Flexible(
+                                fit: FlexFit.loose,
+                                child: container2 ?? SizedBox()),
                           ],
                         ),
                       ),
@@ -595,7 +599,7 @@ class LeadBoardWidget extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => HomePage(
                       // shop: shop,
-                      user: user,
+                      user: user!,
                     )),
             (route) => false);
         break;
@@ -627,7 +631,7 @@ class LeadBoardWidget extends StatelessWidget {
                         newLeads: newLeads,
                         submittedLeads: submittedLeads,
                         // shop: shop
-                        user: user,
+                        user: user!,
                       )));
         } else {
           ShowToast.show("Something went wrong \n Try again after sometime");
@@ -646,7 +650,7 @@ class LeadBoardWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => MyProfile(
                   // shop: shop,
-                  user: user,
+                  user: user!,
                 )));
         break;
 
@@ -654,7 +658,7 @@ class LeadBoardWidget extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChangePassword(
                   // shop: shop,
-                  user: user,
+                  user: user!,
                 )));
         break;
 

@@ -3,7 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetAppIcon = 'asset/app-icon.png';
-  static const String assetAutoLocksmithsAppIcon =
+  static const String assetrated_locksmithsAppIcon =
       'asset/Auto-locksmiths-app-icon.png';
   static const String assetChangePswd = 'asset/change_pswd.png';
   static const String assetDelete = 'asset/delete.png';

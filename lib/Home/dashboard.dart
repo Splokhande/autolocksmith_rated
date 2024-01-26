@@ -1,41 +1,41 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
-import 'package:autolocksmith/model/lead_info.dart';
-import 'package:autolocksmith/widgets/toast.dart';
+import 'package:rated_locksmith/model/lead_info.dart';
+import 'package:rated_locksmith/widgets/toast.dart';
 import 'package:provider/provider.dart';
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/FCM/fcm.dart';
-import 'package:autolocksmith/Home/changePassword.dart';
-import 'package:autolocksmith/Home/leads.dart';
-import 'package:autolocksmith/Home/profile.dart';
-import 'package:autolocksmith/Login/Login.dart';
-import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/widgets/DashBoardWidget.dart';
-import 'package:autolocksmith/widgets/connectivity.dart';
-import 'package:autolocksmith/widgets/loader.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/FCM/fcm.dart';
+import 'package:rated_locksmith/Home/changePassword.dart';
+import 'package:rated_locksmith/Home/leads.dart';
+import 'package:rated_locksmith/Home/profile.dart';
+import 'package:rated_locksmith/Login/Login.dart';
+import 'package:rated_locksmith/model/User.dart';
+import 'package:rated_locksmith/widgets/DashBoardWidget.dart';
+import 'package:rated_locksmith/widgets/connectivity.dart';
+import 'package:rated_locksmith/widgets/loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   User user;
-  HomePage({this.user});
+  HomePage({required this.user});
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  double height, width;
-  SharedPreferences sp;
+  double? height, width;
+  SharedPreferences? sp;
   API api = API();
   Loader loader = Loader();
   bool internet = false;
   Connection connection = Connection();
-  int count;
-  Lead leadsDetail;
+  int? count;
+  Lead? leadsDetail;
   List<Lead> newLeads = [];
   List<Lead> allLeads = [];
   List<Lead> submittedLeads = [];
@@ -48,11 +48,11 @@ class _HomePageState extends State<HomePage> {
 
   getSp() async {
     sp = await SharedPreferences.getInstance();
-    String token = sp.getString("token");
+    String token = sp!.getString("token")!;
     if (widget.user.personName == null)
       widget.user = User(
-        id: sp.getInt('id'),
-        personName: sp.getString('person_name'),
+        id: sp!.getInt('id'),
+        personName: sp!.getString('person_name'),
       );
     if (kDebugMode) print("FCM Token: $token");
     leadsDetail = Lead();
@@ -87,10 +87,12 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Badge(
-                    position: BadgePosition.topEnd(top: -5, end: -2),
-                    animationDuration: Duration(milliseconds: 100),
-                    animationType: BadgeAnimationType.slide,
+                  badge.Badge(
+                    position: badge.BadgePosition.topEnd(top: -5, end: -2),
+                    // animationDuration: Duration(milliseconds: 100),
+                    // animationType: BadgeAnimationType.slide,
+                    badgeAnimation: badge.BadgeAnimation.slide(),
+
                     badgeContent: Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
@@ -101,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     child: GestureDetector(
                         onTap: () async {
                           await connection.check();
-                          if (sp.getBool("internet")) {
+                          if (sp!.getBool("internet") ?? false) {
                             selectOntap(0, context);
                           }
                         },
@@ -113,13 +115,13 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 width: 0.22.sw),
                             SizedBox(
-                              height: height * 0.02,
+                              height: height! * 0.02,
                             ),
                             Text(
                               "Leads",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: width * 0.035),
+                                  fontSize: width! * 0.035),
                             )
                           ],
                         )),
@@ -134,13 +136,13 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset("asset/profile.png"),
                             width: 0.22.sw),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height! * 0.02,
                         ),
                         Text(
                           "Profile",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: width * 0.035),
+                              fontSize: width! * 0.035),
                         )
                       ],
                     ),
@@ -164,14 +166,14 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset("asset/change_pswd.png"),
                             width: 0.22.sw),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height! * 0.02,
                         ),
                         Text(
                           "Password",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: width * 0.035),
+                              fontSize: width! * 0.035),
                         )
                       ],
                     ),
@@ -186,13 +188,13 @@ class _HomePageState extends State<HomePage> {
                             child: Image.asset("asset/logout.png"),
                             width: 0.22.sw),
                         SizedBox(
-                          height: height * 0.02,
+                          height: height! * 0.02,
                         ),
                         Text(
                           "Logout",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: width * 0.035),
+                              fontSize: width! * 0.035),
                         )
                       ],
                     ),
@@ -268,7 +270,7 @@ class _HomePageState extends State<HomePage> {
 
       case 3:
         await FirebaseMessaging.instance.deleteToken();
-        sp.clear();
+        sp!.clear();
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) => Login()), (route) => false);
         break;

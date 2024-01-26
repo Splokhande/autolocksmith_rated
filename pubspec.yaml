@@ -1,4 +1,4 @@
-name: autolocksmith
+name: rated_locksmith
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=3.2.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -35,7 +35,7 @@ dependencies:
   google_fonts:
   http:
   provider:
-  custom_progress_dialog:
+  sn_progress_dialog:
   sqflite:
   flutter_screenutil:
   fluttertoast:

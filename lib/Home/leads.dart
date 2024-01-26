@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/FCM/fcm.dart';
-import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/model/lead_info.dart';
-import 'package:autolocksmith/widgets/DashBoardWidget.dart';
-import 'package:autolocksmith/widgets/loader.dart';
-import 'package:autolocksmith/widgets/toast.dart';
-import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/FCM/fcm.dart';
+import 'package:rated_locksmith/model/User.dart';
+import 'package:rated_locksmith/model/lead_info.dart';
+import 'package:rated_locksmith/widgets/DashBoardWidget.dart';
+import 'package:rated_locksmith/widgets/loader.dart';
+import 'package:rated_locksmith/widgets/toast.dart';
+import 'package:rated_locksmith/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +20,21 @@ class MyLeads extends StatefulWidget {
   final List<Lead> newLeads;
   final List<Lead> submittedLeads;
   User user;
-  final bool showNewLead;
+  final bool? showNewLead;
 
-  MyLeads({this.newLeads, this.submittedLeads, this.user, this.showNewLead});
+  MyLeads(
+      {required this.newLeads,
+      required this.submittedLeads,
+      required this.user,
+      this.showNewLead = false});
 
   @override
   _MyLeadsState createState() => _MyLeadsState();
 }
 
 class _MyLeadsState extends State<MyLeads> {
-  TextEditingController _search = TextEditingController();
-  double height, width;
+  final TextEditingController _search = TextEditingController();
+  double? height, width;
   bool selected = true;
   String title = "";
   String subtitle = "";
@@ -80,29 +84,29 @@ class _MyLeadsState extends State<MyLeads> {
             List<Lead> lead2 = [];
 
             for (int i = 0; i < newLeads.length; i++) {
-              if ((newLeads[i].name.toLowerCase() +
-                      newLeads[i].mapLocation.toLowerCase() +
-                      newLeads[i].zipcode.toLowerCase() +
-                      newLeads[i].email +
+              if ((newLeads[i].name!.toLowerCase() +
+                      newLeads[i].mapLocation!.toLowerCase() +
+                      newLeads[i].zipcode!.toLowerCase() +
+                      newLeads[i].email! +
                       ("rl" + newLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
-                  .contains(value.toString().toLowerCase())) {
+                  .contains(value.toString()!.toLowerCase())) {
                 if (!lead1.contains(newLeads[i])) {
                   lead1.add(newLeads[i]);
                 }
               }
               // if (newLeads[i]
               //     .mapLocation
-              //     .toLowerCase()
-              //     .contains(value.toString().toLowerCase())) {
+              //     !.toLowerCase()
+              //     .contains(value.toString()!.toLowerCase())) {
               //   if (!lead1.contains(newLeads[i])) {
               //     lead1.add(newLeads[i]);
               //   }
               // }
               // if (newLeads[i]
               //     .email
-              //     .toLowerCase()
-              //     .contains(value.toString().toLowerCase())) {
+              //     !.toLowerCase()
+              //     .contains(value.toString()!.toLowerCase())) {
               //   if (!lead1.contains(newLeads[i])) {
               //     lead1.add(newLeads[i]);
               //   }
@@ -110,37 +114,37 @@ class _MyLeadsState extends State<MyLeads> {
               // if (newLeads[i]
               //     .quoteRequestId
               //     .toString()
-              //     .toLowerCase()
-              //     .contains(value.toString().substring(2).toLowerCase())) {
+              //     !.toLowerCase()
+              //     .contains(value.toString().substring(2)!.toLowerCase())) {
               //   if (!lead1.contains(newLeads[i])) {
               //     lead1.add(newLeads[i]);
               //   }
               // }
             }
             for (int i = 0; i < submittedLeads.length; i++) {
-              if ((submittedLeads[i].name.toLowerCase() +
-                      submittedLeads[i].mapLocation.toLowerCase() +
-                      submittedLeads[i].zipcode.toLowerCase() +
-                      submittedLeads[i].email +
+              if ((submittedLeads[i].name!.toLowerCase() +
+                      submittedLeads[i].mapLocation!.toLowerCase() +
+                      submittedLeads[i].zipcode!.toLowerCase() +
+                      submittedLeads[i].email! +
                       ("rl" + submittedLeads[i].quoteRequestId.toString()))
                   .replaceAll(" ", "")
-                  .contains(value.toString().toLowerCase())) {
+                  .contains(value.toString()!.toLowerCase())) {
                 if (!lead2.contains(submittedLeads[i])) {
                   lead2.add(submittedLeads[i]);
                 }
               }
               //   if (submittedLeads[i]
               //       .quote
-              //       .toLowerCase()
-              //       .contains(value.toString().toLowerCase())) {
+              //       !.toLowerCase()
+              //       .contains(value.toString()!.toLowerCase())) {
               //     if (!lead2.contains(submittedLeads[i])) {
               //       lead2.add(submittedLeads[i]);
               //     }
               //   }
               //   if (submittedLeads[i]
               //       .email
-              //       .toLowerCase()
-              //       .contains(value.toString().toLowerCase())) {
+              //       !.toLowerCase()
+              //       .contains(value.toString()!.toLowerCase())) {
               //     if (!lead2.contains(submittedLeads[i])) {
               //       lead2.add(submittedLeads[i]);
               //     }
@@ -148,8 +152,8 @@ class _MyLeadsState extends State<MyLeads> {
               //   if (submittedLeads[i]
               //       .quoteRequestId
               //       .toString()
-              //       .toLowerCase()
-              //       .contains(value.toString().substring(2).toLowerCase())) {
+              //       !.toLowerCase()
+              //       .contains(value.toString().substring(2)!.toLowerCase())) {
               //     if (!lead2.contains(submittedLeads[i])) {
               //       lead2.add(submittedLeads[i]);
               //     }
@@ -168,12 +172,12 @@ class _MyLeadsState extends State<MyLeads> {
         },
       ),
       container2: Container(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+        padding: EdgeInsets.symmetric(horizontal: width! * 0.05),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: height * 0.05,
+              height: height! * 0.05,
             ),
             Container(
               height: 50.h,
@@ -230,14 +234,17 @@ class _MyLeadsState extends State<MyLeads> {
                                       Loader loader = Loader();
                                       loader.showLoader(
                                           "Fetching Details", context);
-                                      LeadInfo leads = LeadInfo();
+                                      LeadInfo leads = LeadInfo(
+                                          hauler: Hauler(),
+                                          lead: Lead(),
+                                          quote: Quote());
                                       var body = await api
                                           .getData("leads/${newLeads[i].id}/");
                                       loader.hideLoader(context);
 
                                       leads = LeadInfo.fromJson(body);
                                       List<String> list =
-                                          leads.quote.vehicleHelp
+                                          leads.quote.vehicleHelp!
                                               // .replaceAll("\$*\$", "'")
                                               // .split("#");
                                               .split(",");
@@ -261,7 +268,7 @@ class _MyLeadsState extends State<MyLeads> {
                                                   )));
                                     },
                                     child: LeadTextFieldWidget(
-                                      title: newLeads[i].createdDate,
+                                      title: newLeads[i].createdDate!,
                                       name: newLeads[i].name,
                                       subtitle:
                                           newLeads[i].quoteRequestId.toString(),
@@ -294,7 +301,10 @@ class _MyLeadsState extends State<MyLeads> {
                                       Loader loader = Loader();
                                       loader.showLoader(
                                           "Fetching Details", context);
-                                      LeadInfo leads = LeadInfo();
+                                      LeadInfo leads = LeadInfo(
+                                          hauler: Hauler(),
+                                          lead: Lead(),
+                                          quote: Quote());
                                       debugPrint(
                                           'leads/${submittedLeads[i].id}');
                                       var body = await api.getData(
@@ -303,7 +313,7 @@ class _MyLeadsState extends State<MyLeads> {
 
                                       leads = LeadInfo.fromJson(body);
                                       List<String> list =
-                                          leads.quote.vehicleHelp
+                                          leads.quote.vehicleHelp!
                                               // .replaceAll("\$*\$", "'")
                                               // .split("#");
                                               .split(",");
@@ -327,7 +337,7 @@ class _MyLeadsState extends State<MyLeads> {
                                                   )));
                                     },
                                     child: LeadTextFieldWidget(
-                                      title: submittedLeads[i].createdDate,
+                                      title: submittedLeads[i].createdDate!,
                                       name: submittedLeads[i].name,
                                       subtitle: submittedLeads[i]
                                           .quoteRequestId
@@ -361,39 +371,39 @@ class _MyLeadsState extends State<MyLeads> {
 }
 
 class LeadsDetails extends StatefulWidget {
-  final String header;
-  final String id;
+  final String? header;
+  final String? id;
   final LeadInfo leads;
   final List<Lead> newLeads;
   final List<Lead> submittedLeads;
-  User user;
+  User? user;
   final bool isSubmitted;
-  final List<String> help;
+  final List<String>? help;
 
   LeadsDetails(
       {this.header,
-      this.leads,
+      required this.leads,
       this.help,
       this.id,
       this.user,
-      this.submittedLeads,
-      this.newLeads,
-      this.isSubmitted});
+      required this.submittedLeads,
+      required this.newLeads,
+      required this.isSubmitted});
 
   @override
   _LeadsDetailsState createState() => _LeadsDetailsState();
 }
 
 class _LeadsDetailsState extends State<LeadsDetails> {
-  TextEditingController _quote = TextEditingController();
+  final TextEditingController _quote = TextEditingController();
   bool isEdit = false;
   FCMConfig fcm = FCMConfig();
-  Future<void> _launched;
+  Future<void>? _launched;
   @override
   void initState() {
     // TODO: implement initState
     isEdit = widget.isSubmitted;
-    _quote.text = widget.leads.quote == null ? "" : widget.leads.lead.quote;
+    _quote.text = widget.leads.lead.quote ?? "";
   }
 
   @override
@@ -404,8 +414,8 @@ class _LeadsDetailsState extends State<LeadsDetails> {
   }
 
   Future<void> _openUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -467,12 +477,13 @@ class _LeadsDetailsState extends State<LeadsDetails> {
 
                                   // shop.fromSharedPreference();
                                   ShowToast.show("Lead deleted successfully");
+                                  // ignore: use_build_context_synchronously
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MyLeads(
                                                 // shop: widget.shop,
-                                                user: widget.user,
+                                                user: widget.user!,
                                                 showNewLead: true,
                                                 newLeads: widget.newLeads,
                                                 submittedLeads:
@@ -654,7 +665,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              widget.help[i],
+                                              widget.help![i],
                                               style: TextStyle(
                                                   color: Theme.of(context)
                                                       .canvasColor,
@@ -670,7 +681,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       height: 0.5.h,
                                     );
                                   },
-                                  itemCount: widget.help.length),
+                                  itemCount: widget.help!.length),
                             ),
                           ],
                         ),
@@ -703,7 +714,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                widget.leads.quote.moreInfo
+                                widget.leads.quote.moreInfo!
                                     .replaceAll("&#39;", "'"),
                                 style: TextStyle(
                                     fontSize: 0.04.sw,
@@ -717,10 +728,10 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                         height: 0.015.sh,
                       ),
                       Visibility(
-                        visible: !(widget.leads.quote.imageList.length == 0),
+                        visible: !(widget.leads.quote.imageList!.length == 0),
                         child: Column(
                           children: [
-                            if (widget.leads.quote.imageList.length > 0)
+                            if (widget.leads.quote.imageList!.length > 0)
                               WhiteRowTextWidget(
                                 text: "Photo(s):",
                                 fontWeight: FontWeight.bold,
@@ -728,12 +739,12 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 text2: "",
                                 fontSize2: 0.035,
                               ),
-                            if (widget.leads.quote.imageList.length > 0)
+                            if (widget.leads.quote.imageList!.length > 0)
                               for (int i = 0;
-                                  i < widget.leads.quote.imageList.length;
+                                  i < widget.leads.quote.imageList!.length;
                                   i++)
                                 ImageContainer(
-                                  image: widget.leads.quote.imageList[i].url,
+                                  image: widget.leads.quote.imageList![i].url!,
                                 ),
                           ],
                         ),
@@ -766,7 +777,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     ),
                                   ),
                                   Text(
-                                    widget.leads.quote.name,
+                                    widget.leads.quote.name!,
                                     style: TextStyle(
                                         color: Theme.of(context).canvasColor,
                                         fontSize: 15.sp),
@@ -798,7 +809,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     ),
                                     Expanded(
                                         child: Text(
-                                      widget.leads.quote.telephoneNo,
+                                      widget.leads.quote.telephoneNo!,
                                       style: TextStyle(
                                           color: Color(0xff0037a6),
                                           fontSize: 15.sp),
@@ -834,7 +845,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                       padding:
                                           const EdgeInsets.only(right: 16.0),
                                       child: Text(
-                                        widget.leads.quote.email,
+                                        widget.leads.quote.email!,
                                         style: TextStyle(
                                           color: Color(0xff0037a6),
                                           fontSize: 15.sp,
@@ -1100,7 +1111,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                     MaterialPageRoute(
                                         builder: (context) => MyLeads(
                                               // shop: widget.shop,
-                                              user: widget.user,
+                                              user: widget.user!,
                                               newLeads: widget.newLeads,
                                               submittedLeads:
                                                   widget.submittedLeads,
@@ -1129,6 +1140,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                 if (!(body is String)) {
                                   FlutterAppBadger.updateBadgeCount(
                                       widget.newLeads.length - 1);
+                                  // ignore: use_build_context_synchronously
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
@@ -1160,7 +1172,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                               MaterialPageRoute(
                                                   builder: (context) => MyLeads(
                                                         // shop: widget.shop,
-                                                        user: widget.user,
+                                                        user: widget.user!,
                                                         newLeads:
                                                             widget.newLeads,
                                                         submittedLeads: widget
@@ -1177,7 +1189,7 @@ class _LeadsDetailsState extends State<LeadsDetails> {
                                                     builder: (context) =>
                                                         MyLeads(
                                                           // shop: widget.shop,
-                                                          user: widget.user,
+                                                          user: widget.user!,
                                                           newLeads:
                                                               widget.newLeads,
                                                           submittedLeads: widget

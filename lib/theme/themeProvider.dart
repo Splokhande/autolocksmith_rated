@@ -7,10 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DarkThemePreference {
   static const THEME_STATUS = "THEMESTATUS";
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   setDarkTheme(bool value) async {
     prefs = await SharedPreferences.getInstance();
-    prefs.setBool(THEME_STATUS, value);
+    prefs!.setBool(THEME_STATUS, value);
   }
 
   Future<bool> getTheme() async {
@@ -55,7 +55,7 @@ class Styles {
       primaryColorLight: primaryColor.withOpacity(0.6),
       backgroundColor: isDarkTheme ? Color(0xffe7ebee) : Color(0xffe7ebee),
       indicatorColor: isDarkTheme ? Color(0xff0E1D36) : Color(0xffCBDCF8),
-      buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
+      // buttonColor: isDarkTheme ? Color(0xff3B3B3B) : Color(0xffF1F5FB),
       hintColor: isDarkTheme ? Color(0xff280C0B) : Color(0xff515F65),
       highlightColor: isDarkTheme ? Color(0xffffffff) : Color(0xff153E73),
       hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),
@@ -72,6 +72,7 @@ class Styles {
       textTheme: GoogleFonts.openSansTextTheme(),
       appBarTheme: AppBarTheme(elevation: 0.0),
       splashColor: Colors.white,
+      // iconTheme: IconThemeData(color: Colors.white)
     );
   }
 }

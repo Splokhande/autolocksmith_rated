@@ -1,4 +1,4 @@
-import 'package:autolocksmith/model/lead_info.dart';
+import 'package:rated_locksmith/model/lead_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -7,8 +7,8 @@ import 'package:flutter/services.dart' as sys;
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:autolocksmith/Home/splashscreen.dart';
-import 'package:autolocksmith/theme/themeProvider.dart';
+import 'package:rated_locksmith/Home/splashscreen.dart';
+import 'package:rated_locksmith/theme/themeProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +17,7 @@ Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // make sure you call `initializeApp` before using other Firebase services.
   // await Firebase.initializeApp();
   SharedPreferences sp = await SharedPreferences.getInstance();
-  int count = sp.getInt("count") + 1;
+  int count = sp.getInt("count")! + 1;
   if (kDebugMode) print("Handling a background message: ${message.messageId}");
   FlutterAppBadger.updateBadgeCount(count);
 }
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
   // User user;
-  SharedPreferences sp;
+  SharedPreferences? sp;
   @override
   void initState() {
     super.initState();
@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
 
                 return MediaQuery(
                     data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                    child: widget);
+                    child: widget!);
               },
               home: SplashScreen(),
               debugShowCheckedModeBanner: false,

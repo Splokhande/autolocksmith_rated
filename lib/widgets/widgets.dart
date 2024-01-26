@@ -9,23 +9,24 @@ import 'package:full_screen_image/full_screen_image.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
 class RichWidget extends StatelessWidget {
-  String text1;
-  String text2;
-  String text3;
-  RichWidget({this.text1, this.text2, this.text3});
+  String? text1;
+  String? text2;
+  String? text3;
+  RichWidget({super.key, this.text1, this.text2, this.text3});
   @override
   Widget build(BuildContext context) {
-    return new RichText(
-      text: new TextSpan(
+    return RichText(
+      text: TextSpan(
         text: '$text1',
         style: TextStyle(color: Theme.of(context).canvasColor),
         children: <TextSpan>[
-          new TextSpan(
-              text: '$text2',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).primaryColor)),
-          new TextSpan(text: ' $text3'),
+          if (text2 != null)
+            TextSpan(
+                text: '$text2',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor)),
+          if (text3 != null) TextSpan(text: ' $text3'),
         ],
       ),
     );
@@ -33,40 +34,43 @@ class RichWidget extends StatelessWidget {
 }
 
 class WhiteHeadTextWidget extends StatelessWidget {
-  String text;
-  double fontSize;
-  double height, width;
-  FontWeight fontWeight;
-  WhiteHeadTextWidget({this.text, this.fontWeight, this.fontSize});
+  String? text;
+  double? fontSize;
+  double? height, width;
+  FontWeight? fontWeight;
+
+  WhiteHeadTextWidget({super.key, this.text, this.fontWeight, this.fontSize});
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: new Text(
-        text,
-        maxLines: 2,
-        style: TextStyle(
-          color: Theme.of(context).backgroundColor,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-        ),
-      ),
-    );
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text!,
+            maxLines: 2,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.background,
+              fontSize: fontSize!,
+              fontWeight: fontWeight ?? FontWeight.normal,
+            )));
   }
 }
 
 class WhiteTextWidget extends StatelessWidget {
-  String text;
-  double fontSize;
-  double height, width;
-  FontWeight fontWeight;
-  WhiteTextWidget({this.text, this.fontWeight, this.fontSize});
+  String? text;
+  double? fontSize;
+  double? height, width;
+  FontWeight? fontWeight;
+
+  WhiteTextWidget({super.key, this.text, this.fontWeight, this.fontSize});
+
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context)!.size.height;
+    width = MediaQuery.of(context)!.size.width;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -75,14 +79,14 @@ class WhiteTextWidget extends StatelessWidget {
       width: width,
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: width * 0.08, vertical: height * 0.01),
+            horizontal: width! * 0.08, vertical: height! * 0.01),
         child: Center(
           child: Text(
-            text,
+            text!,
             maxLines: 5,
             style: TextStyle(
               color: Theme.of(context).canvasColor,
-              fontSize: fontSize,
+              fontSize: fontSize!,
               fontWeight: fontWeight,
             ),
             textAlign: TextAlign.start,
@@ -95,24 +99,28 @@ class WhiteTextWidget extends StatelessWidget {
 
 ///Leads
 class WhiteRowTextWidget extends StatelessWidget {
-  String text;
-  String text2;
-  double fontSize;
-  double fontSize2;
-  double height, width;
-  FontWeight fontWeight;
-  FontWeight fontWeight2;
+  String? text;
+  String? text2;
+  double? fontSize;
+  double? fontSize2;
+  double? height, width;
+  FontWeight? fontWeight;
+  FontWeight? fontWeight2;
+
   WhiteRowTextWidget(
-      {this.text,
+      {super.key,
+      this.text,
       this.text2,
       this.fontWeight,
       this.fontWeight2,
       this.fontSize,
       this.fontSize2});
+
   @override
   Widget build(BuildContext context) {
-    height = MediaQuery.of(context).size.height;
-    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context)?.size.height;
+    width = MediaQuery.of(context)?.size.width;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -120,32 +128,28 @@ class WhiteRowTextWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: width * 0.05, vertical: height * 0.01),
+            horizontal: width! * 0.05, vertical: height! * 0.01),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 0.25.sw,
-              child: Text(
-                text,
-                textAlign: TextAlign.start,
-                maxLines: 5,
-                style: TextStyle(
-                    color: Theme.of(context).canvasColor,
-                    fontSize: 0.04.sw,
-                    fontWeight: fontWeight),
-              ),
+              child: Text(text!,
+                  textAlign: TextAlign.start,
+                  maxLines: 5,
+                  style: TextStyle(
+                      color: Theme.of(context!).canvasColor,
+                      fontSize: 0.04.sw,
+                      fontWeight: fontWeight)),
             ),
             Expanded(
-              child: Text(
-                text2,
-                maxLines: 5,
-                style: TextStyle(
-                    color: Theme.of(context).canvasColor,
-                    fontSize: 0.04.sw,
-                    fontWeight: fontWeight2),
-              ),
+              child: Text(text2!,
+                  maxLines: 5,
+                  style: TextStyle(
+                      color: Theme.of(context!).canvasColor,
+                      fontSize: 0.04.sw,
+                      fontWeight: fontWeight2)),
             ),
           ],
         ),
@@ -155,33 +159,35 @@ class WhiteRowTextWidget extends StatelessWidget {
 }
 
 class TextFormFieldWidget extends StatelessWidget {
-  TextEditingController controller;
-  String hint;
-  String label;
-  TextInputType type;
-  bool isPassword;
-  Icon suffixIcon;
-  int maxLines;
-  Key key;
-  Widget suffix;
-  Function validate;
-  Function onChanged;
-  bool obscure;
-  bool isEnabled;
-  TextFormFieldWidget(
-      {this.label,
-      this.maxLines,
-      this.validate,
-      this.controller,
-      this.hint,
-      this.type,
-      this.suffixIcon,
-      this.isPassword,
-      this.isEnabled,
-      this.onChanged,
-      this.key});
+  TextEditingController? controller;
+  String? hint;
+  String? label;
+  TextInputType? type;
+  bool? isPassword;
+  Icon? suffixIcon;
+  int? maxLines;
+  Key? key;
+  Widget? suffix;
+  String? Function(String?)? validate;
+  void Function(String)? onChanged;
+  bool? obscure;
+  bool? isEnabled;
+  TextFormFieldWidget({
+    super.key,
+    this.label,
+    this.maxLines,
+    this.validate,
+    this.controller,
+    this.hint,
+    this.type,
+    this.suffixIcon,
+    this.isPassword,
+    this.isEnabled,
+    this.onChanged,
+  });
 
-  double height, width;
+  late double height;
+  late double width;
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +205,8 @@ class TextFormFieldWidget extends StatelessWidget {
       onChanged: onChanged,
       textInputAction: TextInputAction.newline,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           filled: true,
           fillColor: Colors.white,
           focusColor: Colors.white,
@@ -220,15 +227,15 @@ class TextFormFieldWidget extends StatelessWidget {
 }
 
 class RaisedGradientButton extends StatelessWidget {
-  final Widget child;
-  final Gradient gradient;
-  final double width;
-  final double height;
-  final Function onPressed;
+  final Widget? child;
+  final Gradient? gradient;
+  final double? width;
+  final double? height;
+  final void Function()? onPressed;
 
   const RaisedGradientButton({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.gradient,
     this.width = double.infinity,
     this.height,
@@ -241,7 +248,7 @@ class RaisedGradientButton extends StatelessWidget {
       width: width,
       height: 55.h,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           gradient: gradient),
       child: Material(
         color: Colors.transparent,
@@ -256,9 +263,10 @@ class RaisedGradientButton extends StatelessWidget {
 
 class GradientTabBarButton extends StatelessWidget {
   final bool isActive;
-  IconData icon;
-  String text;
-  GradientTabBarButton({this.isActive, this.icon, this.text});
+  IconData? icon;
+  String? text;
+  GradientTabBarButton(
+      {super.key, this.isActive = false, this.icon, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +275,7 @@ class GradientTabBarButton extends StatelessWidget {
     TextStyle isTextInactive = TextStyle(
         fontSize: 15.sp, fontWeight: FontWeight.w800, color: Colors.grey);
     BoxDecoration isDecorationActive = BoxDecoration(
-      gradient: LinearGradient(
+      gradient: const LinearGradient(
           transform: GradientRotation(pi / 2),
           colors: [Colors.indigo, Colors.lightBlueAccent]),
       borderRadius: BorderRadius.circular(10),
@@ -294,7 +302,7 @@ class GradientTabBarButton extends StatelessWidget {
             ),
             SizedBox(width: 0.02.sw),
             Text(
-              text,
+              text ?? "",
               style: isActive ? isTextActive : isTextInactive,
             )
           ],
@@ -305,9 +313,9 @@ class GradientTabBarButton extends StatelessWidget {
 }
 
 class DrawerItems extends StatelessWidget {
-  String text = "";
-  bool isOpen = false;
-  DrawerItems({this.text, this.isOpen});
+  String? text = "";
+  bool? isOpen = false;
+  DrawerItems({super.key, this.text, this.isOpen});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -316,9 +324,9 @@ class DrawerItems extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: 0.045.sw, vertical: 0.005.sh),
           child: Text(
-            text,
-            style: isOpen
-                ? TextStyle(color: Color(0xffe30613), fontSize: 18.sp)
+            text ?? "",
+            style: isOpen ?? false
+                ? TextStyle(color: const Color(0xffe30613), fontSize: 18.sp)
                 : TextStyle(fontSize: 18.sp),
           ),
         ));
@@ -329,15 +337,16 @@ class ProfileTextFieldWidget extends StatelessWidget {
   String title;
   String subtitle;
 
-  ProfileTextFieldWidget({this.title, this.subtitle});
-  double height, width;
+  ProfileTextFieldWidget(
+      {super.key, required this.title, required this.subtitle});
+  double height = 0, width = 0;
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -373,17 +382,22 @@ class ProfileTextFieldWidget extends StatelessWidget {
 class LeadTextFieldWidget extends StatelessWidget {
   String title;
   String subtitle;
-  String name;
-  String address;
+  String? name;
+  String? address;
 
-  LeadTextFieldWidget({this.title, this.subtitle, this.address, this.name});
+  LeadTextFieldWidget(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      this.address,
+      this.name});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         // height: 0.09.sh,
-        padding: EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
@@ -415,7 +429,7 @@ class LeadTextFieldWidget extends StatelessWidget {
                             title,
                             style: TextStyle(fontSize: 15.sp),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text("RL" + subtitle,
@@ -438,12 +452,12 @@ class LeadTextFieldWidget extends StatelessWidget {
                           Flexible(
                               fit: FlexFit.loose,
                               child: Text(
-                                name,
+                                name ?? "",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15.sp),
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Flexible(
@@ -483,7 +497,7 @@ class LeadTextFieldWidget extends StatelessWidget {
 class ImageContainer extends StatelessWidget {
   final String image;
 
-  ImageContainer({this.image});
+  ImageContainer({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -500,8 +514,17 @@ class ImageContainer extends StatelessWidget {
           ),
           child: FullScreenWidget(
             backgroundIsTransparent: true,
+            disposeLevel: DisposeLevel.High,
             child: PinchZoom(
               zoomEnabled: true,
+              // resetDuration: const Duration(milliseconds: 100),
+              maxScale: 2.5,
+              onZoomStart: () {
+                if (kDebugMode) print('Start zooming');
+              },
+              onZoomEnd: () {
+                if (kDebugMode) print('Stop zooming');
+              },
               child: CachedNetworkImage(
                 imageUrl: image,
                 width: 1.sw,
@@ -519,20 +542,13 @@ class ImageContainer extends StatelessWidget {
                   ),
                 ),
                 placeholder: (context, url) => Center(
-                    child: Container(
+                    child: SizedBox(
                         width: 1.sw,
                         height: 250.h,
-                        child: Center(child: CircularProgressIndicator()))),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                        child:
+                            const Center(child: CircularProgressIndicator()))),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
-              resetDuration: const Duration(milliseconds: 100),
-              maxScale: 2.5,
-              onZoomStart: () {
-                if (kDebugMode) print('Start zooming');
-              },
-              onZoomEnd: () {
-                if (kDebugMode) print('Stop zooming');
-              },
             ),
           ),
         ),
@@ -542,10 +558,11 @@ class ImageContainer extends StatelessWidget {
 }
 
 class SucessCustomDialog extends StatelessWidget {
-  final String title, description, buttonText;
-  final Image image;
+  final String? title, description, buttonText;
+  final Image? image;
 
   SucessCustomDialog({
+    super.key,
     @required this.title,
     @required this.description,
     @required this.buttonText,
@@ -573,29 +590,29 @@ class SucessCustomDialog extends StatelessWidget {
           margin:
               EdgeInsets.symmetric(vertical: avatarRadius, horizontal: 0.2.h),
           height: 200.h,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10.0,
-                offset: const Offset(0.0, 10.0),
+                offset: Offset(0.0, 10.0),
               ),
             ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
-              SizedBox(height: 26.0),
+              const SizedBox(height: 26.0),
               Image.asset(
                 "asset/done.png",
                 height: 50.h,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Text(
-                description,
+                description ?? "",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 0.05.sw,
@@ -604,7 +621,7 @@ class SucessCustomDialog extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }
@@ -612,15 +629,16 @@ class SucessCustomDialog extends StatelessWidget {
 
 class DeleteCustomDialog extends StatelessWidget {
   final String title, description, buttonText;
-  final Image image;
+  final Image? image;
   final Function onTap;
 
   DeleteCustomDialog(
-      {@required this.title,
-      @required this.description,
-      @required this.buttonText,
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.buttonText,
       this.image,
-      this.onTap});
+      required this.onTap});
   double padding = 5.h;
   double avatarRadius = 250.h;
   @override
@@ -643,27 +661,27 @@ class DeleteCustomDialog extends StatelessWidget {
           margin:
               EdgeInsets.symmetric(vertical: avatarRadius, horizontal: 0.2.h),
           height: 2.sh,
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10.0,
-                offset: const Offset(0.0, 10.0),
+                offset: Offset(0.0, 10.0),
               ),
             ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min, // To make the card compact
             children: <Widget>[
-              SizedBox(height: 26.0),
+              const SizedBox(height: 26.0),
               Image.asset(
                 "asset/delete.png",
                 height: 50.h,
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               Text(
                 description,
                 textAlign: TextAlign.center,
@@ -671,7 +689,7 @@ class DeleteCustomDialog extends StatelessWidget {
                   fontSize: 0.05.sw,
                 ),
               ),
-              SizedBox(height: 24.0),
+              const SizedBox(height: 24.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -680,8 +698,10 @@ class DeleteCustomDialog extends StatelessWidget {
                     child: GestureDetector(
                       child: Center(
                         child: RaisedGradientButton(
-                          onPressed: onTap,
-                          gradient: LinearGradient(
+                          onPressed: () {
+                            onTap();
+                          },
+                          gradient: const LinearGradient(
                             colors: [
                               Colors.white,
                               Colors.black,
@@ -709,7 +729,7 @@ class DeleteCustomDialog extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Colors.white,
                           Colors.black,
@@ -732,7 +752,7 @@ class DeleteCustomDialog extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 16.0),
+        const SizedBox(height: 16.0),
       ],
     );
   }

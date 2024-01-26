@@ -21,16 +21,20 @@ class FCMConfig extends ChangeNotifier {
     );
 
     SharedPreferences sp = await SharedPreferences.getInstance();
-    int count = sp.getInt("count");
-    if (count == null) count = 0;
+    int? count = sp.getInt("count");
+    count ??= 0;
     FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
       if (kDebugMode) print('Got a message whilst in the background!');
-      if (count > 0) FlutterAppBadger.updateBadgeCount(count + 1);
+      if (count != null && count > 0) {
+        FlutterAppBadger.updateBadgeCount(count + 1);
+      }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (kDebugMode) print('Got a message whilst in the foreground!');
-      if (count > 0) FlutterAppBadger.updateBadgeCount(count + 1);
+      if (count != null && count > 0) {
+        FlutterAppBadger.updateBadgeCount(count + 1);
+      }
     });
   }
 }

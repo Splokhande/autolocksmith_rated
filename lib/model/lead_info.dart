@@ -1,23 +1,24 @@
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/widgets/connectivity.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/widgets/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 DateFormat format = DateFormat("MM-dd-yyyy");
 
-class Lead extends ChangeNotifier {
-  int quoteRequestId;
-  int id;
-  String quote;
-  String quoteSendAt;
-  String name;
-  String email;
-  String telephoneNo;
-  String createdDate;
-  String mapLocation;
-  String zipcode;
+class Lead with ChangeNotifier {
+  int? quoteRequestId;
+  int? id;
+  String? quote;
+  String? quoteSendAt;
+  String? name;
+  String? email;
+  String? telephoneNo;
+  String? createdDate;
+  String? mapLocation;
+  String? zipcode;
   List<Lead> leadList = [];
+
   Lead(
       {this.quoteRequestId,
       this.id,
@@ -30,7 +31,7 @@ class Lead extends ChangeNotifier {
 
   Lead.fromJson(Map<String, dynamic> json) {
     quoteRequestId = json['quote_request_id'];
-    id = json["lead_id"] == null ? json['id'] : json['lead_id'];
+    id = json["lead_id"] ?? json['id'];
     quote = json['quote'] ?? "";
     email = json["email"] ?? "";
     name = json["name"] ?? "";
@@ -44,22 +45,21 @@ class Lead extends ChangeNotifier {
     zipcode = json["zipcode"] ?? "";
   }
 
-  Future<List<Lead>> getLeadsCount(context) async {
-    // shop = await shop.fromSharedPreference();
+  Future<List<Lead>> getLeadsCount(BuildContext context) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     API api = API();
     Connection connection = Connection();
     await connection.check();
-    leadList.clear();
+    leadList = [];
     var body = await api.getData("leads/");
-    if (body != null && body != "{}")
+    if (body != null && body != "{}") {
       for (int i = 0; i < body.length; i++) {
         Lead lead = Lead.fromJson(body[i]);
         if (lead.quoteSendAt == "") {
           leadList.add(lead);
-          notifyListeners();
         }
       }
+    }
     sp.setInt("count", leadList.length);
 
     return leadList;
@@ -67,17 +67,21 @@ class Lead extends ChangeNotifier {
 }
 
 class LeadInfo {
-  Quote quote;
-  Hauler hauler;
-  Lead lead;
+  late Quote quote;
+  late Hauler hauler;
+  late Lead lead;
 
-  LeadInfo({this.quote, this.hauler, this.lead});
+  LeadInfo({required this.quote, required this.hauler, required this.lead});
 
   LeadInfo.fromJson(Map<String, dynamic> json) {
-    quote = json['quote'] != null ? new Quote.fromJson(json['quote']) : null;
-    hauler =
-        json['hauler'] != null ? new Hauler.fromJson(json['hauler']) : null;
-    lead = json['lead'] != null ? new Lead.fromJson(json['lead']) : null;
+    quote = json['quote'] != null
+        ? Quote.fromJson(json['quote'])
+        : throw Exception();
+    hauler = json['hauler'] != null
+        ? Hauler.fromJson(json['hauler'])
+        : throw Exception();
+    lead =
+        json['lead'] != null ? Lead.fromJson(json['lead']) : throw Exception();
   }
 
   // Map<String, dynamic> toJson() {
@@ -91,38 +95,36 @@ class LeadInfo {
   //   if (this.lead != null) {
   //     data['lead'] = this.lead.toJson();
   //   }
-  //   return data;
-  // }
 }
 
 class Quote {
-  int id;
-  String name;
-  String telephoneNo;
-  String email;
-  String schedule;
-  String moreInfo;
-  List<String> listItems;
-  String imageIds;
-  String zipcode;
-  String mapLocation;
-  String latitude;
-  String vehicleMotor;
-  String vehicleVin;
-  String vehicleMake;
-  String vehicleModel;
-  String vehicleYear;
-  String vehicleHelp;
+  int? id;
+  String? name;
+  String? telephoneNo;
+  String? email;
+  String? schedule;
+  String? moreInfo;
+  List<String>? listItems;
+  String? imageIds;
+  String? zipcode;
+  String? mapLocation;
+  String? latitude;
+  String? vehicleMotor;
+  String? vehicleVin;
+  String? vehicleMake;
+  String? vehicleModel;
+  String? vehicleYear;
+  String? vehicleHelp;
 
-  String longitude;
-  String token;
-  String ipaddress;
-  String browser;
-  String reviewMailSentAt;
-  String isDeleted;
-  String createdAt;
-  String updatedAt;
-  List<Images> imageList;
+  String? longitude;
+  String? token;
+  String? ipaddress;
+  String? browser;
+  String? reviewMailSentAt;
+  String? isDeleted;
+  String? createdAt;
+  String? updatedAt;
+  List<Images>? imageList;
 
   Quote(
       {this.id,
@@ -208,42 +210,49 @@ class Quote {
     data['is_deleted'] = this.isDeleted;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['vehicle_help'] = this.vehicleHelp;
+    data['vehicle_motor'] = this.vehicleMotor;
+    data['vehicle_vin'] = this.vehicleVin;
+    data['vehicle_make'] = this.vehicleMake;
+    data['vehicle_model'] = this.vehicleModel;
+    data['vehicle_year'] = this.vehicleYear;
+    data['images'] = this.imageList;
     return data;
   }
 }
 
 class Hauler {
-  int id;
-  String title;
-  String personName;
-  String businessName;
-  String address;
-  String city;
-  String state;
-  String zipcode;
-  String mapLocation;
-  String latitude;
-  String longitude;
-  int radiusMiles;
-  String telephoneNo;
-  String secondaryTelephoneNo;
-  String website;
-  String managerName;
-  String email;
-  Null emailVerifiedAt;
-  String profileUrl;
-  String aboutUs;
-  String metaTitle;
-  String metaDescription;
-  String acceptedAt;
-  String activatedAt;
-  String verifiedAt;
-  String paymentStatus;
-  String lockAccount;
-  int completeSetupMail;
-  int makePaymentMail;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  String? title;
+  String? personName;
+  String? businessName;
+  String? address;
+  String? city;
+  String? state;
+  String? zipcode;
+  String? mapLocation;
+  String? latitude;
+  String? longitude;
+  int? radiusMiles;
+  String? telephoneNo;
+  String? secondaryTelephoneNo;
+  String? website;
+  String? managerName;
+  String? email;
+  dynamic emailVerifiedAt;
+  String? profileUrl;
+  String? aboutUs;
+  String? metaTitle;
+  String? metaDescription;
+  String? acceptedAt;
+  String? activatedAt;
+  String? verifiedAt;
+  String? paymentStatus;
+  String? lockAccount;
+  int? completeSetupMail;
+  int? makePaymentMail;
+  String? createdAt;
+  String? updatedAt;
 
   Hauler(
       {this.id,
@@ -350,12 +359,12 @@ class Hauler {
 }
 
 class Images {
-  int id;
-  String url;
+  int? id;
+  String? url;
 
   Images({this.id, this.url});
 
-  factory Images.fromJson(json) {
+  factory Images.fromJson(Map<String, dynamic> json) {
     return Images(
         id: json["id"], url: 'https://www.ratedlocksmiths.co.uk' + json["url"]);
   }

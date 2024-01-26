@@ -6,9 +6,9 @@ class LoginWidget extends StatelessWidget {
   final Widget container1;
   final Widget container2;
 
-  LoginWidget({this.container1, this.container2});
+  LoginWidget({required this.container1, required this.container2});
 
-  double height, width;
+  double height = 0, width = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,7 @@ class LoginWidget extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40)
-                   ),
+                      topRight: Radius.circular(40)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 0.06.sw),

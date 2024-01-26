@@ -1,17 +1,18 @@
-import 'package:autolocksmith/Home/dashboard.dart';
+import 'package:rated_locksmith/Home/dashboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:autolocksmith/API/api.dart';
-import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/widgets/DashBoardWidget.dart';
-import 'package:autolocksmith/widgets/toast.dart';
-import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:rated_locksmith/API/api.dart';
+import 'package:rated_locksmith/model/User.dart';
+import 'package:rated_locksmith/widgets/DashBoardWidget.dart';
+import 'package:rated_locksmith/widgets/toast.dart';
+import 'package:rated_locksmith/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChangePassword extends StatefulWidget {
-  User user;
+  User? user;
   ChangePassword({this.user});
+
   @override
   _ChangePasswordState createState() => _ChangePasswordState();
 }
@@ -122,7 +123,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               GestureDetector(
                 onTap: () async {
                   FocusScope.of(context).unfocus();
-                  if (key.currentState.validate()) {
+                  if (key.currentState!.validate()) {
                     var data = {
                       "old_password": _oldPassword.text,
                       "new_password": _newPassword.text,
@@ -132,13 +133,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                         await SharedPreferences.getInstance();
                     var body = await api.putData("changepassword/", data);
 
-                    if (!(body is String)) {
+                    if (body is! String) {
                       ShowToast.show("Password changed successfully");
+                      // ignore: use_build_context_synchronously
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => HomePage(
-                                    user: widget.user,
+                                    user: widget.user!,
                                   )),
                           (route) => false);
                     } else {

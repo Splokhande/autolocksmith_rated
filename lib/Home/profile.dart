@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:autolocksmith/FCM/fcm.dart';
-import 'package:autolocksmith/model/User.dart';
-import 'package:autolocksmith/widgets/DashBoardWidget.dart';
-import 'package:autolocksmith/widgets/widgets.dart';
+import 'package:rated_locksmith/FCM/fcm.dart';
+import 'package:rated_locksmith/model/User.dart';
+import 'package:rated_locksmith/widgets/DashBoardWidget.dart';
+import 'package:rated_locksmith/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyProfile extends StatefulWidget {
   final User user;
-  MyProfile({this.user});
+  MyProfile({required this.user});
   @override
   _MyProfileState createState() => _MyProfileState();
 }
 
 class _MyProfileState extends State<MyProfile> {
-  double widthS, heightS;
+  double? widthS, heightS;
 
-  Future<void> _launched;
+  Future<void>? _launched;
   FCMConfig fcm = FCMConfig();
   @override
   void initState() {
@@ -25,8 +25,8 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Future<void> _openUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -64,18 +64,19 @@ class _MyProfileState extends State<MyProfile> {
                     ),
                     ProfileTextFieldWidget(
                       title: "Contact:",
-                      subtitle: widget.user.personName,
+                      subtitle: widget.user.personName!,
                     ),
                     SizedBox(
                       height: heightS,
                     ),
                     ProfileTextFieldWidget(
-                        title: "Business:", subtitle: widget.user.businessName),
+                        title: "Business:",
+                        subtitle: widget.user.businessName!),
                     SizedBox(
                       height: heightS,
                     ),
                     ProfileTextFieldWidget(
-                        title: "Address:", subtitle: widget.user.address),
+                        title: "Address:", subtitle: widget.user.address!),
                     SizedBox(
                       height: heightS,
                     ),
@@ -94,17 +95,17 @@ class _MyProfileState extends State<MyProfile> {
                       height: heightS,
                     ),
                     ProfileTextFieldWidget(
-                        title: "Website:", subtitle: widget.user.website),
+                        title: "Website:", subtitle: widget.user.website!),
                     SizedBox(
                       height: heightS,
                     ),
                     ProfileTextFieldWidget(
-                        title: "Manager:", subtitle: widget.user.managerName),
+                        title: "Manager:", subtitle: widget.user.managerName!),
                     SizedBox(
                       height: heightS,
                     ),
                     ProfileTextFieldWidget(
-                        title: "Email:", subtitle: widget.user.email),
+                        title: "Email:", subtitle: widget.user.email!),
                     SizedBox(
                       height: 0.025.sh,
                     ),

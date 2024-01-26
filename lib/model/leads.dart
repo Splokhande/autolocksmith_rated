@@ -2,27 +2,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LeadsDetail with ChangeNotifier {
-  String vehicleType = "";
-  String vehicleLocation = "";
-  String vehicleReg = "";
-  String makeOfVehicle = "";
-  String modelVehicle = "";
-  String damageWindow = "";
-  String additionInfo = "";
-  String whoPay = "";
-  String needed = "";
-  String windowHeated = "";
-  String yearVehicle = "";
-  String carDamagePhoto = "";
-  String preferDate = "";
-  String customerName = "";
-  String phone = "";
-  String email = "";
-  String quoteDetails = "";
-  String image1 = "";
-  String image2 = "";
-  String image3 = "";
-  String image4 = "";
+  String? vehicleType;
+  String? vehicleLocation;
+  String? vehicleReg;
+  String? makeOfVehicle;
+  String? modelVehicle;
+  String? damageWindow;
+  String? additionInfo;
+  String? whoPay;
+  String? windowHeated;
+  String? yearVehicle;
+  String? carDamagePhoto;
+  String? preferDate;
+  String? customerName;
+  String? phone;
+  String? email;
+  String? quoteDetails;
+  String? image1;
+  String? image2;
+  String? image3;
+  String? image4;
+  String? needed;
+
   LeadsDetail({
     this.vehicleType,
     this.vehicleLocation,

@@ -1,37 +1,37 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
-  int id;
-  String title;
-  String personName;
-  String businessName;
-  String address;
-  String city;
-  String state;
-  String zipcode;
-  String mapLocation;
-  String latitude;
-  String longitude;
-  int radiusMiles;
-  String telephoneNo;
-  String secondaryTelephoneNo;
-  String website;
-  String managerName;
-  String email;
-  Null emailVerifiedAt;
-  String profileUrl;
-  String aboutUs;
-  String metaTitle;
-  String metaDescription;
-  String acceptedAt;
-  String activatedAt;
-  String verifiedAt;
-  String paymentStatus;
-  String lockAccount;
-  int completeSetupMail;
-  int makePaymentMail;
-  String createdAt;
-  String updatedAt;
+  int? id;
+  String? title;
+  String? personName;
+  String? businessName;
+  String? address;
+  String? city;
+  String? state;
+  String? zipcode;
+  String? mapLocation;
+  String? latitude;
+  String? longitude;
+  int? radiusMiles;
+  String? telephoneNo;
+  String? secondaryTelephoneNo;
+  String? website;
+  String? managerName;
+  String? email;
+  dynamic emailVerifiedAt;
+  String? profileUrl;
+  String? aboutUs;
+  String? metaTitle;
+  String? metaDescription;
+  String? acceptedAt;
+  String? activatedAt;
+  String? verifiedAt;
+  String? paymentStatus;
+  String? lockAccount;
+  int? completeSetupMail;
+  int? makePaymentMail;
+  String? createdAt;
+  String? updatedAt;
 
   User(
       {this.id,
@@ -138,23 +138,23 @@ class User {
 }
 
 class Shop {
-  String id;
-  String shopName;
-  String shopAddress;
-  String shopStreet;
-  String shopWebsite;
-  String shopRadius;
-  String shopProfile;
-  String shopTelephone;
-  String shopEmail;
-  String shopContactPerson;
-  String shopCity;
-  String country;
-  String shopPostcode;
-  String secondaryTel;
-  String manager;
-  String status;
-  bool connection;
+  String? id;
+  String? shopName;
+  String? shopAddress;
+  String? shopStreet;
+  String? shopWebsite;
+  String? shopRadius;
+  String? shopProfile;
+  String? shopTelephone;
+  String? shopEmail;
+  String? shopContactPerson;
+  String? shopCity;
+  String? country;
+  String? shopPostcode;
+  String? secondaryTel;
+  String? manager;
+  String? status;
+  bool? connection;
 
   Shop(
       {this.id,
@@ -237,29 +237,29 @@ class Shop {
         id: sp.getString("id"),
         status: sp.getString("status"),
         connection: sp.getBool("internet"),
-        country: sp.get("country"));
+        country: sp.getString("country"));
     return shop;
   }
 
   toSharedPreference(Shop shop) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
 
-    sp.setString("id", shop.id);
-    sp.setString("shopEmail", shop.shopEmail);
-    sp.setString("shopName", shop.shopName);
-    sp.setString("shopPostcode", shop.shopPostcode);
-    sp.setString("shopProfile", shop.shopProfile);
-    sp.setString("shopRadius", shop.shopRadius);
-    sp.setString("shopContactPerson", shop.shopContactPerson);
-    sp.setString("shopAddress", shop.shopAddress);
-    sp.setString("shopCity", shop.shopCity);
-    sp.setString("secondaryTel", shop.secondaryTel);
-    sp.setString("manager", shop.manager);
-    sp.setString("status", shop.status);
-    sp.setString("country", shop.country);
-    sp.setString("shopStreet", shop.shopStreet);
-    sp.setString("shopTelephone", shop.shopTelephone);
-    sp.setString("shopWebsite", shop.shopWebsite);
+    sp.setString("id", shop.id!);
+    sp.setString("shopEmail", shop.shopEmail!);
+    sp.setString("shopName", shop.shopName!);
+    sp.setString("shopPostcode", shop.shopPostcode!);
+    sp.setString("shopProfile", shop.shopProfile!);
+    sp.setString("shopRadius", shop.shopRadius!);
+    sp.setString("shopContactPerson", shop.shopContactPerson!);
+    sp.setString("shopAddress", shop.shopAddress!);
+    sp.setString("shopCity", shop.shopCity!);
+    sp.setString("secondaryTel", shop.secondaryTel!);
+    sp.setString("manager", shop.manager!);
+    sp.setString("status", shop.status!);
+    sp.setString("country", shop.country!);
+    sp.setString("shopStreet", shop.shopStreet!);
+    sp.setString("shopTelephone", shop.shopTelephone!);
+    sp.setString("shopWebsite", shop.shopWebsite!);
     sp.setBool("internet", true);
     sp.setInt("count", 0);
   }
